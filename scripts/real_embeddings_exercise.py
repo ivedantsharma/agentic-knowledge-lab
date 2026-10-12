@@ -1,10 +1,7 @@
+from cosine_similarity_exercise import cosine_similarity
 from sentence_transformers import SentenceTransformer
 
-from scripts.cosine_similarity_exercise import cosine_similarity
-
-
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
-
 
 def main() -> None:
     sentences = {
