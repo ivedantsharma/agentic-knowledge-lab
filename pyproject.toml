@@ -4,7 +4,9 @@ version = "0.1.0"
 description = "Research engineering for agent-native knowledge systems and adversarial knowledge-agent evaluation."
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
-dependencies = []
+dependencies = [
+    "sentence-transformers>=3.0,<4.0",
+]
 
 [dependency-groups]
 dev = [
