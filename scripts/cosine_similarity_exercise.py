@@ -4,19 +4,24 @@ from math import sqrt
 def dot_product(a: list[float], b: list[float]) -> float:
     """Return the dot product of two equal-length vectors."""
     # TODO: implement this yourself.
-    raise NotImplementedError
+    if len(a) != len(b):
+        raise ValueError("Vectors must have the same length")
+    return sum(x * y for x, y in zip(a, b))
 
 
 def magnitude(v: list[float]) -> float:
     """Return the Euclidean magnitude (length) of a vector."""
     # TODO: implement this yourself.
-    raise NotImplementedError
+    return sqrt(sum(x ** 2 for x in v))
 
 
 def cosine_similarity(a: list[float], b: list[float]) -> float:
     """Return cosine similarity between two non-zero vectors."""
     # TODO: implement this yourself.
-    raise NotImplementedError
+    dot_prod = dot_product(a, b)
+    mag_a = magnitude(a)
+    mag_b = magnitude(b)
+    return dot_prod / (mag_a * mag_b) if mag_a > 0 and mag_b > 0 else 0
 
 
 def main() -> None:
