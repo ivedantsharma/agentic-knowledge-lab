@@ -1,6 +1,9 @@
 from sentence_transformers import SentenceTransformer
 
-from scripts.cosine_similarity_exercise import cosine_similarity
+if __package__:
+    from .cosine_similarity_exercise import cosine_similarity
+else:
+    from cosine_similarity_exercise import cosine_similarity
 
 
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
@@ -32,17 +35,25 @@ def rank_documents(
 ) -> list[tuple[str, float]]:
     """Return document IDs ranked by semantic similarity to the query."""
     # TODO 1: encode the query.
+    query_embedding = model.encode(query)
+    
     # TODO 2: encode all document texts.
+    document_embeddings = model.encode(list(documents.values()))
+    
     # TODO 3: calculate cosine similarity for each document.
+    similarities = [cosine_similarity(query_embedding, doc_embedding) for doc_embedding in document_embeddings]
+    
     # TODO 4: sort from highest score to lowest.
+    ranked_indices = sorted(range(len(similarities)), key=lambda i: similarities[i], reverse=True)
+    
     # TODO 5: return only the first top_k results.
-    raise NotImplementedError
+    return [(list(documents.keys())[i], similarities[i]) for i in ranked_indices[:top_k]]
 
 
 def main() -> None:
     model = SentenceTransformer(MODEL_NAME)
 
-    query = "How do I stop Python package versions from conflicting between projects?"
+    query = "Why is my server refusing the connection?"
 
     results = rank_documents(
         query=query,

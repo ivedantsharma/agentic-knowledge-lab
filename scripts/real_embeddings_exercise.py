@@ -1,5 +1,9 @@
-from cosine_similarity_exercise import cosine_similarity
 from sentence_transformers import SentenceTransformer
+
+if __package__:
+    from .cosine_similarity_exercise import cosine_similarity
+else:
+    from cosine_similarity_exercise import cosine_similarity
 
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 
