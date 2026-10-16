@@ -74,10 +74,20 @@ def main() -> None:
 
     print("KnowledgeBench Phase 1 Dense Baseline")
     print(f"Tasks evaluated: {report.evaluated_tasks}")
+    print(f"Answerable tasks: {report.answerable_tasks}")
+    print(f"Unanswerable tasks: {report.unanswerable_tasks}")
     print(f"Missing results: {report.missing_results}")
+    print()
+    print("Answerable-task retrieval metrics")
     print(f"Mean Recall@3: {report.mean_recall_at_k:.4f}")
     print(f"Mean Precision@3: {report.mean_precision_at_k:.4f}")
     print(f"MRR: {report.mean_reciprocal_rank:.4f}")
+    print()
+    print("Unanswerable-task diagnostic")
+    print(
+        "Unanswerable retrieval rate: "
+        f"{report.unanswerable_retrieval_rate:.4f}"
+    )
     print()
 
     for task, result in zip(tasks, results):
