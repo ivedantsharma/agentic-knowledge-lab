@@ -5,6 +5,7 @@ description = "Research engineering for agent-native knowledge systems and adver
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
 dependencies = [
+    "pydantic>=2.14,<3.0",
     "sentence-transformers>=6.1,<7.0",
 ]
 
