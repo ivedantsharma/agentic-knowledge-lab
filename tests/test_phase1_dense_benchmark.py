@@ -1,4 +1,3 @@
-from knowledgebench.documents.schema import KnowledgeDocument
 from scripts.run_phase1_dense_benchmark import rank_documents
 
 

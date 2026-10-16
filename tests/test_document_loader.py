@@ -36,12 +36,8 @@ def test_load_documents_jsonl(tmp_path) -> None:
 def test_duplicate_document_id_is_rejected(tmp_path) -> None:
     path = tmp_path / "documents.jsonl"
     path.write_text(
-        "\n".join(
-            [
-                '{"document_id":"doc_a","text":"A"}',
-                '{"document_id":"doc_a","text":"B"}',
-            ]
-        ),
+        '{"document_id":"doc_a","text":"A"}\n'
+        '{"document_id":"doc_a","text":"B"}',
         encoding="utf-8",
     )
 
