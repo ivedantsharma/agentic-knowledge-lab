@@ -1,0 +1,5 @@
+{"document_id":"doc_python","text":"Python virtual environments isolate project dependencies so different projects can use different package versions without interfering with each other.","metadata":{"source":"synthetic","topic":"python"}}
+{"document_id":"doc_http","text":"ERR_CONNECTION_REFUSED usually means the target server rejected or did not accept the attempted network connection.","metadata":{"source":"synthetic","topic":"networking"}}
+{"document_id":"doc_rl","text":"Reinforcement learning trains an agent through rewards and penalties that encourage useful behavior over time.","metadata":{"source":"synthetic","topic":"machine_learning"}}
+{"document_id":"doc_finance","text":"Stock prices rose during the trading session as investors became more optimistic about future earnings.","metadata":{"source":"synthetic","topic":"finance"}}
+{"document_id":"doc_dog","text":"A puppy slept peacefully on the sofa after playing outside for most of the afternoon.","metadata":{"source":"synthetic","topic":"animals"}}
