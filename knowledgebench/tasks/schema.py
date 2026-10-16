@@ -16,17 +16,29 @@ class KnowledgeTask(BaseModel):
     @field_validator("task_id")
     @classmethod
     def validate_task_id(cls, value: str) -> str:
-        # TODO: reject empty/whitespace-only task IDs.
-        raise NotImplementedError
+        cleaned = value.strip()
+
+        if not cleaned:
+            raise ValueError("task_id must not be blank")
+
+        return cleaned
 
     @field_validator("question")
     @classmethod
     def validate_question(cls, value: str) -> str:
-        # TODO: reject empty/whitespace-only questions.
-        raise NotImplementedError
+        cleaned = value.strip()
+
+        if not cleaned:
+            raise ValueError("question must not be blank")
+        
+        return cleaned
 
     @field_validator("category")
     @classmethod
     def validate_category(cls, value: str) -> str:
-        # TODO: reject empty/whitespace-only categories.
-        raise NotImplementedError
+        cleaned = value.strip()
+
+        if not cleaned:
+            raise ValueError("category must not be blank")
+        
+        return cleaned

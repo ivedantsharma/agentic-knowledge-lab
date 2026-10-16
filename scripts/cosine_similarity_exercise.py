@@ -3,7 +3,6 @@ from math import sqrt
 
 def dot_product(a: list[float], b: list[float]) -> float:
     """Return the dot product of two equal-length vectors."""
-    # TODO: implement this yourself.
     if len(a) != len(b):
         raise ValueError("Vectors must have the same length")
     return sum(x * y for x, y in zip(a, b))
@@ -11,13 +10,11 @@ def dot_product(a: list[float], b: list[float]) -> float:
 
 def magnitude(v: list[float]) -> float:
     """Return the Euclidean magnitude (length) of a vector."""
-    # TODO: implement this yourself.
     return sqrt(sum(x ** 2 for x in v))
 
 
 def cosine_similarity(a: list[float], b: list[float]) -> float:
     """Return cosine similarity between two non-zero vectors."""
-    # TODO: implement this yourself.
     dot_prod = dot_product(a, b)
     mag_a = magnitude(a)
     mag_b = magnitude(b)

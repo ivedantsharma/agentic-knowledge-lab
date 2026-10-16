@@ -75,12 +75,8 @@ def test_invalid_task_reports_line_number(tmp_path) -> None:
 def test_duplicate_task_id_is_rejected(tmp_path) -> None:
     path = tmp_path / "tasks.jsonl"
     path.write_text(
-        "\n".join(
-            [
-                '{"task_id":"kb-001","question":"Q1","category":"direct"}',
-                '{"task_id":"kb-001","question":"Q2","category":"direct"}',
-            ]
-        ),
+        '{"task_id":"kb-001","question":"Q1","category":"direct"}\n'
+        '{"task_id":"kb-001","question":"Q2","category":"direct"}',
         encoding="utf-8",
     )
 

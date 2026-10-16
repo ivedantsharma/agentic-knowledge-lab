@@ -34,19 +34,14 @@ def rank_documents(
     top_k: int = 3,
 ) -> list[tuple[str, float]]:
     """Return document IDs ranked by semantic similarity to the query."""
-    # TODO 1: encode the query.
     query_embedding = model.encode(query)
     
-    # TODO 2: encode all document texts.
     document_embeddings = model.encode(list(documents.values()))
     
-    # TODO 3: calculate cosine similarity for each document.
     similarities = [cosine_similarity(query_embedding, doc_embedding) for doc_embedding in document_embeddings]
     
-    # TODO 4: sort from highest score to lowest.
     ranked_indices = sorted(range(len(similarities)), key=lambda i: similarities[i], reverse=True)
     
-    # TODO 5: return only the first top_k results.
     return [(list(documents.keys())[i], similarities[i]) for i in ranked_indices[:top_k]]
 
 

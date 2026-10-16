@@ -65,6 +65,7 @@ def test_missing_retrieval_output_counts_as_failure() -> None:
     }
 
     assert mean_recall_at_k(retrieved, relevant, 1) == pytest.approx(0.5)
+    assert mean_precision_at_k(retrieved, relevant, 1) == pytest.approx(0.5)
     assert mean_reciprocal_rank(retrieved, relevant) == pytest.approx(0.5)
 
 
