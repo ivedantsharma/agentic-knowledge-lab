@@ -1,6 +1,6 @@
 from knowledge_engine.ingestion.schema import DocumentChunk
-from knowledgebench.tasks.schema import KnowledgeTask
 from knowledgebench.tasks.evidence_schema import EvidenceTask
+from knowledgebench.tasks.schema import KnowledgeTask
 
 
 def derive_chunk_task(
