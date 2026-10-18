@@ -1,7 +1,11 @@
 import json
+import sys
 from pathlib import Path
 
 from sentence_transformers import SentenceTransformer
+
+if not __package__:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from knowledge_engine.ingestion.chunker import chunk_by_words
 from knowledge_engine.ingestion.loader import load_source_documents_jsonl
@@ -13,7 +17,6 @@ from knowledgebench.runs.schema import RunResult
 from knowledgebench.tasks.evidence_labeler import derive_chunk_task
 from knowledgebench.tasks.evidence_schema import EvidenceTask
 from scripts.cosine_similarity_exercise import cosine_similarity
-
 
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 
