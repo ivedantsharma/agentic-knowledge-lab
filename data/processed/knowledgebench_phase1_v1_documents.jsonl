@@ -1,0 +1,10 @@
+{"document_id":"doc_python","text":"Python virtual environments isolate project dependencies so separate projects can use incompatible package versions safely.","metadata":{"source":"synthetic","topic":"python"}}
+{"document_id":"doc_http","text":"ERR_CONNECTION_REFUSED means a network connection attempt was actively refused by the destination server.","metadata":{"source":"synthetic","topic":"networking"}}
+{"document_id":"doc_rfc7231","text":"RFC 7231 Section 4.3 defines the semantics of several HTTP request methods.","metadata":{"source":"synthetic","topic":"http"}}
+{"document_id":"doc_cublas","text":"CUBLAS_STATUS_ALLOC_FAILED indicates that CUDA BLAS could not allocate required GPU resources.","metadata":{"source":"synthetic","topic":"gpu"}}
+{"document_id":"doc_rl","text":"Reinforcement learning improves an agent's policy by using reward signals from interactions with an environment.","metadata":{"source":"synthetic","topic":"machine_learning"}}
+{"document_id":"doc_supervised","text":"Supervised learning trains models using labeled input-output examples.","metadata":{"source":"synthetic","topic":"machine_learning"}}
+{"document_id":"doc_packages_general","text":"Package managers download, install, update, and remove software packages and dependencies.","metadata":{"source":"synthetic","topic":"python"}}
+{"document_id":"doc_connection_general","text":"Network connections allow two computers to exchange data over a communication channel.","metadata":{"source":"synthetic","topic":"networking"}}
+{"document_id":"doc_finance","text":"Stock markets moved higher as investors reacted to stronger earnings expectations.","metadata":{"source":"synthetic","topic":"finance"}}
+{"document_id":"doc_dog","text":"A puppy rested on a sofa after playing outside in the afternoon.","metadata":{"source":"synthetic","topic":"animals"}}
