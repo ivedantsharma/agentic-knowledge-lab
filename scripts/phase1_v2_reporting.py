@@ -1,7 +1,5 @@
-from collections.abc import Callable
-
-from knowledgebench.evaluation.category_evaluator import evaluate_retrieval_by_category
 from knowledgebench.evaluation.benchmark_evaluator import evaluate_retrieval_run
+from knowledgebench.evaluation.category_evaluator import evaluate_retrieval_by_category
 from knowledgebench.runs.schema import RunResult
 from knowledgebench.tasks.schema import KnowledgeTask
 
