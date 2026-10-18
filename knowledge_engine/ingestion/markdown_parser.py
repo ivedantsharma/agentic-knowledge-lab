@@ -51,7 +51,7 @@ def parse_markdown_document(
                 title = line[2:].strip()
             continue
 
-        if line.startswith("## ") or line.startswith("### "):
+        if line.startswith(("## ", "### ")):
             flush_section()
 
             heading_prefix = "### " if line.startswith("### ") else "## "
