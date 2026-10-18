@@ -1,0 +1,13 @@
+{"document_id":"doc_inc_b","text":"Incident INC-847291-B caused a regional authentication outage and was resolved after a token-cache rollback.","metadata":{"source":"synthetic","group":"lexical"}}
+{"document_id":"doc_inc_a","text":"Incident INC-847291-A caused elevated API latency in the reporting service.","metadata":{"source":"synthetic","group":"lexical"}}
+{"document_id":"doc_inc_c","text":"Incident INC-847291-C affected metrics ingestion for several internal dashboards.","metadata":{"source":"synthetic","group":"lexical"}}
+{"document_id":"doc_zxq_target","text":"Hardware unit ZXQ-19F7-A3 requires firmware package FWP-4402 before calibration.","metadata":{"source":"synthetic","group":"lexical"}}
+{"document_id":"doc_zxq_a4","text":"Hardware unit ZXQ-19F7-A4 uses firmware package FWP-4408 for calibration.","metadata":{"source":"synthetic","group":"lexical"}}
+{"document_id":"doc_zxq_f8","text":"Hardware unit ZXQ-19F8-A3 requires a diagnostic reset before calibration.","metadata":{"source":"synthetic","group":"lexical"}}
+{"document_id":"doc_err_target","text":"ERR-KV-4097 indicates that the requested key version is no longer available in the active key store.","metadata":{"source":"synthetic","group":"lexical"}}
+{"document_id":"doc_err_near","text":"ERR-KV-4098 indicates that a key exists but is disabled for cryptographic operations.","metadata":{"source":"synthetic","group":"lexical"}}
+{"document_id":"doc_python_isolation","text":"Python virtual environments isolate dependency installations so one project can use package versions that would conflict with another project.","metadata":{"source":"synthetic","group":"semantic"}}
+{"document_id":"doc_rl_rewards","text":"Reinforcement learning changes an agent's policy based on reward signals received after actions in an environment.","metadata":{"source":"synthetic","group":"semantic"}}
+{"document_id":"doc_cache","text":"A cache stores previously computed or retrieved values so repeated requests can be served faster.","metadata":{"source":"synthetic","group":"distractor"}}
+{"document_id":"doc_package_manager","text":"A package manager installs, upgrades, and removes software libraries and their declared dependencies.","metadata":{"source":"synthetic","group":"distractor"}}
+{"document_id":"doc_supervised","text":"Supervised learning fits a model to labeled examples containing desired outputs.","metadata":{"source":"synthetic","group":"distractor"}}
