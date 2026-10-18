@@ -24,7 +24,6 @@ SOURCE_PATH = Path("data/processed/phase2_source_documents_v0.jsonl")
 STRUCTURED_PATH = Path("data/processed/phase2_structured_documents_v0.json")
 TASK_PATH = Path("data/processed/phase2_evidence_tasks_v0.json")
 
-
 def load_evidence_tasks() -> list[EvidenceTask]:
     payload = json.loads(
         TASK_PATH.read_text(encoding="utf-8")
