@@ -1,6 +1,10 @@
+import sys
 from pathlib import Path
 
 from sentence_transformers import SentenceTransformer
+
+if not __package__:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from knowledge_engine.retrieval.bm25 import BM25Retriever
 from knowledge_engine.retrieval.hybrid import reciprocal_rank_fusion
@@ -9,7 +13,6 @@ from knowledgebench.runs.schema import RunResult
 from knowledgebench.tasks.loader import load_tasks_jsonl
 from scripts.cosine_similarity_exercise import cosine_similarity
 from scripts.phase1_v2_reporting import print_reports
-
 
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 
