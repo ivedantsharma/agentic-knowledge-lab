@@ -1,9 +1,7 @@
-import json
 from pathlib import Path
 
 from knowledge_engine.ingestion.chunker import chunk_by_words
 from knowledge_engine.ingestion.loader import load_source_documents_jsonl
-
 
 SOURCE_PATH = Path("data/processed/phase2_source_documents_v0.jsonl")
 OUTPUT_PATH = Path("data/processed/phase2_chunks_v0.jsonl")

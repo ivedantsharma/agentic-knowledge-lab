@@ -23,10 +23,8 @@ def test_duplicate_source_document_id_is_rejected(tmp_path) -> None:
     path = tmp_path / "sources.jsonl"
     path.write_text(
         "\n".join(
-            [
-                '{"document_id":"doc-1","text":"A"}',
-                '{"document_id":"doc-1","text":"B"}',
-            ]
+            json.dumps({"document_id": "doc-1", "text": text})
+            for text in ("A", "B")
         ),
         encoding="utf-8",
     )

@@ -9,7 +9,6 @@ from knowledgebench.runs.schema import RunResult
 from knowledgebench.tasks.loader import load_tasks_jsonl
 from scripts.cosine_similarity_exercise import cosine_similarity
 
-
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 
 SOURCE_PATH = Path("data/processed/phase2_source_documents_v0.jsonl")
