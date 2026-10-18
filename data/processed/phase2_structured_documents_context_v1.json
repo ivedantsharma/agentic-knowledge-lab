@@ -1,0 +1,89 @@
+[
+  {
+    "document_id": "manual_alpha",
+    "metadata": {
+      "source": "synthetic",
+      "title": "Atlas Service Manual"
+    },
+    "sections": [
+      {
+        "title": "Authentication Overview",
+        "context": "This section introduces how the Atlas service authenticates incoming requests.",
+        "text": "The Atlas service accepts signed access tokens issued by the identity gateway."
+      },
+      {
+        "title": "Token Rotation",
+        "context": "This section of the Atlas Service Manual explains how signing keys are rotated and identified.",
+        "text": "Access-token signing keys rotate every 24 hours, and the current key identifier is ATLAS-KV-104."
+      },
+      {
+        "title": "Cache Behavior",
+        "context": "This section explains how Atlas reduces repeated token verification work using cached metadata.",
+        "text": "The service caches validated token metadata for five minutes to reduce repeated verification work."
+      },
+      {
+        "title": "Deployment Notes",
+        "context": "This section describes how the Atlas service is deployed across regions.",
+        "text": "Atlas runs in three regional clusters and uses rolling deployments."
+      }
+    ]
+  },
+  {
+    "document_id": "manual_beta",
+    "metadata": {
+      "source": "synthetic",
+      "title": "Borealis Storage Manual"
+    },
+    "sections": [
+      {
+        "title": "Storage Overview",
+        "context": "This section introduces how Borealis stores customer profile data.",
+        "text": "The Borealis database stores customer profile records in replicated partitions."
+      },
+      {
+        "title": "Backup Policy",
+        "context": "This section of the Borealis Storage Manual explains the schedule for full and incremental backups.",
+        "text": "Full backups run every Sunday, while incremental backups run every six hours."
+      },
+      {
+        "title": "Encryption",
+        "context": "This section explains how Borealis protects backup archives before they leave the primary region.",
+        "text": "Backup archives are encrypted with key BOREALIS-BK-77 before leaving the primary region."
+      },
+      {
+        "title": "Restore Process",
+        "context": "This section explains how operators reconstruct Borealis data from full and incremental backups.",
+        "text": "Operators restore the most recent full backup and then replay available incrementals."
+      }
+    ]
+  },
+  {
+    "document_id": "manual_gamma",
+    "metadata": {
+      "source": "synthetic",
+      "title": "Cirrus Worker Manual"
+    },
+    "sections": [
+      {
+        "title": "Queue Overview",
+        "context": "This section introduces how the Cirrus worker system receives asynchronous jobs.",
+        "text": "The Cirrus worker system consumes asynchronous jobs from a durable queue."
+      },
+      {
+        "title": "Retry Policy",
+        "context": "This section explains how Cirrus retries jobs that fail during processing.",
+        "text": "Failed jobs use exponential backoff and are retried at most five times."
+      },
+      {
+        "title": "Dead Letter Handling",
+        "context": "This section of the Cirrus Worker Manual describes what happens to jobs after all retry attempts fail.",
+        "text": "A job that fails all retry attempts is moved to the dead-letter queue named CIRRUS-DLQ."
+      },
+      {
+        "title": "Observability",
+        "context": "This section explains which Cirrus queue and retry measurements are exported for monitoring.",
+        "text": "Queue depth and retry counts are exported as monitoring metrics."
+      }
+    ]
+  }
+]
