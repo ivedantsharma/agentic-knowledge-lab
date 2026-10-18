@@ -1,6 +1,11 @@
+import sys
+
 from pathlib import Path
 
 from sentence_transformers import SentenceTransformer
+
+if not __package__:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from knowledge_engine.ingestion.rich_context_chunker import (
     chunk_by_rich_context,
@@ -9,7 +14,6 @@ from knowledge_engine.ingestion.structured_loader import (
     load_structured_documents_json,
 )
 from scripts.cosine_similarity_exercise import cosine_similarity
-
 
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 
