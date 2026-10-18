@@ -1,9 +1,11 @@
-import json
+import sys
 from pathlib import Path
+
+if not __package__:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from knowledge_engine.ingestion.chunker import chunk_by_words
 from knowledge_engine.ingestion.loader import load_source_documents_jsonl
-
 
 SOURCE_PATH = Path("data/processed/phase2_source_documents_v0.jsonl")
 OUTPUT_PATH = Path("data/processed/phase2_chunks_overlap6_v1.jsonl")

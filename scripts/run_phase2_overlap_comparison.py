@@ -1,13 +1,16 @@
+import sys
 from pathlib import Path
 
 from sentence_transformers import SentenceTransformer
+
+if not __package__:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from knowledge_engine.ingestion.chunk_loader import load_chunks_jsonl
 from knowledgebench.evaluation.benchmark_evaluator import evaluate_retrieval_run
 from knowledgebench.runs.schema import RunResult
 from knowledgebench.tasks.loader import load_tasks_jsonl
 from scripts.cosine_similarity_exercise import cosine_similarity
-
 
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 
