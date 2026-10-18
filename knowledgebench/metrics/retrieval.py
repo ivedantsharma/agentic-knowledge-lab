@@ -42,4 +42,13 @@ def reciprocal_rank(
         if document_id in relevant_ids:
             return 1.0 / rank
 
-    return 0.0
+    return 0.0\n\n\ndef hit_at_k(
+    retrieved_ids: list[str],
+    relevant_ids: set[str],
+    k: int,
+) -> float:
+    """Return 1 if any relevant item appears in top-k, otherwise 0."""
+    if k <= 0 or not relevant_ids:
+        return 0.0
+
+    return float(bool(set(retrieved_ids[:k]) & relevant_ids))
