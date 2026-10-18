@@ -6,6 +6,7 @@ from pydantic import BaseModel, Field, field_validator
 class DocumentSection(BaseModel):
     title: str
     text: str
+    context: str | None = None
     metadata: dict[str, Any] = Field(default_factory=dict)
 
     @field_validator("title", "text")
@@ -14,6 +15,22 @@ class DocumentSection(BaseModel):
         cleaned = value.strip()
         if not cleaned:
             raise ValueError("section title/text must not be blank")
+        return cleaned
+
+    @field_validator("context")
+    @classmethod
+    def validate_optional_context(
+        cls,
+        value: str | None,
+    ) -> str | None:
+        if value is None:
+            return None
+
+        cleaned = value.strip()
+
+        if not cleaned:
+            raise ValueError("section context must not be blank")
+
         return cleaned
 
 
