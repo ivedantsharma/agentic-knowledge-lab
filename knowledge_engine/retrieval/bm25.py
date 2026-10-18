@@ -2,7 +2,6 @@ import math
 import re
 from collections import Counter
 
-
 TOKEN_PATTERN = re.compile(r"[a-z0-9_]+")
 
 
