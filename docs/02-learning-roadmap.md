@@ -2,10 +2,11 @@
 
 We learn only what is needed for the next engineering step.
 
-## Phase 0 — Foundations and environment
+## Phase 0 — Foundations & Environment
+
 Learn:
 - Codespaces basics
-- Terminal basics
+- terminal basics
 - Git and GitHub basics
 - Python environments
 - repository structure
@@ -18,81 +19,180 @@ Deliverables:
 - CI passes
 - documentation readable
 
-## Phase 1 — Research framing
+Status: Complete.
+
+## Phase 1 — Retrieval & Evaluation Foundations
+
 Learn:
 - research questions
 - hypotheses
 - baselines
 - metrics
 - experimental design
+- embeddings
+- cosine similarity
+- BM25
+- dense retrieval
+- hybrid retrieval
+- reciprocal rank fusion
+- retrieval evaluation
 
-## Phase 2 — Ingestion
+Deliverables:
+- BM25 baseline
+- dense baseline
+- hybrid RRF baseline
+- typed benchmark schemas
+- Recall@K, Precision@K, MRR evaluators
+- controlled experiment protocol
+
+Status: Complete.
+
+## Phase 2 — Ingestion, Chunking & Retrieval Architecture
+
 Learn:
 - parsing
 - metadata
 - chunking
-- tokenization
-
-## Phase 3 — Keyword retrieval
-Learn:
-- term frequency
-- inverse document frequency
-- BM25
-
-## Phase 4 — Dense retrieval
-Learn:
-- embeddings
-- cosine similarity
-- nearest-neighbor search
-- approximate nearest neighbors
-
-## Phase 5 — Hybrid retrieval and reranking
-Learn:
-- rank fusion
-- RRF
+- overlap
+- evidence provenance
+- structure-aware chunking
+- contextualized retrieval units
+- Hit@K
 - cross-encoder reranking
 
-## Phase 6 — Agentic search
+Deliverables:
+- source-document ingestion
+- fixed-size chunker
+- overlap experiments
+- chunk-size comparison
+- evidence-derived relevance labels
+- structure-aware chunks
+- contextualized chunks
+- Markdown ingestion
+- retrieve-then-rerank pipeline
+
+Status: Complete.
+
+## Phase 3 — Multi-Hop Retrieval Foundations
+
+Learn:
+- dependent searches
+- question decomposition
+- intermediate facts
+- evidence chains
+- multi-document questions
+- why single-hop retrieval fails
+
+Deliverables:
+- multi-hop task schema
+- synthetic multi-document benchmark
+- single-hop baseline
+- deterministic two-hop baseline
+- evidence-chain metrics
+- failure analysis
+
+Status: Current.
+
+## Phase 4 — Agentic Search Planner
+
 Learn:
 - agent loops
 - tool calling
 - state
+- query rewriting
+- tool selection
 - stopping conditions
 - planning
 
-## Phase 7 — Agent-native information architecture
+## Phase 5 — Hierarchical Retrieval
+
 Learn:
-- hierarchies
+- document → section → chunk retrieval
+- coarse-to-fine search
+- parent-child navigation
+- hierarchical indexes
+
+## Phase 6 — Knowledge Graph & Claim/Evidence Retrieval
+
+Learn:
+- entities
+- relations
 - knowledge graphs
 - claim/evidence graphs
 - retrieval over structure
 
-## Phase 8–9 — KnowledgeBench
+## Phase 7 — KnowledgeBench v2: Hard Retrieval Evals
+
 Learn:
-- benchmark design
+- multi-hop tasks
+- distractors
+- ambiguity
+- temporal/stale knowledge
+- contradictions
+- unanswerable questions
+
+## Phase 8 — Agent Evaluation & Graders
+
+Learn:
+- agent traces
+- tool-use metrics
+- retrieval-path metrics
 - deterministic graders
 - model graders
-- adversarial task generation
+- groundedness
+
+## Phase 9 — Adversarial Robustness & Failure Analysis
+
+Learn:
+- prompt-injection documents
+- search loops
+- misleading evidence
+- long-context distraction
 - failure taxonomies
 
-## Phase 10 — Fine-tuning
+## Phase 10 — Adaptive Retrieval & Query Understanding
+
+Learn:
+- BM25 vs dense vs hybrid vs graph routing
+- query classification
+- adaptive top-k
+- query transformation
+- retrieval policies
+
+## Phase 11 — Fine-Tuning Retrieval/Search Behavior
+
 Learn:
 - PyTorch basics
 - Hugging Face Transformers
 - LoRA / PEFT
-- SFT
+- supervised fine-tuning
+- retrieval-policy training data
 
-## Phase 11 — RL for retrieval policy
+## Phase 12 — RL for Retrieval Policy
+
 Learn:
 - rewards
 - trajectories
+- credit assignment
 - policy optimization
 - evaluation leakage risks
 
-## Phase 12–14 — Research campaign
+## Phase 13 — Full Research Campaign
+
 Learn:
 - controlled experiments
 - ablations
+- multiple trials
 - confidence and variance
+- architecture comparisons
 - failure analysis
-- technical writing
+
+## Phase 14 — Final Research System & Portfolio
+
+Deliverables:
+- integrated knowledge engine
+- final KnowledgeBench
+- technical report
+- architecture documentation
+- polished GitHub repository
+- portfolio/application narrative
