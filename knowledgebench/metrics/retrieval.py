@@ -12,6 +12,7 @@ def recall_at_k(
 
     return relevant_retrieved / len(relevant_ids)
 
+
 def precision_at_k(
     retrieved_ids: list[str],
     relevant_ids: set[str],
@@ -27,8 +28,9 @@ def precision_at_k(
         return 0.0
 
     relevant_retrieved = len(set(top_k) & relevant_ids)
-    
+
     return relevant_retrieved / len(top_k)
+
 
 def reciprocal_rank(
     retrieved_ids: list[str],
@@ -42,7 +44,10 @@ def reciprocal_rank(
         if document_id in relevant_ids:
             return 1.0 / rank
 
-    return 0.0\n\n\ndef hit_at_k(
+    return 0.0
+
+
+def hit_at_k(
     retrieved_ids: list[str],
     relevant_ids: set[str],
     k: int,
