@@ -1,11 +1,15 @@
+import sys
 from pathlib import Path
+
+# Direct script execution puts only `scripts/` on the import path.
+if not __package__:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from knowledge_engine.retrieval.bm25 import BM25Retriever
 from knowledgebench.documents.loader import load_documents_jsonl
 from knowledgebench.evaluation.benchmark_evaluator import evaluate_retrieval_run
 from knowledgebench.runs.schema import RunResult
 from knowledgebench.tasks.loader import load_tasks_jsonl
-
 
 TASKS_PATH = Path("data/processed/knowledgebench_phase1_v1_tasks.jsonl")
 DOCUMENTS_PATH = Path("data/processed/knowledgebench_phase1_v1_documents.jsonl")
