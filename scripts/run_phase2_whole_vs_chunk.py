@@ -1,6 +1,10 @@
+import sys
 from pathlib import Path
 
 from sentence_transformers import SentenceTransformer
+
+if not __package__:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from knowledge_engine.ingestion.chunk_loader import load_chunks_jsonl
 from knowledge_engine.ingestion.loader import load_source_documents_jsonl
