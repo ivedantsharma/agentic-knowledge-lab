@@ -1,5 +1,4 @@
 import sys
-
 from pathlib import Path
 
 from sentence_transformers import SentenceTransformer
@@ -22,7 +21,6 @@ STRUCTURED_PATH = Path(
 )
 
 QUERY = "Where are Cirrus jobs sent after exhausting all retries?"
-
 
 def main() -> None:
     documents = load_structured_documents_json(
