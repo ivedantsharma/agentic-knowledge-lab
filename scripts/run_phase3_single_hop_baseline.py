@@ -1,6 +1,9 @@
+import sys
 from pathlib import Path
 
 from sentence_transformers import SentenceTransformer
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from knowledgebench.documents.loader import load_documents_jsonl
 from knowledgebench.tasks.multihop_loader import (
@@ -9,7 +12,6 @@ from knowledgebench.tasks.multihop_loader import (
 from scripts.cosine_similarity_exercise import (
     cosine_similarity,
 )
-
 
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 
@@ -27,10 +29,6 @@ def main() -> None:
 
     model = SentenceTransformer(MODEL_NAME)
 
-    document_ids = [
-        document.document_id
-        for document in documents
-    ]
     document_embeddings = model.encode(
         [document.text for document in documents]
     )
