@@ -9,19 +9,22 @@
         "hop_index": 0,
         "query": "Which team operates Atlas?",
         "expected_document_id": "org_atlas",
-        "expected_fact": "Platform Reliability"
+        "expected_fact": "Platform Reliability",
+        "query_template": "Which team operates Atlas?"
       },
       {
         "hop_index": 1,
         "query": "Which storage system is maintained by Platform Reliability?",
         "expected_document_id": "org_platform_reliability",
-        "expected_fact": "Borealis"
+        "expected_fact": "Borealis",
+        "query_template": "Which storage system is maintained by {previous_fact}?"
       },
       {
         "hop_index": 2,
         "query": "What is the incremental backup cadence for Borealis?",
         "expected_document_id": "manual_borealis",
-        "expected_fact": "every six hours"
+        "expected_fact": "every six hours",
+        "query_template": "What is the incremental backup cadence for {previous_fact}?"
       }
     ]
   }
