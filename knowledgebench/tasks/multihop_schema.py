@@ -6,6 +6,7 @@ from pydantic import BaseModel, Field, field_validator
 class EvidenceHop(BaseModel):
     hop_index: int
     query: str
+    query_template: str | None = None
     expected_document_id: str
     expected_fact: str
 
@@ -19,6 +20,22 @@ class EvidenceHop(BaseModel):
         cleaned = value.strip()
         if not cleaned:
             raise ValueError("hop fields must not be blank")
+        return cleaned
+
+    @field_validator("query_template")
+    @classmethod
+    def validate_optional_query_template(
+        cls,
+        value: str | None,
+    ) -> str | None:
+        if value is None:
+            return None
+
+        cleaned = value.strip()
+
+        if not cleaned:
+            raise ValueError("query_template must not be blank")
+
         return cleaned
 
 
