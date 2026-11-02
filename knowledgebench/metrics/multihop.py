@@ -33,3 +33,29 @@ def exact_chain_match(
     return float(
         retrieved_document_ids == expected_document_ids
     )
+
+
+def fact_accuracy(
+    extracted_facts: list[str | None],
+    expected_facts: list[str],
+) -> float:
+    """Return the fraction of extracted facts matching gold facts."""
+    if len(extracted_facts) != len(expected_facts):
+        raise ValueError(
+            "extracted and expected fact lists must have equal length"
+        )
+
+    if not expected_facts:
+        return 0.0
+
+    correct = sum(
+        extracted is not None
+        and extracted.casefold().strip()
+        == expected.casefold().strip()
+        for extracted, expected in zip(
+            extracted_facts,
+            expected_facts,
+        )
+    )
+
+    return correct / len(expected_facts)
