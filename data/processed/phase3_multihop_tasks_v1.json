@@ -1,0 +1,34 @@
+[
+  {
+    "task_id": "mh-001",
+    "question": "What backup cadence is used by the storage system maintained by the team that operates Atlas?",
+    "expected_answer": "every six hours",
+    "category": "three_hop",
+    "hops": [
+      {
+        "hop_index": 0,
+        "query": "Which team operates Atlas?",
+        "expected_document_id": "org_atlas",
+        "expected_fact": "Platform Reliability",
+        "query_template": "Which team operates Atlas?",
+        "extraction_pattern": "operated by the (.+?) team"
+      },
+      {
+        "hop_index": 1,
+        "query": "Which storage system is maintained by Platform Reliability?",
+        "expected_document_id": "org_platform_reliability",
+        "expected_fact": "Borealis",
+        "query_template": "Which storage system is maintained by {previous_fact}?",
+        "extraction_pattern": "maintains the (.+?) storage system"
+      },
+      {
+        "hop_index": 2,
+        "query": "What is the incremental backup cadence for Borealis?",
+        "expected_document_id": "manual_borealis",
+        "expected_fact": "every six hours",
+        "query_template": "What is the incremental backup cadence for {previous_fact}?",
+        "extraction_pattern": "Incremental backups run (every [^.]+)"
+      }
+    ]
+  }
+]
