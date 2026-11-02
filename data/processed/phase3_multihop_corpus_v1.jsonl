@@ -1,0 +1,9 @@
+{"document_id":"org_atlas","text":"Atlas is operated by the Platform Reliability team. The service handles authentication traffic.","metadata":{"kind":"organization"}}
+{"document_id":"org_platform_reliability","text":"Platform Reliability maintains the Borealis storage system and several internal deployment services.","metadata":{"kind":"organization"}}
+{"document_id":"manual_borealis","text":"Borealis performs full backups every Sunday. Incremental backups run every six hours.","metadata":{"kind":"manual"}}
+{"document_id":"distractor_atlas_backup","text":"Atlas deployment snapshots are created once per day for rollback support.","metadata":{"kind":"distractor"}}
+{"document_id":"distractor_team","text":"Developer Productivity maintains the Cirrus worker platform and build tooling.","metadata":{"kind":"distractor"}}
+{"document_id":"distractor_atlas_analytics","text":"Atlas Analytics is operated by the Developer Productivity team. It produces internal reporting dashboards.","metadata":{"kind":"distractor"}}
+{"document_id":"distractor_platform_aurora","text":"Platform Reliability previously maintained the Aurora storage system before it was retired.","metadata":{"kind":"distractor"}}
+{"document_id":"distractor_borealis_full","text":"Borealis full backups run every Sunday and are retained for thirty days.","metadata":{"kind":"distractor"}}
+{"document_id":"distractor_cirrus_backup","text":"Cirrus incremental backups run every four hours for worker-state recovery.","metadata":{"kind":"distractor"}}
