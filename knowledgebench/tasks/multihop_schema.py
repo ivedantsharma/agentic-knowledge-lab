@@ -8,6 +8,7 @@ class EvidenceHop(BaseModel):
     query: str
     query_template: str | None = None
     extraction_pattern: str | None = None
+    qualifier_pattern: str | None = None
     expected_document_id: str
     expected_fact: str
 
@@ -23,7 +24,11 @@ class EvidenceHop(BaseModel):
             raise ValueError("hop fields must not be blank")
         return cleaned
 
-    @field_validator("query_template", "extraction_pattern")
+    @field_validator(
+        "query_template",
+        "extraction_pattern",
+        "qualifier_pattern",
+    )
     @classmethod
     def validate_optional_text(
         cls,
