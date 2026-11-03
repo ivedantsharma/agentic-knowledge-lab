@@ -1,0 +1,9 @@
+{"document_id":"org_atlas","text":"Atlas is operated by the Platform Reliability team. The service handles authentication traffic.","metadata":{"kind":"organization","environment":"production"}}
+{"document_id":"org_atlas_analytics","text":"Atlas Analytics is operated by the Developer Productivity team. The service produces internal reporting dashboards.","metadata":{"kind":"organization","environment":"production"}}
+{"document_id":"org_platform_reliability","text":"Platform Reliability maintains the Borealis storage system for production customer profile data.","metadata":{"kind":"organization","environment":"production"}}
+{"document_id":"org_platform_reliability_legacy","text":"Platform Reliability maintains the Aurora storage system for legacy reporting workloads.","metadata":{"kind":"organization","environment":"legacy"}}
+{"document_id":"manual_borealis","text":"For the production Borealis service, full backups run every Sunday. Incremental backups run every six hours.","metadata":{"kind":"manual","environment":"production"}}
+{"document_id":"manual_borealis_staging","text":"For Borealis staging, incremental backups run every four hours to speed up recovery testing.","metadata":{"kind":"manual","environment":"staging"}}
+{"document_id":"manual_aurora","text":"Aurora performs incremental backups every twelve hours for legacy reporting data.","metadata":{"kind":"manual","environment":"legacy"}}
+{"document_id":"distractor_atlas_backup","text":"Atlas deployment snapshots are created once per day for rollback support.","metadata":{"kind":"distractor"}}
+{"document_id":"distractor_team","text":"Developer Productivity maintains the Cirrus worker platform and build tooling.","metadata":{"kind":"distractor"}}
