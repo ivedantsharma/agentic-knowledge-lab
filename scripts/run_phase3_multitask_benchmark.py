@@ -16,12 +16,10 @@ from knowledgebench.metrics.multihop import (
 from knowledgebench.tasks.multihop_loader import (
     load_multihop_tasks_json,
 )
-from scripts.cosine_similarity_exercise import cosine_similarity
 from scripts.run_phase3_structured_state_chain import (
     rank_documents,
     render_state_query,
 )
-
 
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 
@@ -82,7 +80,7 @@ def main() -> None:
             )
             top3 = ranking[:3]
 
-            retrieved_id, score = top3[0]
+            retrieved_id, _score = top3[0]
             retrieved_document = document_by_id[
                 retrieved_id
             ]

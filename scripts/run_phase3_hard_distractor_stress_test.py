@@ -24,7 +24,6 @@ from scripts.run_phase3_gold_fact_chaining import (
     render_query,
 )
 
-
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 
 CORPUS_PATH = Path(
