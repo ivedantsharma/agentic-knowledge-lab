@@ -4,7 +4,7 @@ from knowledge_engine.agent.actions import (
 )
 from knowledge_engine.agent.state import PlannerState
 from knowledgebench.tasks.multihop_schema import MultiHopTask
-from scripts.run_phase3_structured_state_chain import (
+from knowledge_engine.agent.query_renderer import (
     render_state_query,
 )
 
