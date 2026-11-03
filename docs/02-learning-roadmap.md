@@ -87,22 +87,35 @@ Deliverables:
 - multi-hop task schema
 - synthetic multi-document benchmark
 - single-hop baseline
-- deterministic two-hop baseline
+- deterministic multi-hop baseline
 - evidence-chain metrics
+- structured retrieval state
 - failure analysis
 
-Status: Current.
+Status: Complete.
 
 ## Phase 4 — Agentic Search Planner
 
 Learn:
 - agent loops
+- planner actions
 - tool calling
-- state
-- query rewriting
+- planner state
+- query generation
 - tool selection
 - stopping conditions
 - planning
+
+Deliverables:
+- planner action schema
+- planner state + trace
+- search-tool abstraction
+- oracle planner baseline
+- rule-based planner baseline
+- autonomous query planner
+- stopping-policy evaluation
+
+Status: Current.
 
 ## Phase 5 — Hierarchical Retrieval
 
