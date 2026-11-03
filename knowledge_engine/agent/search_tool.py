@@ -1,7 +1,9 @@
 from sentence_transformers import SentenceTransformer
 
+from knowledge_engine.retrieval.vector_math import (
+    cosine_similarity,
+)
 from knowledgebench.documents.schema import KnowledgeDocument
-from scripts.cosine_similarity_exercise import cosine_similarity
 
 
 class DenseSearchTool:
