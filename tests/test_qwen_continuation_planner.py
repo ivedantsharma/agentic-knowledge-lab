@@ -39,3 +39,20 @@ def test_generate_next_query_returns_model_text() -> None:
     )
 
     assert query == "Where are exhausted Cirrus jobs sent?"
+
+
+def test_grounded_answer_requires_evidence_span() -> None:
+    evidence = (
+        "Jobs that exhaust retries are sent to the "
+        "CIRRUS-DLQ dead-letter queue."
+    )
+
+    assert QwenContinuationPlanner.is_grounded_answer(
+        "CIRRUS-DLQ dead-letter queue",
+        evidence,
+    )
+
+    assert not QwenContinuationPlanner.is_grounded_answer(
+        "the developer's own platform",
+        evidence,
+    )
