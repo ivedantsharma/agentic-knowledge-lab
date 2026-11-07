@@ -56,3 +56,40 @@ def test_grounded_answer_requires_evidence_span() -> None:
         "the developer's own platform",
         evidence,
     )
+
+
+def test_extract_or_abstain_returns_none_for_insufficient() -> None:
+    planner = object.__new__(
+        QwenContinuationPlanner
+    )
+
+    planner._generate = (
+        lambda _instruction: "INSUFFICIENT"
+    )
+
+    result = planner.extract_or_abstain(
+        "Where are failed jobs sent?",
+        "Developer Productivity maintains Cirrus.",
+    )
+
+    assert result is None
+
+
+def test_extract_or_abstain_returns_exact_span() -> None:
+    planner = object.__new__(
+        QwenContinuationPlanner
+    )
+
+    planner._generate = (
+        lambda _instruction: "CIRRUS-DLQ"
+    )
+
+    result = planner.extract_or_abstain(
+        "Where are failed jobs sent?",
+        (
+            "Jobs that exhaust retries are sent to "
+            "CIRRUS-DLQ."
+        ),
+    )
+
+    assert result == "CIRRUS-DLQ"
