@@ -4,10 +4,13 @@ from knowledge_engine.agent.actions import (
     PlannerAction,
     PlannerActionType,
 )
+from knowledge_engine.agent.qwen_relation_verifier import (
+    QwenRelationVerifier,
+)
 from knowledge_engine.agent.state import PlannerState
 
 DEFAULT_MODEL_NAME = "Qwen/Qwen2.5-0.5B-Instruct"
-PLANNER_IMPLEMENTATION_VERSION = "extract-or-abstain-v3"
+PLANNER_IMPLEMENTATION_VERSION = "relation-verified-stop-v4"
 
 
 class QwenContinuationPlanner:
@@ -16,6 +19,7 @@ class QwenContinuationPlanner:
     def __init__(
         self,
         model_name: str = DEFAULT_MODEL_NAME,
+        relation_verifier: QwenRelationVerifier | None = None,
     ) -> None:
         self.tokenizer = AutoTokenizer.from_pretrained(
             model_name
@@ -23,6 +27,7 @@ class QwenContinuationPlanner:
         self.model = AutoModelForCausalLM.from_pretrained(
             model_name
         )
+        self.relation_verifier = relation_verifier
 
     def inspect_decision(
         self,
@@ -53,24 +58,38 @@ class QwenContinuationPlanner:
             )
         )
 
+        relation_aligned = False
+
+        if (
+            candidate_answer is not None
+            and grounded
+            and self.relation_verifier is not None
+        ):
+            relation_aligned = self.relation_verifier.verify(
+                state.question,
+                evidence,
+                candidate_answer,
+            )
+
         return {
             "answerable": not abstained,
             "candidate_answer": candidate_answer,
             "grounded": grounded,
             "abstained": abstained,
+            "relation_aligned": relation_aligned,
         }
 
-    def next_action(
+    def action_from_decision(
         self,
         state: PlannerState,
+        decision: dict[str, str | bool | None],
     ) -> PlannerAction:
-        decision = self.inspect_decision(state)
-
         candidate_answer = decision["candidate_answer"]
 
         if (
             not decision["abstained"]
             and decision["grounded"]
+            and decision["relation_aligned"]
             and isinstance(candidate_answer, str)
         ):
             return PlannerAction(
@@ -91,6 +110,17 @@ class QwenContinuationPlanner:
         return PlannerAction(
             action_type=PlannerActionType.SEARCH,
             query=query,
+        )
+
+    def next_action(
+        self,
+        state: PlannerState,
+    ) -> PlannerAction:
+        decision = self.inspect_decision(state)
+
+        return self.action_from_decision(
+            state,
+            decision,
         )
 
     def extract_or_abstain(
