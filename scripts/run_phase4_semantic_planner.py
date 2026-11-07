@@ -1,6 +1,8 @@
 import sys
 from pathlib import Path
 
+from sentence_transformers import SentenceTransformer
+
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from knowledge_engine.agent.actions import PlannerActionType
@@ -37,14 +39,18 @@ def main() -> None:
         for document in documents
     }
 
+    shared_model = SentenceTransformer(MODEL_NAME)
+
     search_tool = DenseSearchTool(
         documents=documents,
         model_name=MODEL_NAME,
+        model=shared_model,
     )
 
     planner = SemanticPlanner(
         documents=documents,
         model_name=MODEL_NAME,
+        model=shared_model,
     )
 
     stopped_tasks = 0
