@@ -7,7 +7,7 @@ from knowledge_engine.agent.actions import (
 from knowledge_engine.agent.state import PlannerState
 
 DEFAULT_MODEL_NAME = "Qwen/Qwen2.5-0.5B-Instruct"
-PLANNER_IMPLEMENTATION_VERSION = "grounded-stop-v2"
+PLANNER_IMPLEMENTATION_VERSION = "extract-or-abstain-v3"
 
 
 class QwenContinuationPlanner:
@@ -38,28 +38,26 @@ class QwenContinuationPlanner:
                 "QwenContinuationPlanner requires prior evidence"
             )
 
-        answerable = self.is_answerable(
+        candidate_answer = self.extract_or_abstain(
             state.question,
             evidence,
         )
 
-        candidate_answer: str | None = None
-        grounded = False
-
-        if answerable:
-            candidate_answer = self.extract_answer(
-                state.question,
-                evidence,
-            )
-            grounded = self.is_grounded_answer(
+        abstained = candidate_answer is None
+        grounded = (
+            False
+            if candidate_answer is None
+            else self.is_grounded_answer(
                 candidate_answer,
                 evidence,
             )
+        )
 
         return {
-            "answerable": answerable,
+            "answerable": not abstained,
             "candidate_answer": candidate_answer,
             "grounded": grounded,
+            "abstained": abstained,
         }
 
     def next_action(
@@ -71,7 +69,7 @@ class QwenContinuationPlanner:
         candidate_answer = decision["candidate_answer"]
 
         if (
-            decision["answerable"]
+            not decision["abstained"]
             and decision["grounded"]
             and isinstance(candidate_answer, str)
         ):
@@ -94,6 +92,33 @@ class QwenContinuationPlanner:
             action_type=PlannerActionType.SEARCH,
             query=query,
         )
+
+    def extract_or_abstain(
+        self,
+        question: str,
+        evidence: str,
+    ) -> str | None:
+        output = self._generate(
+            "If the evidence directly contains the answer to the "
+            "original question, copy the shortest exact answer span "
+            "from the evidence. If the evidence does not directly "
+            "answer the question, return exactly INSUFFICIENT. "
+            "Do not infer or paraphrase.\n"
+            f"Original question: {question}\n"
+            f"Evidence: {evidence}"
+        )
+
+        cleaned = output.strip()
+
+        if cleaned.casefold() == "insufficient":
+            return None
+
+        if not cleaned:
+            raise ValueError(
+                "extract-or-abstain returned empty output"
+            )
+
+        return cleaned
 
     def is_answerable(
         self,
