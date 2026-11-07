@@ -1,0 +1,150 @@
+[
+  {
+    "task_id": "mh-001",
+    "question": "What backup cadence is used by the storage system maintained by the team that operates Atlas?",
+    "expected_answer": "every six hours",
+    "category": "known_backup_three_hop",
+    "hops": [
+      {
+        "hop_index": 0,
+        "query": "Which team operates Atlas?",
+        "query_template": "Which team operates Atlas?",
+        "extraction_pattern": "operated by the (.+?) team",
+        "qualifier_pattern": null,
+        "expected_document_id": "org_atlas",
+        "expected_fact": "Platform Reliability"
+      },
+      {
+        "hop_index": 1,
+        "query": "Which storage system is maintained by Platform Reliability?",
+        "query_template": "Which storage system is maintained by {entity}?",
+        "extraction_pattern": "maintains the (.+?) storage system",
+        "qualifier_pattern": "for (production) customer profile data",
+        "expected_document_id": "org_platform_reliability",
+        "expected_fact": "Borealis"
+      },
+      {
+        "hop_index": 2,
+        "query": "What is the incremental backup cadence for the production Borealis service?",
+        "query_template": "What is the incremental backup cadence for the {qualifier} {entity} service?",
+        "extraction_pattern": "Incremental backups run (every [^.]+)",
+        "qualifier_pattern": null,
+        "expected_document_id": "manual_borealis",
+        "expected_fact": "every six hours"
+      }
+    ]
+  },
+  {
+    "task_id": "mh-002",
+    "question": "How many retry attempts are used by the worker platform maintained by Developer Productivity?",
+    "expected_answer": "five times",
+    "category": "known_retry_two_hop",
+    "hops": [
+      {
+        "hop_index": 0,
+        "query": "Which worker platform is maintained by Developer Productivity?",
+        "query_template": "Which worker platform is maintained by Developer Productivity?",
+        "extraction_pattern": "maintains the (.+?) worker platform",
+        "qualifier_pattern": "for (production) asynchronous workloads",
+        "expected_document_id": "org_dev_productivity",
+        "expected_fact": "Cirrus"
+      },
+      {
+        "hop_index": 1,
+        "query": "How many times are failed jobs retried by the production Cirrus worker platform?",
+        "query_template": "How many times are failed jobs retried by the {qualifier} {entity} worker platform?",
+        "extraction_pattern": "retried at most (.+?) before",
+        "qualifier_pattern": null,
+        "expected_document_id": "manual_cirrus",
+        "expected_fact": "five times"
+      }
+    ]
+  },
+  {
+    "task_id": "mh-003",
+    "question": "What cache duration is used by the service maintained by the team that operates Helios?",
+    "expected_answer": "ten minutes",
+    "category": "known_cache_three_hop",
+    "hops": [
+      {
+        "hop_index": 0,
+        "query": "Which team operates Helios?",
+        "query_template": "Which team operates Helios?",
+        "extraction_pattern": "operated by the (.+?) team",
+        "qualifier_pattern": null,
+        "expected_document_id": "org_helios",
+        "expected_fact": "Identity Foundations"
+      },
+      {
+        "hop_index": 1,
+        "query": "Which cache service is maintained by Identity Foundations?",
+        "query_template": "Which cache service is maintained by {entity}?",
+        "extraction_pattern": "maintains the (.+?) cache service",
+        "qualifier_pattern": "for (production) session metadata",
+        "expected_document_id": "org_identity_foundations",
+        "expected_fact": "Solstice"
+      },
+      {
+        "hop_index": 2,
+        "query": "How long is metadata cached by the production Solstice cache service?",
+        "query_template": "How long is metadata cached by the {qualifier} {entity} cache service?",
+        "extraction_pattern": "cached for (.+?)[.]",
+        "qualifier_pattern": null,
+        "expected_document_id": "manual_solstice",
+        "expected_fact": "ten minutes"
+      }
+    ]
+  },
+  {
+    "task_id": "mh-004",
+    "question": "How often do signing keys rotate for the signing service maintained by Security Platform?",
+    "expected_answer": "every twelve hours",
+    "category": "known_signing_two_hop",
+    "hops": [
+      {
+        "hop_index": 0,
+        "query": "Which signing service is maintained by Security Platform?",
+        "query_template": "Which signing service is maintained by Security Platform?",
+        "extraction_pattern": "maintains the (.+?) signing service",
+        "qualifier_pattern": "for (production) API credentials",
+        "expected_document_id": "org_security_platform",
+        "expected_fact": "Meridian"
+      },
+      {
+        "hop_index": 1,
+        "query": "How often do signing keys rotate for the production Meridian signing service?",
+        "query_template": "How often do signing keys rotate for the {qualifier} {entity} signing service?",
+        "extraction_pattern": "rotate (every [^.]+)",
+        "qualifier_pattern": null,
+        "expected_document_id": "manual_meridian",
+        "expected_fact": "every twelve hours"
+      }
+    ]
+  },
+  {
+    "task_id": "ood-001",
+    "question": "Where are failed jobs sent after the production worker platform owned by Developer Productivity exhausts all retry attempts?",
+    "expected_answer": "CIRRUS-DLQ",
+    "category": "unseen_dead_letter_intent",
+    "hops": [
+      {
+        "hop_index": 0,
+        "query": "Which worker platform is maintained by Developer Productivity?",
+        "query_template": "Which worker platform is maintained by Developer Productivity?",
+        "extraction_pattern": "maintains the (.+?) worker platform",
+        "qualifier_pattern": "for (production) asynchronous workloads",
+        "expected_document_id": "org_dev_productivity",
+        "expected_fact": "Cirrus"
+      },
+      {
+        "hop_index": 1,
+        "query": "Where are jobs sent after the production Cirrus worker platform exhausts retries?",
+        "query_template": "Where are jobs sent after the {qualifier} {entity} worker platform exhausts retries?",
+        "extraction_pattern": "sent to the (.+?) dead-letter queue",
+        "qualifier_pattern": null,
+        "expected_document_id": "manual_cirrus",
+        "expected_fact": "CIRRUS-DLQ"
+      }
+    ]
+  }
+]
