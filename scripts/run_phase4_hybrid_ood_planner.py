@@ -14,6 +14,9 @@ from knowledge_engine.agent.qwen_continuation_planner import (
     PLANNER_IMPLEMENTATION_VERSION,
     QwenContinuationPlanner,
 )
+from knowledge_engine.agent.qwen_relation_verifier import (
+    QwenRelationVerifier,
+)
 from knowledge_engine.agent.search_tool import DenseSearchTool
 from knowledge_engine.agent.semantic_planner import SemanticPlanner
 from knowledge_engine.agent.state import PlannerState
@@ -24,6 +27,7 @@ from knowledgebench.tasks.multihop_loader import (
 
 EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 QWEN_MODEL = "Qwen/Qwen2.5-0.5B-Instruct"
+QWEN_VERIFIER_MODEL = "Qwen/Qwen2.5-1.5B-Instruct"
 
 CORPUS_PATH = Path(
     "data/processed/phase4_ood_corpus_v0.jsonl"
@@ -60,8 +64,13 @@ def main() -> None:
         model=embedding_model,
     )
 
+    relation_verifier = QwenRelationVerifier(
+        model_name=QWEN_VERIFIER_MODEL,
+    )
+
     continuation_planner = QwenContinuationPlanner(
         model_name=QWEN_MODEL,
+        relation_verifier=relation_verifier,
     )
 
     print(
@@ -117,9 +126,16 @@ def main() -> None:
                         "  grounded="
                         f"{decision['grounded']}"
                     )
+                    print(
+                        "  relation_aligned="
+                        f"{decision['relation_aligned']}"
+                    )
 
-                    action = continuation_planner.next_action(
-                        state
+                    action = (
+                        continuation_planner.action_from_decision(
+                            state,
+                            decision,
+                        )
                     )
                     planner_name = "qwen_continuation"
             except ValueError as error:
