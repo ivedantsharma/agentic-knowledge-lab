@@ -5,11 +5,11 @@ from sentence_transformers import SentenceTransformer
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+import knowledge_engine.agent.qwen_continuation_planner as qwen_planner_module
 from knowledge_engine.agent.actions import PlannerActionType
 from knowledge_engine.agent.observation_parser import (
     parse_retrieval_observation,
 )
-import knowledge_engine.agent.qwen_continuation_planner as qwen_planner_module
 from knowledge_engine.agent.qwen_continuation_planner import (
     PLANNER_IMPLEMENTATION_VERSION,
     QwenContinuationPlanner,

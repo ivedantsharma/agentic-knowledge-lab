@@ -146,20 +146,11 @@ class QwenContinuationPlanner:
         evidence: str,
     ) -> str:
         output = self._generate(
-<<<<<<< HEAD
-            (
-                "Copy the shortest exact span from the evidence that "
-                "answers the original question. Do not paraphrase. "
-                "Return only that exact span.\n"
-                f"Original question: {question}\n"
-                f"Evidence: {evidence}"
-            )
-=======
-            "Answer the original question using only the evidence. "
-            "Return only the answer.\n"
+            "Copy the shortest exact span from the evidence that "
+            "answers the original question. Do not paraphrase. "
+            "Return only that exact span.\n"
             f"Original question: {question}\n"
             f"Evidence: {evidence}"
->>>>>>> dfc4d6f (formatted)
         )
 
         if not output:
