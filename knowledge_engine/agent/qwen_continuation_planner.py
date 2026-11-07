@@ -105,6 +105,8 @@ class QwenContinuationPlanner:
         query = self.generate_next_query(
             state.question,
             evidence,
+            entity=state.retrieval_state.entity,
+            qualifiers=state.retrieval_state.qualifiers,
         )
 
         return PlannerAction(
@@ -179,12 +181,29 @@ class QwenContinuationPlanner:
         self,
         question: str,
         evidence: str,
+        entity: str | None = None,
+        qualifiers: list[str] | None = None,
     ) -> str:
+        qualifier_text = (
+            ", ".join(qualifiers)
+            if qualifiers
+            else "None"
+        )
+        entity_text = (
+            entity
+            if entity is not None
+            else "None"
+        )
+
         output = self._generate(
             "Generate the next concise search query needed to "
             "answer the original question. Do not answer yet. "
+            "Preserve the current entity and any qualifiers when "
+            "they are relevant to the remaining information need. "
             "Return only the search query.\n"
             f"Original question: {question}\n"
+            f"Current entity: {entity_text}\n"
+            f"Qualifiers: {qualifier_text}\n"
             f"Evidence: {evidence}"
         )
 
