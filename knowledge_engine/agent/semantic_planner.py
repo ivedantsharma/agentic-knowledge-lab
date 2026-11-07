@@ -41,8 +41,13 @@ class SemanticPlanner:
         self,
         documents: list[KnowledgeDocument],
         model_name: str,
+        model: SentenceTransformer | None = None,
     ) -> None:
-        self.model = SentenceTransformer(model_name)
+        self.model = (
+            model
+            if model is not None
+            else SentenceTransformer(model_name)
+        )
 
         self.goal_names = list(_GOAL_PROTOTYPES)
         self.goal_embeddings = self.model.encode(
