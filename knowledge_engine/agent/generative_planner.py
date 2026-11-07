@@ -28,6 +28,20 @@ class LocalGenerativePlanner:
         self,
         state: PlannerState,
     ) -> PlannerAction:
+        output = self.generate_raw(state)
+
+        try:
+            return self.parse_action(output)
+        except ValueError as error:
+            raise ValueError(
+                f"{error}; raw_output={output!r}"
+            ) from error
+
+    def generate_raw(
+        self,
+        state: PlannerState,
+    ) -> str:
+        """Generate raw planner text before protocol parsing."""
         prompt = self.build_prompt(state)
 
         inputs = self.tokenizer(
@@ -43,17 +57,10 @@ class LocalGenerativePlanner:
             do_sample=False,
         )
 
-        output = self.tokenizer.decode(
+        return self.tokenizer.decode(
             output_ids[0],
             skip_special_tokens=True,
         ).strip()
-
-        try:
-            return self.parse_action(output)
-        except ValueError as error:
-            raise ValueError(
-                f"{error}; raw_output={output!r}"
-            ) from error
 
     @staticmethod
     def build_prompt(
