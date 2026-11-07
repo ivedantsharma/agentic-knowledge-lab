@@ -2,11 +2,11 @@ from knowledge_engine.agent.actions import (
     PlannerAction,
     PlannerActionType,
 )
-from knowledge_engine.agent.state import PlannerState
-from knowledgebench.tasks.multihop_schema import MultiHopTask
 from knowledge_engine.agent.query_renderer import (
     render_state_query,
 )
+from knowledge_engine.agent.state import PlannerState
+from knowledgebench.tasks.multihop_schema import MultiHopTask
 
 
 class OraclePlanner:

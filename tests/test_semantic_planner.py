@@ -3,9 +3,7 @@ from knowledge_engine.agent.semantic_planner import (
 )
 from knowledgebench.documents.schema import KnowledgeDocument
 
-
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
-
 
 def make_documents() -> list[KnowledgeDocument]:
     return [

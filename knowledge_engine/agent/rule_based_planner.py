@@ -6,14 +6,12 @@ from knowledge_engine.agent.actions import (
 )
 from knowledge_engine.agent.state import PlannerState
 
-
 _FINAL_EVIDENCE_PATTERNS = (
     "incremental backups run",
     "retried at most",
     "cached for",
     "signing keys rotate",
 )
-
 
 class RuleBasedPlanner:
     """Deterministic planner that does not read benchmark hop labels."""

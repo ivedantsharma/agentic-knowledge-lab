@@ -10,7 +10,6 @@ from knowledge_engine.agent.state import PlannerState
 from knowledge_engine.retrieval.vector_math import cosine_similarity
 from knowledgebench.documents.schema import KnowledgeDocument
 
-
 _GOAL_PROTOTYPES = {
     "backup": (
         "What is the incremental backup cadence of a storage system?"

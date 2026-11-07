@@ -2,7 +2,6 @@ import re
 
 from knowledge_engine.retrieval.state import RetrievalState
 
-
 _RELATION_PATTERNS: list[tuple[str, str]] = [
     (
         r"operated by the (.+?) team",

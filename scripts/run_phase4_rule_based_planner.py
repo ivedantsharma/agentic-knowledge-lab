@@ -20,7 +20,6 @@ from knowledgebench.tasks.multihop_loader import (
     load_multihop_tasks_json,
 )
 
-
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 
 CORPUS_PATH = Path(

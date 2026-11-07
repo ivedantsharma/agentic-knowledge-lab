@@ -31,7 +31,7 @@ class PlannerAction(BaseModel):
 
         return cleaned
 
-    def model_post_init(self, __context) -> None:
+    def model_post_init(self, /, __context) -> None:
         if (
             self.action_type == PlannerActionType.SEARCH
             and self.query is None
