@@ -47,10 +47,14 @@ class QwenContinuationPlanner:
                 evidence,
             )
 
-            return PlannerAction(
-                action_type=PlannerActionType.STOP,
-                answer=answer,
-            )
+            if self.is_grounded_answer(
+                answer,
+                evidence,
+            ):
+                return PlannerAction(
+                    action_type=PlannerActionType.STOP,
+                    answer=answer,
+                )
 
         query = self.generate_next_query(
             state.question,
@@ -118,8 +122,9 @@ class QwenContinuationPlanner:
     ) -> str:
         output = self._generate(
             (
-                "Answer the original question using only the evidence. "
-                "Return only the answer.\n"
+                "Copy the shortest exact span from the evidence that "
+                "answers the original question. Do not paraphrase. "
+                "Return only that exact span.\n"
                 f"Original question: {question}\n"
                 f"Evidence: {evidence}"
             )
@@ -131,6 +136,23 @@ class QwenContinuationPlanner:
             )
 
         return output
+
+    @staticmethod
+    def is_grounded_answer(
+        answer: str,
+        evidence: str,
+    ) -> bool:
+        normalized_answer = " ".join(
+            answer.casefold().split()
+        )
+        normalized_evidence = " ".join(
+            evidence.casefold().split()
+        )
+
+        return (
+            bool(normalized_answer)
+            and normalized_answer in normalized_evidence
+        )
 
     def _generate(
         self,
