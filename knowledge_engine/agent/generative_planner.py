@@ -48,7 +48,12 @@ class LocalGenerativePlanner:
             skip_special_tokens=True,
         ).strip()
 
-        return self.parse_action(output)
+        try:
+            return self.parse_action(output)
+        except ValueError as error:
+            raise ValueError(
+                f"{error}; raw_output={output!r}"
+            ) from error
 
     @staticmethod
     def build_prompt(
