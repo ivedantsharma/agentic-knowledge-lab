@@ -64,8 +64,11 @@ def main() -> None:
             not state.stopped
             and state.step_index < MAX_STEPS
         ):
+            raw_output = planner.generate_raw(state)
+            print(f"raw_output={raw_output!r}")
+
             try:
-                action = planner.next_action(state)
+                action = planner.parse_action(raw_output)
             except ValueError as error:
                 planner_failed = True
                 print(f"planner_error={error}")
