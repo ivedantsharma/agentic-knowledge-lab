@@ -5,7 +5,6 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 
-
 MODEL_NAME = "google/flan-t5-small"
 
 QUESTION = (

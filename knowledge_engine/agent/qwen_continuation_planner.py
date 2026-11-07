@@ -6,7 +6,6 @@ from knowledge_engine.agent.actions import (
 )
 from knowledge_engine.agent.state import PlannerState
 
-
 DEFAULT_MODEL_NAME = "Qwen/Qwen2.5-0.5B-Instruct"
 PLANNER_IMPLEMENTATION_VERSION = "grounded-stop-v2"
 
@@ -102,12 +101,10 @@ class QwenContinuationPlanner:
         evidence: str,
     ) -> bool:
         output = self._generate(
-            (
-                "Decide whether the evidence is enough to answer "
-                "the original question. Reply only YES or NO.\n"
-                f"Original question: {question}\n"
-                f"Evidence: {evidence}"
-            )
+            "Decide whether the evidence is enough to answer "
+            "the original question. Reply only YES or NO.\n"
+            f"Original question: {question}\n"
+            f"Evidence: {evidence}"
         )
 
         normalized = output.strip().casefold()
@@ -129,13 +126,11 @@ class QwenContinuationPlanner:
         evidence: str,
     ) -> str:
         output = self._generate(
-            (
-                "Generate the next concise search query needed to "
-                "answer the original question. Do not answer yet. "
-                "Return only the search query.\n"
-                f"Original question: {question}\n"
-                f"Evidence: {evidence}"
-            )
+            "Generate the next concise search query needed to "
+            "answer the original question. Do not answer yet. "
+            "Return only the search query.\n"
+            f"Original question: {question}\n"
+            f"Evidence: {evidence}"
         )
 
         if not output:
@@ -151,6 +146,7 @@ class QwenContinuationPlanner:
         evidence: str,
     ) -> str:
         output = self._generate(
+<<<<<<< HEAD
             (
                 "Copy the shortest exact span from the evidence that "
                 "answers the original question. Do not paraphrase. "
@@ -158,6 +154,12 @@ class QwenContinuationPlanner:
                 f"Original question: {question}\n"
                 f"Evidence: {evidence}"
             )
+=======
+            "Answer the original question using only the evidence. "
+            "Return only the answer.\n"
+            f"Original question: {question}\n"
+            f"Evidence: {evidence}"
+>>>>>>> dfc4d6f (formatted)
         )
 
         if not output:

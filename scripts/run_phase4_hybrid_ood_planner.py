@@ -22,7 +22,6 @@ from knowledgebench.tasks.multihop_loader import (
     load_multihop_tasks_json,
 )
 
-
 EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 QWEN_MODEL = "Qwen/Qwen2.5-0.5B-Instruct"
 
