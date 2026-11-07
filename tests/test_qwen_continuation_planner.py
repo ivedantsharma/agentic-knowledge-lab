@@ -93,3 +93,36 @@ def test_extract_or_abstain_returns_exact_span() -> None:
     )
 
     assert result == "CIRRUS-DLQ"
+
+
+def test_action_from_decision_requires_relation_alignment() -> None:
+    planner = object.__new__(
+        QwenContinuationPlanner
+    )
+    planner.generate_next_query = (
+        lambda _question, _evidence:
+        "Where are exhausted Cirrus jobs sent?"
+    )
+
+    from knowledge_engine.agent.state import PlannerState
+    from knowledge_engine.retrieval.state import RetrievalState
+
+    state = PlannerState(
+        question="Where are failed jobs sent?",
+        retrieval_state=RetrievalState(
+            evidence_text="Developer Productivity maintains Cirrus."
+        ),
+    )
+
+    action = planner.action_from_decision(
+        state,
+        {
+            "answerable": True,
+            "candidate_answer": "Cirrus",
+            "grounded": True,
+            "abstained": False,
+            "relation_aligned": False,
+        },
+    )
+
+    assert action.query == "Where are exhausted Cirrus jobs sent?"
