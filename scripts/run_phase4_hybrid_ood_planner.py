@@ -9,7 +9,9 @@ from knowledge_engine.agent.actions import PlannerActionType
 from knowledge_engine.agent.observation_parser import (
     parse_retrieval_observation,
 )
+import knowledge_engine.agent.qwen_continuation_planner as qwen_planner_module
 from knowledge_engine.agent.qwen_continuation_planner import (
+    PLANNER_IMPLEMENTATION_VERSION,
     QwenContinuationPlanner,
 )
 from knowledge_engine.agent.search_tool import DenseSearchTool
@@ -63,6 +65,16 @@ def main() -> None:
         model_name=QWEN_MODEL,
     )
 
+    print(
+        "qwen_planner_module="
+        f"{qwen_planner_module.__file__}"
+    )
+    print(
+        "qwen_planner_version="
+        f"{PLANNER_IMPLEMENTATION_VERSION}"
+    )
+    print()
+
     for task in tasks:
         state = PlannerState(
             question=task.question
@@ -85,6 +97,24 @@ def main() -> None:
                     )
                     planner_name = "semantic_bootstrap"
                 else:
+                    decision = (
+                        continuation_planner.inspect_decision(
+                            state
+                        )
+                    )
+                    print(
+                        "  answerable="
+                        f"{decision['answerable']}"
+                    )
+                    print(
+                        "  candidate_answer="
+                        f"{decision['candidate_answer']!r}"
+                    )
+                    print(
+                        "  grounded="
+                        f"{decision['grounded']}"
+                    )
+
                     action = continuation_planner.next_action(
                         state
                     )
