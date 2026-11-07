@@ -110,6 +110,10 @@ def main() -> None:
                         f"{decision['candidate_answer']!r}"
                     )
                     print(
+                        "  abstained="
+                        f"{decision['abstained']}"
+                    )
+                    print(
                         "  grounded="
                         f"{decision['grounded']}"
                     )
