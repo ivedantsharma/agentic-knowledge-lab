@@ -126,3 +126,27 @@ def test_action_from_decision_requires_relation_alignment() -> None:
     )
 
     assert action.query == "Where are exhausted Cirrus jobs sent?"
+
+
+def test_generate_next_query_prompt_includes_structured_state() -> None:
+    planner = object.__new__(
+        QwenContinuationPlanner
+    )
+
+    captured: dict[str, str] = {}
+
+    def fake_generate(instruction: str) -> str:
+        captured["instruction"] = instruction
+        return "production Meridian signing key rotation"
+
+    planner._generate = fake_generate
+
+    planner.generate_next_query(
+        "How often do signing keys rotate?",
+        "Security Platform maintains Meridian.",
+        entity="Meridian",
+        qualifiers=["production"],
+    )
+
+    assert "Current entity: Meridian" in captured["instruction"]
+    assert "Qualifiers: production" in captured["instruction"]
