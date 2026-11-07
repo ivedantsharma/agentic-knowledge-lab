@@ -17,7 +17,6 @@ from knowledgebench.tasks.multihop_loader import (
     load_multihop_tasks_json,
 )
 
-
 EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 PLANNER_MODEL = "google/flan-t5-small"
 

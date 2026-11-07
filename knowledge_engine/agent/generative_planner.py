@@ -6,7 +6,6 @@ from knowledge_engine.agent.actions import (
 )
 from knowledge_engine.agent.state import PlannerState
 
-
 DEFAULT_MODEL_NAME = "google/flan-t5-small"
 
 
