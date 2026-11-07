@@ -8,6 +8,7 @@ from knowledge_engine.agent.state import PlannerState
 
 
 DEFAULT_MODEL_NAME = "Qwen/Qwen2.5-0.5B-Instruct"
+PLANNER_IMPLEMENTATION_VERSION = "grounded-stop-v2"
 
 
 class QwenContinuationPlanner:
@@ -24,10 +25,10 @@ class QwenContinuationPlanner:
             model_name
         )
 
-    def next_action(
+    def inspect_decision(
         self,
         state: PlannerState,
-    ) -> PlannerAction:
+    ) -> dict[str, str | bool | None]:
         evidence = (
             state.retrieval_state.evidence_text
             or ""
@@ -38,23 +39,52 @@ class QwenContinuationPlanner:
                 "QwenContinuationPlanner requires prior evidence"
             )
 
-        if self.is_answerable(
+        answerable = self.is_answerable(
             state.question,
             evidence,
-        ):
-            answer = self.extract_answer(
+        )
+
+        candidate_answer: str | None = None
+        grounded = False
+
+        if answerable:
+            candidate_answer = self.extract_answer(
                 state.question,
                 evidence,
             )
-
-            if self.is_grounded_answer(
-                answer,
+            grounded = self.is_grounded_answer(
+                candidate_answer,
                 evidence,
-            ):
-                return PlannerAction(
-                    action_type=PlannerActionType.STOP,
-                    answer=answer,
-                )
+            )
+
+        return {
+            "answerable": answerable,
+            "candidate_answer": candidate_answer,
+            "grounded": grounded,
+        }
+
+    def next_action(
+        self,
+        state: PlannerState,
+    ) -> PlannerAction:
+        decision = self.inspect_decision(state)
+
+        candidate_answer = decision["candidate_answer"]
+
+        if (
+            decision["answerable"]
+            and decision["grounded"]
+            and isinstance(candidate_answer, str)
+        ):
+            return PlannerAction(
+                action_type=PlannerActionType.STOP,
+                answer=candidate_answer,
+            )
+
+        evidence = (
+            state.retrieval_state.evidence_text
+            or ""
+        )
 
         query = self.generate_next_query(
             state.question,
