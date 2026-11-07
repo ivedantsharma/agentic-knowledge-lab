@@ -1,0 +1,28 @@
+[
+  {
+    "task_id": "ood-001",
+    "question": "Where are failed jobs sent after the production worker platform owned by Developer Productivity exhausts all retry attempts?",
+    "expected_answer": "CIRRUS-DLQ",
+    "category": "unseen_dead_letter_intent",
+    "hops": [
+      {
+        "hop_index": 0,
+        "query": "Which worker platform is maintained by Developer Productivity?",
+        "query_template": "Which worker platform is maintained by Developer Productivity?",
+        "extraction_pattern": "maintains the (.+?) worker platform",
+        "qualifier_pattern": "for (production) asynchronous workloads",
+        "expected_document_id": "org_dev_productivity",
+        "expected_fact": "Cirrus"
+      },
+      {
+        "hop_index": 1,
+        "query": "Where are jobs sent after the production Cirrus worker platform exhausts retries?",
+        "query_template": "Where are jobs sent after the {qualifier} {entity} worker platform exhausts retries?",
+        "extraction_pattern": "sent to the (.+?) dead-letter queue",
+        "qualifier_pattern": null,
+        "expected_document_id": "manual_cirrus",
+        "expected_fact": "CIRRUS-DLQ"
+      }
+    ]
+  }
+]
