@@ -1,0 +1,19 @@
+{"document_id":"org_atlas","text":"Atlas is operated by the Platform Reliability team. The service handles authentication traffic.","metadata":{"kind":"organization","environment":"production"}}
+{"document_id":"org_atlas_analytics","text":"Atlas Analytics is operated by the Developer Productivity team. The service produces internal reporting dashboards.","metadata":{"kind":"organization","environment":"production"}}
+{"document_id":"org_platform_reliability","text":"Platform Reliability maintains the Borealis storage system for production customer profile data.","metadata":{"kind":"organization","environment":"production"}}
+{"document_id":"org_platform_reliability_legacy","text":"Platform Reliability maintains the Aurora storage system for legacy reporting workloads.","metadata":{"kind":"organization","environment":"legacy"}}
+{"document_id":"manual_borealis","text":"For the production Borealis service, full backups run every Sunday. Incremental backups run every six hours.","metadata":{"kind":"manual","environment":"production"}}
+{"document_id":"manual_borealis_staging","text":"For Borealis staging, incremental backups run every four hours to speed up recovery testing.","metadata":{"kind":"manual","environment":"staging"}}
+{"document_id":"manual_aurora","text":"Aurora performs incremental backups every twelve hours for legacy reporting data.","metadata":{"kind":"manual","environment":"legacy"}}
+{"document_id":"org_dev_productivity","text":"Developer Productivity maintains the Cirrus worker platform for production asynchronous workloads.","metadata":{"kind":"organization","environment":"production"}}
+{"document_id":"manual_cirrus","text":"For the production Cirrus worker platform, failed jobs are retried at most five times before dead-letter handling. Jobs that exhaust retries are sent to the CIRRUS-DLQ dead-letter queue.","metadata":{"kind":"manual","environment":"production"}}
+{"document_id":"manual_cirrus_staging","text":"For Cirrus staging, failed jobs are retried at most three times to keep tests fast. Exhausted staging jobs are written to a temporary test sink.","metadata":{"kind":"manual","environment":"staging"}}
+{"document_id":"org_helios","text":"Helios is operated by the Identity Foundations team. The service validates internal session credentials.","metadata":{"kind":"organization","environment":"production"}}
+{"document_id":"org_identity_foundations","text":"Identity Foundations maintains the Solstice cache service for production session metadata.","metadata":{"kind":"organization","environment":"production"}}
+{"document_id":"manual_solstice","text":"For the production Solstice cache service, validated session metadata is cached for ten minutes.","metadata":{"kind":"manual","environment":"production"}}
+{"document_id":"manual_solstice_staging","text":"For Solstice staging, validated session metadata is cached for two minutes.","metadata":{"kind":"manual","environment":"staging"}}
+{"document_id":"org_security_platform","text":"Security Platform maintains the Meridian signing service for production API credentials.","metadata":{"kind":"organization","environment":"production"}}
+{"document_id":"manual_meridian","text":"For the production Meridian signing service, signing keys rotate every twelve hours.","metadata":{"kind":"manual","environment":"production"}}
+{"document_id":"manual_meridian_dev","text":"For Meridian development, signing keys rotate every two hours.","metadata":{"kind":"manual","environment":"development"}}
+{"document_id":"distractor_atlas_backup","text":"Atlas deployment snapshots are created once per day for rollback support.","metadata":{"kind":"distractor"}}
+{"document_id":"distractor_team","text":"Developer Productivity also maintains internal build tooling for release automation.","metadata":{"kind":"distractor"}}
