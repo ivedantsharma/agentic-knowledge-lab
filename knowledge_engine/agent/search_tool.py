@@ -13,9 +13,14 @@ class DenseSearchTool:
         self,
         documents: list[KnowledgeDocument],
         model_name: str,
+        model: SentenceTransformer | None = None,
     ) -> None:
         self.documents = documents
-        self.model = SentenceTransformer(model_name)
+        self.model = (
+            model
+            if model is not None
+            else SentenceTransformer(model_name)
+        )
         self.document_embeddings = self.model.encode(
             [document.text for document in documents]
         )
