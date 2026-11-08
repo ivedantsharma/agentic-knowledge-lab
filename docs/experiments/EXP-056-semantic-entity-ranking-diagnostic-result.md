@@ -10,59 +10,56 @@ PositiveTopScores=[0.545878, 0.498791]
 NegativeTopScores=[0.311179, 0.322663]
 ```
 
-## Positive score separation
+## Positive finding: score separation
 
-The two positive questions produced substantially higher top semantic scores than the unrelated negatives.
-
-```text
-positive minimum top score = 0.498791
-negative maximum top score = 0.322663
-```
-
-This suggests semantic profiles contain useful signal.
-
-However, the sample is too small to justify a production threshold.
-
-## Critical failure
-
-For the paraphrased Platform Reliability question:
+The lowest positive top score is approximately:
 
 ```text
-Borealis              0.498791
-Platform Reliability  0.491856
+0.4988
 ```
 
-The correct start node ranks second.
+The highest unrelated-negative top score is approximately:
 
-A simple threshold on the top score would therefore accept the wrong entity.
+```text
+0.3227
+```
+
+On this tiny diagnostic set, positive and unrelated top-score ranges are separated.
+
+This suggests semantic confidence may help distinguish some resolvable questions from unrelated questions.
+
+## Critical failure: top-1 entity can still be wrong
+
+For:
+
+```text
+Which service is maintained by the infrastructure reliability group?
+```
+
+the ranking was:
+
+```text
+1. borealis              0.498791
+2. platform_reliability  0.491856  <- gold
+```
+
+Therefore a threshold on the top score would accept the wrong entity.
 
 ## Diagnosis
 
-The semantic ranker matches the question to the correct local graph neighborhood but does not understand which node plays the required graph role.
+The ranker embeds the entire question.
 
-Borealis and Platform Reliability share evidence:
+The question contains two semantic roles:
 
-```text
-Platform Reliability maintains the Borealis storage system...
-```
+- the entity mention to resolve: "infrastructure reliability group",
+- the requested answer type: "service".
 
-Both profiles therefore look relevant.
+Borealis is highly compatible with the full question because it is a service maintained by Platform Reliability.
 
-The missing signal is structural:
-
-```text
-maintains_storage_system
-requires the start node to be a subject of that relation
-```
+The semantic ranker is therefore partly performing answer retrieval rather than mention linking.
 
 ## Conclusion
 
-Do not implement:
+Do not convert semantic top-1 into an entity link yet.
 
-```text
-semantic top-1 + score threshold
-```
-
-yet.
-
-The next experiment should test whether the known first relation can constrain semantic candidate ranking to structurally valid start nodes.
+The next experiment should isolate the entity mention span from the rest of the question.
