@@ -3,7 +3,7 @@ from knowledge_engine.graph.entity_type import (
 )
 
 
-def test_first_cue_prefers_team_over_related_service() -> None:
+def test_first_cue_prefers_team_in_team_operating_service() -> None:
     inferer = FirstCueEntityTypeInferer()
 
     result = inferer.infer(
@@ -14,7 +14,7 @@ def test_first_cue_prefers_team_over_related_service() -> None:
     assert result.matched_cue == "team"
 
 
-def test_first_cue_prefers_group_over_cache() -> None:
+def test_first_cue_prefers_group_over_later_cache() -> None:
     inferer = FirstCueEntityTypeInferer()
 
     result = inferer.infer(
@@ -25,7 +25,7 @@ def test_first_cue_prefers_group_over_cache() -> None:
     assert result.matched_cue == "group"
 
 
-def test_first_cue_keeps_service_case() -> None:
+def test_first_cue_service_case_still_works() -> None:
     inferer = FirstCueEntityTypeInferer()
 
     result = inferer.infer(
