@@ -166,3 +166,67 @@ class RelationConstrainedEntityTask(BaseModel):
                 "relation-constrained task fields must not be blank"
             )
         return cleaned
+
+
+
+class EntityMentionResolutionTask(BaseModel):
+    task_id: str
+    question: str
+    mention_text: str
+    expected_entity_id: str | None = None
+    should_resolve: bool
+    category: str = "entity_mention_resolution"
+    metadata: dict[str, Any] = Field(default_factory=dict)
+
+    @field_validator(
+        "task_id",
+        "question",
+        "mention_text",
+        "category",
+    )
+    @classmethod
+    def validate_required_mention_task_text(
+        cls,
+        value: str,
+    ) -> str:
+        cleaned = value.strip()
+        if not cleaned:
+            raise ValueError(
+                "entity-mention task fields must not be blank"
+            )
+        return cleaned
+
+    @field_validator("expected_entity_id")
+    @classmethod
+    def validate_optional_mention_entity_id(
+        cls,
+        value: str | None,
+    ) -> str | None:
+        if value is None:
+            return None
+
+        cleaned = value.strip()
+        if not cleaned:
+            raise ValueError(
+                "expected_entity_id must not be blank"
+            )
+        return cleaned
+
+    @model_validator(mode="after")
+    def validate_mention_resolution_expectation(
+        self,
+    ) -> "EntityMentionResolutionTask":
+        if self.should_resolve and self.expected_entity_id is None:
+            raise ValueError(
+                "resolvable mention task requires expected_entity_id"
+            )
+
+        if (
+            not self.should_resolve
+            and self.expected_entity_id is not None
+        ):
+            raise ValueError(
+                "abstention mention task must not set expected_entity_id"
+            )
+
+        return self
