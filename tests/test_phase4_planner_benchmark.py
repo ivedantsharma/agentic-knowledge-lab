@@ -4,7 +4,6 @@ from knowledgebench.tasks.multihop_loader import (
     load_multihop_tasks_json,
 )
 
-
 TASK_PATH = Path(
     "data/processed/phase4_planner_benchmark_v0.json"
 )

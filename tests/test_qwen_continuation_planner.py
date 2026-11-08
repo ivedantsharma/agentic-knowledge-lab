@@ -100,7 +100,7 @@ def test_action_from_decision_requires_relation_alignment() -> None:
         QwenContinuationPlanner
     )
     planner.generate_next_query = (
-        lambda _question, _evidence:
+        lambda _question, _evidence, **_kwargs:
         "Where are exhausted Cirrus jobs sent?"
     )
 
