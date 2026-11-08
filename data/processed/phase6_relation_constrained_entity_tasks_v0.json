@@ -1,0 +1,16 @@
+[
+  {
+    "task_id":"relation-entity-001",
+    "question":"What is the backup cadence of the customer-profile storage platform?",
+    "expected_entity_id":"borealis",
+    "first_relation":"incremental_backup_cadence",
+    "category":"implicit_entity"
+  },
+  {
+    "task_id":"relation-entity-002",
+    "question":"Which service is maintained by the infrastructure reliability group?",
+    "expected_entity_id":"platform_reliability",
+    "first_relation":"maintains_storage_system",
+    "category":"unregistered_paraphrase"
+  }
+]
