@@ -163,3 +163,46 @@ class SemanticEntityRanker:
             question,
             allowed_entity_ids=allowed,
         )
+
+
+
+@dataclass(frozen=True)
+class ThresholdedEntityResolutionResult:
+    entity_id: str | None
+    score: float
+    accepted: bool
+
+
+class ThresholdedSemanticEntityResolver:
+    """Accept semantic top-1 only when it clears a configured threshold."""
+
+    def __init__(
+        self,
+        ranker: SemanticEntityRanker,
+        threshold: float,
+    ) -> None:
+        self.ranker = ranker
+        self.threshold = threshold
+
+    def resolve(
+        self,
+        mention_text: str,
+    ) -> ThresholdedEntityResolutionResult:
+        ranking = self.ranker.rank(
+            mention_text
+        )
+        top = ranking[0]
+
+        accepted = (
+            top.score >= self.threshold
+        )
+
+        return ThresholdedEntityResolutionResult(
+            entity_id=(
+                top.entity_id
+                if accepted
+                else None
+            ),
+            score=float(top.score),
+            accepted=accepted,
+        )
