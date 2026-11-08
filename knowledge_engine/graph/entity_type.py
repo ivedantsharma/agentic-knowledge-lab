@@ -88,3 +88,44 @@ class LexicalEntityTypeInferer:
             entity_type=entity_type,
             matched_cue=cue,
         )
+
+
+
+class FirstCueEntityTypeInferer(LexicalEntityTypeInferer):
+    """Infer type from the earliest explicit type cue in mention order."""
+
+    def infer(
+        self,
+        mention_text: str,
+    ) -> EntityTypeInferenceResult:
+        normalized = normalize_entity_text(
+            mention_text
+        )
+
+        if not normalized:
+            raise ValueError(
+                "mention_text must contain searchable text"
+            )
+
+        tokens = normalized.split()
+
+        cue_to_type = {
+            cue: entity_type
+            for entity_type, cues in self.type_cues.items()
+            for cue in cues
+        }
+
+        for token in tokens:
+            entity_type = cue_to_type.get(
+                token
+            )
+            if entity_type is not None:
+                return EntityTypeInferenceResult(
+                    entity_type=entity_type,
+                    matched_cue=token,
+                )
+
+        return EntityTypeInferenceResult(
+            entity_type=None,
+            matched_cue=None,
+        )
