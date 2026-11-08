@@ -1,0 +1,126 @@
+{
+  "entities": [
+    {"entity_id":"atlas","name":"Atlas","entity_type":"service"},
+    {"entity_id":"platform_reliability","name":"Platform Reliability","entity_type":"team"},
+    {"entity_id":"borealis","name":"Borealis","entity_type":"service"},
+    {"entity_id":"aurora","name":"Aurora","entity_type":"service"},
+    {"entity_id":"developer_productivity","name":"Developer Productivity","entity_type":"team"},
+    {"entity_id":"cirrus","name":"Cirrus","entity_type":"service"},
+    {"entity_id":"helios","name":"Helios","entity_type":"service"},
+    {"entity_id":"identity_foundations","name":"Identity Foundations","entity_type":"team"},
+    {"entity_id":"solstice","name":"Solstice","entity_type":"service"},
+    {"entity_id":"security_platform","name":"Security Platform","entity_type":"team"},
+    {"entity_id":"meridian","name":"Meridian","entity_type":"service"}
+  ],
+  "claims": [
+    {
+      "claim_id":"claim-atlas-operated-by",
+      "subject_entity_id":"atlas",
+      "relation":"operated_by",
+      "object_entity_id":"platform_reliability",
+      "evidence":[{"document_id":"org_atlas","evidence_text":"Atlas is operated by the Platform Reliability team."}]
+    },
+    {
+      "claim_id":"claim-atlas-snapshot-cadence",
+      "subject_entity_id":"atlas",
+      "relation":"deployment_snapshot_cadence",
+      "object_value":"once per day",
+      "evidence":[{"document_id":"distractor_atlas_backup","evidence_text":"Atlas deployment snapshots are created once per day for rollback support."}]
+    },
+    {
+      "claim_id":"claim-platform-maintains-borealis",
+      "subject_entity_id":"platform_reliability",
+      "relation":"maintains_storage_system",
+      "object_entity_id":"borealis",
+      "evidence":[{"document_id":"org_platform_reliability","evidence_text":"Platform Reliability maintains the Borealis storage system for production customer profile data."}]
+    },
+    {
+      "claim_id":"claim-platform-maintains-aurora",
+      "subject_entity_id":"platform_reliability",
+      "relation":"maintains_legacy_storage_system",
+      "object_entity_id":"aurora",
+      "evidence":[{"document_id":"org_platform_reliability_legacy","evidence_text":"Platform Reliability maintains the Aurora storage system for legacy reporting workloads."}]
+    },
+    {
+      "claim_id":"claim-borealis-backup-cadence",
+      "subject_entity_id":"borealis",
+      "relation":"incremental_backup_cadence",
+      "object_value":"every six hours",
+      "evidence":[{"document_id":"manual_borealis","evidence_text":"For the production Borealis service, full backups run every Sunday. Incremental backups run every six hours."}]
+    },
+    {
+      "claim_id":"claim-aurora-backup-cadence",
+      "subject_entity_id":"aurora",
+      "relation":"incremental_backup_cadence",
+      "object_value":"every twelve hours",
+      "evidence":[{"document_id":"manual_aurora","evidence_text":"Aurora performs incremental backups every twelve hours for legacy reporting data."}]
+    },
+    {
+      "claim_id":"claim-devprod-maintains-cirrus",
+      "subject_entity_id":"developer_productivity",
+      "relation":"maintains_worker_platform",
+      "object_entity_id":"cirrus",
+      "evidence":[{"document_id":"org_dev_productivity","evidence_text":"Developer Productivity maintains the Cirrus worker platform for production asynchronous workloads."}]
+    },
+    {
+      "claim_id":"claim-devprod-build-tooling",
+      "subject_entity_id":"developer_productivity",
+      "relation":"also_maintains",
+      "object_value":"internal build tooling",
+      "evidence":[{"document_id":"distractor_team","evidence_text":"Developer Productivity also maintains internal build tooling for release automation."}]
+    },
+    {
+      "claim_id":"claim-cirrus-retry-limit",
+      "subject_entity_id":"cirrus",
+      "relation":"retry_limit",
+      "object_value":"five times",
+      "evidence":[{"document_id":"manual_cirrus","evidence_text":"For the production Cirrus worker platform, failed jobs are retried at most five times before dead-letter handling."}]
+    },
+    {
+      "claim_id":"claim-helios-operated-by",
+      "subject_entity_id":"helios",
+      "relation":"operated_by",
+      "object_entity_id":"identity_foundations",
+      "evidence":[{"document_id":"org_helios","evidence_text":"Helios is operated by the Identity Foundations team."}]
+    },
+    {
+      "claim_id":"claim-helios-purpose",
+      "subject_entity_id":"helios",
+      "relation":"validates",
+      "object_value":"internal session credentials",
+      "evidence":[{"document_id":"org_helios","evidence_text":"The service validates internal session credentials."}]
+    },
+    {
+      "claim_id":"claim-identity-maintains-solstice",
+      "subject_entity_id":"identity_foundations",
+      "relation":"maintains_cache_service",
+      "object_entity_id":"solstice",
+      "evidence":[{"document_id":"org_identity_foundations","evidence_text":"Identity Foundations maintains the Solstice cache service for production session metadata."}]
+    },
+    {
+      "claim_id":"claim-solstice-cache-duration",
+      "subject_entity_id":"solstice",
+      "relation":"cache_duration",
+      "object_value":"ten minutes",
+      "evidence":[{"document_id":"manual_solstice","evidence_text":"For the production Solstice cache service, validated session metadata is cached for ten minutes."}]
+    },
+    {
+      "claim_id":"claim-security-maintains-meridian",
+      "subject_entity_id":"security_platform",
+      "relation":"maintains_signing_service",
+      "object_entity_id":"meridian",
+      "evidence":[{"document_id":"org_security_platform","evidence_text":"Security Platform maintains the Meridian signing service for production API credentials."}]
+    },
+    {
+      "claim_id":"claim-meridian-key-rotation",
+      "subject_entity_id":"meridian",
+      "relation":"signing_key_rotation",
+      "object_value":"every twelve hours",
+      "evidence":[{"document_id":"manual_meridian","evidence_text":"For the production Meridian signing service, signing keys rotate every twelve hours."}]
+    }
+  ],
+  "metadata":{
+    "source":"phase3_multihop_corpus_v3",
+    "purpose":"phase6 branching relation-path stress graph"
+  }
+}
