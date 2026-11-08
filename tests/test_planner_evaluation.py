@@ -65,3 +65,17 @@ def test_aggregate_planner_metrics() -> None:
     assert metrics.search_success_rate == 0.5
     assert metrics.average_search_steps == 1.5
     assert metrics.max_step_exhaustion_rate == 0.0
+
+
+def test_answer_matches_shorter_specific_frequency_span() -> None:
+    assert answer_matches(
+        "twelve hours",
+        "every twelve hours",
+    )
+
+
+def test_answer_matches_does_not_accept_single_token_prefix() -> None:
+    assert not answer_matches(
+        "Cirrus",
+        "CIRRUS-DLQ",
+    )
