@@ -1,0 +1,44 @@
+[
+  {
+    "task_id":"entity-001",
+    "question":"Which team operates Atlas?",
+    "expected_entity_id":"atlas",
+    "should_resolve":true,
+    "category":"exact_name"
+  },
+  {
+    "task_id":"entity-002",
+    "question":"What storage system does the PR Team maintain?",
+    "expected_entity_id":"platform_reliability",
+    "should_resolve":true,
+    "category":"registered_alias"
+  },
+  {
+    "task_id":"entity-003",
+    "question":"Which group owns Atlas Analytics reporting?",
+    "expected_entity_id":"atlas_analytics",
+    "should_resolve":true,
+    "category":"overlapping_name"
+  },
+  {
+    "task_id":"entity-004",
+    "question":"What does Atlas BI publish?",
+    "expected_entity_id":"atlas_analytics",
+    "should_resolve":true,
+    "category":"overlapping_alias"
+  },
+  {
+    "task_id":"entity-005",
+    "question":"What is the backup cadence of the customer-profile storage platform?",
+    "expected_entity_id":null,
+    "should_resolve":false,
+    "category":"implicit_entity"
+  },
+  {
+    "task_id":"entity-006",
+    "question":"Which service is maintained by the infrastructure reliability group?",
+    "expected_entity_id":null,
+    "should_resolve":false,
+    "category":"unregistered_paraphrase"
+  }
+]
