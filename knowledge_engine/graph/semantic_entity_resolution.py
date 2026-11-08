@@ -87,6 +87,7 @@ class SemanticEntityRanker:
     def rank(
         self,
         question: str,
+        allowed_entity_ids: set[str] | None = None,
     ) -> list[SemanticEntityCandidate]:
         cleaned = question.strip()
         if not cleaned:
@@ -111,10 +112,54 @@ class SemanticEntityRanker:
             )
             for entity_id, entity_embedding
             in self.entity_embeddings.items()
+            if (
+                allowed_entity_ids is None
+                or entity_id in allowed_entity_ids
+            )
         ]
+
+        if not candidates:
+            raise ValueError(
+                "no semantic entity candidates available"
+            )
 
         candidates.sort(
             key=lambda item: item.score,
             reverse=True,
         )
         return candidates
+
+    def valid_subjects_for_relation(
+        self,
+        relation: str,
+    ) -> set[str]:
+        cleaned = relation.strip()
+        if not cleaned:
+            raise ValueError(
+                "relation must not be blank"
+            )
+
+        return {
+            claim.subject_entity_id
+            for claim in self.graph.claims
+            if claim.relation == cleaned
+        }
+
+    def rank_for_relation(
+        self,
+        question: str,
+        relation: str,
+    ) -> list[SemanticEntityCandidate]:
+        allowed = self.valid_subjects_for_relation(
+            relation
+        )
+
+        if not allowed:
+            raise ValueError(
+                f"unknown relation={relation}"
+            )
+
+        return self.rank(
+            question,
+            allowed_entity_ids=allowed,
+        )
