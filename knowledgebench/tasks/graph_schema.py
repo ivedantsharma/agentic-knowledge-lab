@@ -1,6 +1,6 @@
 from typing import Any
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 
 
 class GraphTraversalTask(BaseModel):
@@ -47,3 +47,64 @@ class GraphTraversalTask(BaseModel):
             )
 
         return cleaned
+
+
+class EntityResolutionTask(BaseModel):
+    task_id: str
+    question: str
+    expected_entity_id: str | None = None
+    should_resolve: bool
+    category: str = "entity_resolution"
+    metadata: dict[str, Any] = Field(default_factory=dict)
+
+    @field_validator(
+        "task_id",
+        "question",
+        "category",
+    )
+    @classmethod
+    def validate_required_entity_task_text(
+        cls,
+        value: str,
+    ) -> str:
+        cleaned = value.strip()
+        if not cleaned:
+            raise ValueError(
+                "entity-resolution task fields must not be blank"
+            )
+        return cleaned
+
+    @field_validator("expected_entity_id")
+    @classmethod
+    def validate_optional_entity_id(
+        cls,
+        value: str | None,
+    ) -> str | None:
+        if value is None:
+            return None
+
+        cleaned = value.strip()
+        if not cleaned:
+            raise ValueError(
+                "expected_entity_id must not be blank"
+            )
+        return cleaned
+
+    @model_validator(mode="after")
+    def validate_resolution_expectation(
+        self,
+    ) -> "EntityResolutionTask":
+        if self.should_resolve and self.expected_entity_id is None:
+            raise ValueError(
+                "resolvable task requires expected_entity_id"
+            )
+
+        if (
+            not self.should_resolve
+            and self.expected_entity_id is not None
+        ):
+            raise ValueError(
+                "abstention task must not set expected_entity_id"
+            )
+
+        return self
