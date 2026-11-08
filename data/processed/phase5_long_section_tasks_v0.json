@@ -1,0 +1,26 @@
+[
+  {
+    "task_id": "p5-long-001",
+    "question": "What is the current Atlas signing-key identifier?",
+    "source_document_id": "manual_alpha_long",
+    "evidence_text": "ATLAS-KV-104",
+    "expected_answer": "ATLAS-KV-104",
+    "category": "long_section_hierarchy"
+  },
+  {
+    "task_id": "p5-long-002",
+    "question": "How often do Borealis incremental backups run?",
+    "source_document_id": "manual_beta_long",
+    "evidence_text": "every six hours",
+    "expected_answer": "Every six hours.",
+    "category": "long_section_hierarchy"
+  },
+  {
+    "task_id": "p5-long-003",
+    "question": "Where are Cirrus jobs sent after exhausting all retries?",
+    "source_document_id": "manual_gamma_long",
+    "evidence_text": "CIRRUS-DLQ",
+    "expected_answer": "CIRRUS-DLQ.",
+    "category": "long_section_hierarchy"
+  }
+]
