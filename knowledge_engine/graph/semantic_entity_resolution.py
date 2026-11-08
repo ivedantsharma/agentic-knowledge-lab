@@ -166,6 +166,42 @@ class SemanticEntityRanker:
 
 
 
+    def valid_entities_for_type(
+        self,
+        entity_type: str,
+    ) -> set[str]:
+        cleaned = entity_type.strip()
+        if not cleaned:
+            raise ValueError(
+                "entity_type must not be blank"
+            )
+
+        return {
+            entity.entity_id
+            for entity in self.graph.entities
+            if entity.entity_type == cleaned
+        }
+
+    def rank_for_type(
+        self,
+        question: str,
+        entity_type: str,
+    ) -> list[SemanticEntityCandidate]:
+        allowed = self.valid_entities_for_type(
+            entity_type
+        )
+
+        if not allowed:
+            raise ValueError(
+                f"unknown entity_type={entity_type}"
+            )
+
+        return self.rank(
+            question,
+            allowed_entity_ids=allowed,
+        )
+
+
 @dataclass(frozen=True)
 class ThresholdedEntityResolutionResult:
     entity_id: str | None
