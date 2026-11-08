@@ -1,0 +1,66 @@
+[
+  {
+    "task_id":"graph-001",
+    "question":"What backup cadence is used by the storage system maintained by the team that operates Atlas?",
+    "start_entity_id":"atlas",
+    "relation_path":[
+      "operated_by",
+      "maintains_storage_system",
+      "incremental_backup_cadence"
+    ],
+    "expected_answer":"every six hours",
+    "expected_claim_ids":[
+      "claim-atlas-operated-by",
+      "claim-platform-maintains-borealis",
+      "claim-borealis-backup-cadence"
+    ],
+    "category":"three_hop_graph"
+  },
+  {
+    "task_id":"graph-002",
+    "question":"How many retry attempts are used by the worker platform maintained by Developer Productivity?",
+    "start_entity_id":"developer_productivity",
+    "relation_path":[
+      "maintains_worker_platform",
+      "retry_limit"
+    ],
+    "expected_answer":"five times",
+    "expected_claim_ids":[
+      "claim-devprod-maintains-cirrus",
+      "claim-cirrus-retry-limit"
+    ],
+    "category":"two_hop_graph"
+  },
+  {
+    "task_id":"graph-003",
+    "question":"What cache duration is used by the service maintained by the team that operates Helios?",
+    "start_entity_id":"helios",
+    "relation_path":[
+      "operated_by",
+      "maintains_cache_service",
+      "cache_duration"
+    ],
+    "expected_answer":"ten minutes",
+    "expected_claim_ids":[
+      "claim-helios-operated-by",
+      "claim-identity-maintains-solstice",
+      "claim-solstice-cache-duration"
+    ],
+    "category":"three_hop_graph"
+  },
+  {
+    "task_id":"graph-004",
+    "question":"How often do signing keys rotate for the signing service maintained by Security Platform?",
+    "start_entity_id":"security_platform",
+    "relation_path":[
+      "maintains_signing_service",
+      "signing_key_rotation"
+    ],
+    "expected_answer":"every twelve hours",
+    "expected_claim_ids":[
+      "claim-security-maintains-meridian",
+      "claim-meridian-key-rotation"
+    ],
+    "category":"two_hop_graph"
+  }
+]
