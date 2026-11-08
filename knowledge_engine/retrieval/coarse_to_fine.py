@@ -117,13 +117,16 @@ class CoarseToFineHierarchicalRetriever:
             : self.config.section_beam
         ]
 
-        windows = [
-            self._build_local_window(
+        windows = []
+        chunk_candidates_scored = 0
+
+        for section_candidate in retained_sections:
+            window, chunk_count = self._build_local_window(
                 cleaned_query,
                 section_candidate,
             )
-            for section_candidate in retained_sections
-        ]
+            windows.append(window)
+            chunk_candidates_scored += chunk_count
 
         return HierarchicalRetrievalResult(
             query=cleaned_query,
@@ -133,16 +136,7 @@ class CoarseToFineHierarchicalRetriever:
                 "parent_candidates_scored": len(self.documents),
                 "section_candidates_scored": len(section_candidates),
                 "retained_sections": len(retained_sections),
-                "chunk_candidates_scored": sum(
-                    item["chunks_scored"]
-                    for item in windows
-                    if isinstance(item, dict)
-                )
-                if False
-                else sum(
-                    self._chunk_count_for_window(window)
-                    for window in windows
-                ),
+                "chunk_candidates_scored": chunk_candidates_scored,
             },
         )
 
@@ -215,7 +209,7 @@ class CoarseToFineHierarchicalRetriever:
         self,
         query: str,
         section_candidate: tuple[str, int, str, str, float],
-    ) -> HierarchicalEvidenceWindow:
+    ) -> tuple[HierarchicalEvidenceWindow, int]:
         (
             document_id,
             section_index,
@@ -274,16 +268,19 @@ class CoarseToFineHierarchicalRetriever:
             words[start_word:end_word]
         )
 
-        return HierarchicalEvidenceWindow(
-            document_id=document_id,
-            section_index=section_index,
-            section_title=section_title,
-            section_score=section_score,
-            anchor_chunk_index=anchor_chunk.chunk_index,
-            anchor_chunk_score=anchor_score,
-            start_word=start_word,
-            end_word=end_word,
-            text=window_text,
+        return (
+            HierarchicalEvidenceWindow(
+                document_id=document_id,
+                section_index=section_index,
+                section_title=section_title,
+                section_score=section_score,
+                anchor_chunk_index=anchor_chunk.chunk_index,
+                anchor_chunk_score=anchor_score,
+                start_word=start_word,
+                end_word=end_word,
+                text=window_text,
+            ),
+            len(chunks),
         )
 
     def _document_by_id(
@@ -305,19 +302,3 @@ class CoarseToFineHierarchicalRetriever:
             )
 
         return document
-
-    def _chunk_count_for_window(
-        self,
-        window: HierarchicalEvidenceWindow,
-    ) -> int:
-        document = self._document_by_id(
-            window.document_id
-        )
-        return len(
-            chunk_section(
-                document,
-                section_index=window.section_index,
-                chunk_size_words=self.config.chunk_size_words,
-                overlap_words=self.config.chunk_overlap_words,
-            )
-        )
