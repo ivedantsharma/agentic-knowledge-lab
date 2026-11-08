@@ -26,11 +26,11 @@ class FakeCrossEncoder:
         scores = []
 
         for _query, candidate in pairs:
-            if "Target Section" in candidate:
+            if "ANSWER-42" in candidate:
                 scores.append(10.0)
-            elif "ANSWER-42" in candidate:
-                scores.append(9.0)
             elif "middle clue" in candidate:
+                scores.append(9.0)
+            elif "Target Section" in candidate:
                 scores.append(8.0)
             else:
                 scores.append(0.0)
@@ -98,6 +98,7 @@ def test_search_returns_radius_window_with_provenance() -> None:
     assert window.section_title == "Target Section"
     assert "ANSWER-42" in window.text
     assert window.start_word <= window.end_word
+    assert result.metadata["chunk_candidates_scored"] > 0
 
 
 def test_search_rejects_blank_query() -> None:
