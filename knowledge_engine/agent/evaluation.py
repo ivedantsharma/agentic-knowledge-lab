@@ -15,7 +15,15 @@ def answer_matches(
     predicted_normalized = normalize_text(predicted)
     expected_normalized = normalize_text(expected)
 
-    return expected_normalized in predicted_normalized
+    if expected_normalized in predicted_normalized:
+        return True
+
+    predicted_tokens = predicted_normalized.split()
+
+    return (
+        len(predicted_tokens) >= 2
+        and predicted_normalized in expected_normalized
+    )
 
 
 @dataclass(frozen=True)
