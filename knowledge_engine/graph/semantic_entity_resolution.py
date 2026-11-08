@@ -1,0 +1,120 @@
+from dataclasses import dataclass
+
+from sentence_transformers import SentenceTransformer
+
+from knowledge_engine.graph.schema import ClaimGraph
+from knowledge_engine.retrieval.vector_math import cosine_similarity
+
+
+@dataclass(frozen=True)
+class SemanticEntityCandidate:
+    entity_id: str
+    score: float
+    retrieval_text: str
+
+
+def render_entity_profile(
+    graph: ClaimGraph,
+    entity_id: str,
+) -> str:
+    entity = next(
+        item
+        for item in graph.entities
+        if item.entity_id == entity_id
+    )
+
+    parts = [
+        f"Entity: {entity.name}.",
+        f"Type: {entity.entity_type}.",
+    ]
+
+    if entity.aliases:
+        parts.append(
+            "Aliases: "
+            + ", ".join(entity.aliases)
+            + "."
+        )
+
+    for claim in graph.claims:
+        if (
+            claim.subject_entity_id == entity_id
+            or claim.object_entity_id == entity_id
+        ):
+            parts.extend(
+                evidence.evidence_text
+                for evidence in claim.evidence
+            )
+
+    return " ".join(parts)
+
+
+class SemanticEntityRanker:
+    """Rank graph entities using semantic similarity over entity profiles."""
+
+    def __init__(
+        self,
+        graph: ClaimGraph,
+        model_name: str,
+        model: SentenceTransformer | None = None,
+    ) -> None:
+        self.graph = graph
+        self.model = (
+            model
+            if model is not None
+            else SentenceTransformer(model_name)
+        )
+
+        self.entity_profiles = {
+            entity.entity_id: render_entity_profile(
+                graph,
+                entity.entity_id,
+            )
+            for entity in graph.entities
+        }
+
+        self.entity_embeddings = {
+            entity_id: embedding
+            for entity_id, embedding in zip(
+                self.entity_profiles,
+                self.model.encode(
+                    list(
+                        self.entity_profiles.values()
+                    )
+                ),
+            )
+        }
+
+    def rank(
+        self,
+        question: str,
+    ) -> list[SemanticEntityCandidate]:
+        cleaned = question.strip()
+        if not cleaned:
+            raise ValueError(
+                "question must not be blank"
+            )
+
+        query_embedding = self.model.encode(
+            cleaned
+        )
+
+        candidates = [
+            SemanticEntityCandidate(
+                entity_id=entity_id,
+                score=cosine_similarity(
+                    query_embedding,
+                    entity_embedding,
+                ),
+                retrieval_text=(
+                    self.entity_profiles[entity_id]
+                ),
+            )
+            for entity_id, entity_embedding
+            in self.entity_embeddings.items()
+        ]
+
+        candidates.sort(
+            key=lambda item: item.score,
+            reverse=True,
+        )
+        return candidates
