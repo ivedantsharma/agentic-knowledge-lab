@@ -65,6 +65,7 @@ def chunk_section(
                 "parent_document_id": document.document_id,
                 "section_index": section_index,
                 "section_title": section.title,
+                "raw_chunk_text": chunk.text,
             },
         )
         for chunk in chunks
