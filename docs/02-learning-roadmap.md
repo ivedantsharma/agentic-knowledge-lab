@@ -115,9 +115,11 @@ Deliverables:
 - autonomous query planner
 - stopping-policy evaluation
 
-Status: Current.
+Status: Complete.
 
 ## Phase 5 — Hierarchical Retrieval
+
+Status: Current.
 
 Learn:
 - document → section → chunk retrieval
