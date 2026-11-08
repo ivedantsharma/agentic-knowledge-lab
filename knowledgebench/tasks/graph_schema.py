@@ -108,3 +108,32 @@ class EntityResolutionTask(BaseModel):
             )
 
         return self
+
+
+
+class SemanticEntityMentionTask(BaseModel):
+    task_id: str
+    question: str
+    mention_text: str
+    expected_entity_id: str
+    category: str = "semantic_entity_mention"
+    metadata: dict[str, Any] = Field(default_factory=dict)
+
+    @field_validator(
+        "task_id",
+        "question",
+        "mention_text",
+        "expected_entity_id",
+        "category",
+    )
+    @classmethod
+    def validate_required_mention_task_text(
+        cls,
+        value: str,
+    ) -> str:
+        cleaned = value.strip()
+        if not cleaned:
+            raise ValueError(
+                "semantic mention task fields must not be blank"
+            )
+        return cleaned
