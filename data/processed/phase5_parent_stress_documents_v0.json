@@ -1,0 +1,152 @@
+[
+  {
+    "document_id": "manual_alpha",
+    "metadata": {
+      "source": "synthetic",
+      "title": "Atlas Service Manual"
+    },
+    "sections": [
+      {
+        "title": "Authentication Overview",
+        "text": "The Atlas service accepts signed access tokens issued by the identity gateway."
+      },
+      {
+        "title": "Token Rotation",
+        "text": "Access-token signing keys rotate every 24 hours, and the current key identifier is ATLAS-KV-104."
+      },
+      {
+        "title": "Cache Behavior",
+        "text": "The service caches validated token metadata for five minutes to reduce repeated verification work."
+      },
+      {
+        "title": "Deployment Notes",
+        "text": "Atlas runs in three regional clusters and uses rolling deployments."
+      }
+    ]
+  },
+  {
+    "document_id": "manual_beta",
+    "metadata": {
+      "source": "synthetic",
+      "title": "Borealis Storage Manual"
+    },
+    "sections": [
+      {
+        "title": "Storage Overview",
+        "text": "The Borealis database stores customer profile records in replicated partitions."
+      },
+      {
+        "title": "Backup Policy",
+        "text": "Full backups run every Sunday, while incremental backups run every six hours."
+      },
+      {
+        "title": "Encryption",
+        "text": "Backup archives are encrypted with key BOREALIS-BK-77 before leaving the primary region."
+      },
+      {
+        "title": "Restore Process",
+        "text": "Operators restore the most recent full backup and then replay available incrementals."
+      }
+    ]
+  },
+  {
+    "document_id": "manual_gamma",
+    "metadata": {
+      "source": "synthetic",
+      "title": "Cirrus Worker Manual"
+    },
+    "sections": [
+      {
+        "title": "Queue Overview",
+        "text": "The Cirrus worker system consumes asynchronous jobs from a durable queue."
+      },
+      {
+        "title": "Retry Policy",
+        "text": "Failed jobs use exponential backoff and are retried at most five times."
+      },
+      {
+        "title": "Dead Letter Handling",
+        "text": "A job that fails all retry attempts is moved to the dead-letter queue named CIRRUS-DLQ."
+      },
+      {
+        "title": "Observability",
+        "text": "Queue depth and retry counts are exported as monitoring metrics."
+      }
+    ]
+  },
+  {
+    "document_id": "distractor_atlas_keys",
+    "metadata": {
+      "source": "synthetic",
+      "title": "Atlas Signing Key Operations Guide"
+    },
+    "sections": [
+      {
+        "title": "Current Signing Keys",
+        "text": "Operators inspect active signing-key metadata during incident response."
+      },
+      {
+        "title": "Key Identifier Lookup",
+        "text": "The key identifier is read from the identity control plane rather than stored in this guide."
+      },
+      {
+        "title": "Rotation Procedures",
+        "text": "Signing-key rotation procedures require validation before rollout."
+      },
+      {
+        "title": "Emergency Replacement",
+        "text": "Compromised keys can be replaced through an emergency workflow."
+      }
+    ]
+  },
+  {
+    "document_id": "distractor_borealis_backup",
+    "metadata": {
+      "source": "synthetic",
+      "title": "Borealis Backup Operations Guide"
+    },
+    "sections": [
+      {
+        "title": "Incremental Backup Scheduling",
+        "text": "Operators monitor incremental backup schedules and investigate missed backup windows."
+      },
+      {
+        "title": "Backup Cadence Alerts",
+        "text": "Alerting detects deviations from the configured backup cadence."
+      },
+      {
+        "title": "Recovery Validation",
+        "text": "Recovery drills validate that recent backups can be restored."
+      },
+      {
+        "title": "Retention",
+        "text": "Backup retention is managed separately from execution scheduling."
+      }
+    ]
+  },
+  {
+    "document_id": "distractor_cirrus_failures",
+    "metadata": {
+      "source": "synthetic",
+      "title": "Cirrus Failed Job Operations Guide"
+    },
+    "sections": [
+      {
+        "title": "Exhausted Retry Monitoring",
+        "text": "Operators monitor jobs that exhaust retry attempts and investigate repeated failures."
+      },
+      {
+        "title": "Failed Job Destination Checks",
+        "text": "Operational checks confirm that exhausted jobs reach the configured failure destination."
+      },
+      {
+        "title": "Retry Metrics",
+        "text": "Dashboards track retry counts and repeated worker failures."
+      },
+      {
+        "title": "Queue Triage",
+        "text": "Runbooks describe how to inspect queues during worker incidents."
+      }
+    ]
+  }
+]
