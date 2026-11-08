@@ -230,3 +230,21 @@ class EntityMentionResolutionTask(BaseModel):
             )
 
         return self
+
+
+
+class TypedEntityMentionResolutionTask(EntityMentionResolutionTask):
+    expected_entity_type: str
+
+    @field_validator("expected_entity_type")
+    @classmethod
+    def validate_entity_type(
+        cls,
+        value: str,
+    ) -> str:
+        cleaned = value.strip()
+        if not cleaned:
+            raise ValueError(
+                "expected_entity_type must not be blank"
+            )
+        return cleaned
