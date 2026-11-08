@@ -1,0 +1,66 @@
+[
+  {
+    "task_id":"threshold-001",
+    "question":"Which platform keeps production customer profile records?",
+    "mention_text":"platform that keeps production customer profile records",
+    "expected_entity_id":"borealis",
+    "should_resolve":true,
+    "category":"implicit_service"
+  },
+  {
+    "task_id":"threshold-002",
+    "question":"Which group runs the Atlas authentication service?",
+    "mention_text":"group that runs the Atlas authentication service",
+    "expected_entity_id":"platform_reliability",
+    "should_resolve":true,
+    "category":"implicit_team"
+  },
+  {
+    "task_id":"threshold-003",
+    "question":"Which worker system handles production asynchronous workloads?",
+    "mention_text":"worker system that handles production asynchronous workloads",
+    "expected_entity_id":"cirrus",
+    "should_resolve":true,
+    "category":"implicit_service"
+  },
+  {
+    "task_id":"threshold-004",
+    "question":"Which team maintains the production session-metadata cache?",
+    "mention_text":"team that maintains the production session-metadata cache",
+    "expected_entity_id":"identity_foundations",
+    "should_resolve":true,
+    "category":"implicit_team"
+  },
+  {
+    "task_id":"threshold-005",
+    "question":"Which system manages employee vacation balances?",
+    "mention_text":"system that manages employee vacation balances",
+    "expected_entity_id":null,
+    "should_resolve":false,
+    "category":"unrelated_negative"
+  },
+  {
+    "task_id":"threshold-006",
+    "question":"Which team handles corporate travel reimbursements?",
+    "mention_text":"team that handles corporate travel reimbursements",
+    "expected_entity_id":null,
+    "should_resolve":false,
+    "category":"unrelated_negative"
+  },
+  {
+    "task_id":"threshold-007",
+    "question":"Which service processes cafeteria menu updates?",
+    "mention_text":"service that processes cafeteria menu updates",
+    "expected_entity_id":null,
+    "should_resolve":false,
+    "category":"unrelated_negative"
+  },
+  {
+    "task_id":"threshold-008",
+    "question":"Which platform stores recruiting interview notes?",
+    "mention_text":"platform that stores recruiting interview notes",
+    "expected_entity_id":null,
+    "should_resolve":false,
+    "category":"unrelated_negative"
+  }
+]
