@@ -9,41 +9,48 @@ AbstentionAccuracy=1.0000
 FalsePositiveResolutionRate=0.0000
 ```
 
+## What worked
+
+Service mentions with only service-type cues resolved correctly.
+
+Unrelated negatives still abstained perfectly.
+
 ## Failure pattern
 
-Two positive tasks failed before semantic ranking:
+Two positive team mentions failed:
 
 ```text
 "team operating the Atlas authentication service"
+
 "group maintaining the production session metadata cache"
 ```
 
-The baseline type inferer found both team and service cues in each phrase and treated that as ambiguous.
-
-For example:
+The strict lexical type inferer saw cues for both types:
 
 ```text
-team      -> team cue
-service   -> service cue
+team + service
+
+group + cache
 ```
 
-and:
-
-```text
-group     -> team cue
-cache     -> service cue
-```
+and returned no type.
 
 ## Diagnosis
 
-The policy treats every type word in the mention as if it described the referent.
+Not every type word in a mention describes the referent.
 
-That is incorrect for relational noun phrases.
+In:
 
-The first noun-like type cue describes the target entity, while later type words may describe related objects.
+```text
+team operating the Atlas authentication service
+```
 
-## Conclusion
+the referent is the `team`.
 
-Do not change the semantic model or threshold.
+The later word `service` describes the object operated by that team.
 
-EXP-061 will compare the original conflict-abstain policy with an earliest-cue policy while keeping all downstream components fixed.
+The strict "all type cues must agree" rule is therefore too conservative for relational noun phrases.
+
+## Next experiment
+
+EXP-061 compares the strict rule with an earliest-cue/head-like heuristic while keeping the semantic ranker, threshold, and benchmark fixed.
