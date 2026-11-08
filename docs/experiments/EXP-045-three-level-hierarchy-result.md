@@ -1,6 +1,10 @@
-# EXP-045 Result: Three-Level Hierarchical Retrieval Baseline
+# EXP-045 Result: Three-Level Hierarchy Baseline
 
-## Aggregate
+## Status
+
+Provisional result — rerun required with the ancestry-preserving chunk representation.
+
+## Observed aggregate
 
 ```text
 ParentRecall@2=1.0000
@@ -13,59 +17,51 @@ AvgRetainedChunkWords=16.33
 AvgChunksScored=3.33
 ```
 
-## Main finding
+## Important implementation discrepancy
 
-The document and section levels preserve all answer-bearing evidence, but the chunk level loses one task.
-
-## Borealis failure
-
-The relevant section contains:
+The printed retained chunks were raw text such as:
 
 ```text
-Full backups run every Sunday, while incremental backups run every six hours.
+key identifier is ATLAS-KV-104.
 ```
 
-With 10-word chunks and zero overlap, the evidence phrase crosses the boundary:
+rather than the intended ancestry-preserving representation:
 
 ```text
-chunk 0: ... incremental backups run every
-chunk 1: six hours.
+Document: Atlas Service Manual.
+Section: Token Rotation.
+key identifier is ATLAS-KV-104.
 ```
 
-The benchmark evidence:
+Therefore this run does not yet validate the final EXP-045 design.
+
+## Borealis fragmentation diagnosis
+
+The Borealis evidence is:
 
 ```text
 every six hours
 ```
 
-is therefore present in neither chunk.
-
-This is evidence fragmentation, not retrieval ranking failure.
-
-## Cirrus
-
-The relevant chunk survives at rank 2.
-
-This is consistent with the earlier child-level beam result: a hard distractor remains rank 1, but the answer-bearing evidence is still nearby.
-
-## Context effect
-
-Average retained text falls from:
+With 10-word chunks and zero overlap, the section is split so that one chunk ends with:
 
 ```text
-23.33 section words
+... incremental backups run every
 ```
 
-to:
+and the remaining words appear in the next chunk.
 
-```text
-16.33 retained chunk words
-```
+The exact evidence span is therefore absent from every individual chunk.
 
-but evidence retention falls from 1.0 to 0.6667.
+This is an evidence-fragmentation failure, not a parent- or section-routing failure.
 
-Therefore smaller context is not automatically better if chunk boundaries destroy evidence.
+## Scientific consequence
 
-## Conclusion
+Two variables must not be conflated:
 
-The third hierarchy level is mechanically working, but zero-overlap chunking is too brittle for boundary-spanning evidence.
+1. ancestry/context in chunk representation;
+2. overlap needed to preserve boundary-spanning evidence.
+
+First rerun EXP-045 with the intended ancestry-preserving code.
+
+Then test overlap as a separate controlled experiment.
