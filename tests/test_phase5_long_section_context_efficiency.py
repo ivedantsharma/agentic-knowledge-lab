@@ -3,7 +3,6 @@ from pathlib import Path
 
 from knowledge_engine.ingestion.structured_schema import StructuredDocument
 
-
 DATA_PATH = Path(
     "data/processed/phase5_long_section_documents_v0.json"
 )

@@ -99,16 +99,16 @@ class HierarchicalDenseRetriever:
         self,
         query: str,
     ) -> list[tuple[str, float]]:
-        query_embedding = self.model.encode(
-            query
-        ).tolist()
+        query_embedding = list(
+            map(float, self.model.encode(query))
+        )
 
         ranked = [
             (
                 document.document_id,
                 cosine_similarity(
                     query_embedding,
-                    embedding.tolist(),
+                    list(map(float, embedding)),
                 ),
             )
             for document, embedding in zip(
@@ -143,9 +143,9 @@ class HierarchicalDenseRetriever:
                 f"unknown document_id={document_id}"
             )
 
-        query_embedding = self.model.encode(
-            query
-        ).tolist()
+        query_embedding = list(
+            map(float, self.model.encode(query))
+        )
 
         embeddings = self.section_embeddings[
             document_id
@@ -157,7 +157,7 @@ class HierarchicalDenseRetriever:
                 section.title,
                 cosine_similarity(
                     query_embedding,
-                    embedding.tolist(),
+                    list(map(float, embedding)),
                 ),
             )
             for index, (section, embedding) in enumerate(

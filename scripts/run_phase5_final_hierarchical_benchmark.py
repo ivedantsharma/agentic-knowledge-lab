@@ -15,7 +15,6 @@ from knowledge_engine.retrieval.coarse_to_fine import (
 )
 from knowledgebench.tasks.evidence_schema import EvidenceTask
 
-
 EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 CROSS_ENCODER_MODEL = "cross-encoder/ms-marco-MiniLM-L6-v2"
 

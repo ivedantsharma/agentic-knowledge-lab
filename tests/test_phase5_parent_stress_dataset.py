@@ -5,7 +5,6 @@ from knowledge_engine.ingestion.structured_schema import (
     StructuredDocument,
 )
 
-
 DATA_PATH = Path(
     "data/processed/phase5_parent_stress_documents_v0.json"
 )

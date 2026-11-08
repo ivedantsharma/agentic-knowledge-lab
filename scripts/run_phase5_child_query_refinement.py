@@ -14,7 +14,6 @@ from knowledge_engine.retrieval.hierarchical import (
 )
 from knowledgebench.tasks.evidence_schema import EvidenceTask
 
-
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 STRUCTURED_PATH = Path(
     "data/processed/phase2_structured_documents_v0.json"
