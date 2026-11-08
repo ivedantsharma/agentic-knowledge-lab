@@ -41,12 +41,23 @@ def chunk_section(
         overlap_words=overlap_words,
     )
 
+    document_title = str(
+        document.metadata.get(
+            "title",
+            document.document_id,
+        )
+    )
+
     return [
         DocumentChunk(
             chunk_id=chunk.chunk_id,
             source_document_id=document.document_id,
             chunk_index=chunk.chunk_index,
-            text=chunk.text,
+            text=(
+                f"Document: {document_title}. "
+                f"Section: {section.title}. "
+                f"{chunk.text}"
+            ),
             start_word=chunk.start_word,
             end_word=chunk.end_word,
             metadata={
