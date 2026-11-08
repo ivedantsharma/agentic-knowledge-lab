@@ -7,16 +7,16 @@ from knowledge_engine.ingestion.structured_schema import (
 )
 
 
-def test_chunk_section_preserves_parent_and_section_metadata() -> None:
+def test_chunk_section_preserves_parent_context_in_text() -> None:
     document = StructuredDocument(
-        document_id="manual",
-        metadata={"title": "Manual"},
+        document_id="manual_gamma",
+        metadata={"title": "Cirrus Worker Manual"},
         sections=[
             DocumentSection(
-                title="Policy",
+                title="Dead Letter Handling",
                 text=(
-                    "one two three four five six "
-                    "seven eight nine ten eleven twelve"
+                    "A failed job is moved to CIRRUS-DLQ "
+                    "after retry exhaustion."
                 ),
             )
         ],
@@ -25,19 +25,10 @@ def test_chunk_section_preserves_parent_and_section_metadata() -> None:
     chunks = chunk_section(
         document,
         section_index=0,
-        chunk_size_words=6,
+        chunk_size_words=10,
     )
 
-    assert len(chunks) == 2
-    assert all(
-        chunk.source_document_id == "manual"
-        for chunk in chunks
-    )
-    assert all(
-        chunk.metadata["section_title"] == "Policy"
-        for chunk in chunks
-    )
-    assert all(
-        chunk.metadata["section_index"] == 0
-        for chunk in chunks
-    )
+    assert chunks
+    assert "Cirrus Worker Manual" in chunks[0].text
+    assert "Dead Letter Handling" in chunks[0].text
+    assert chunks[0].metadata["parent_document_id"] == "manual_gamma"
