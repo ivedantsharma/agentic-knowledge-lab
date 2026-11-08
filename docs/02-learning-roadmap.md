@@ -119,7 +119,7 @@ Status: Complete.
 
 ## Phase 5 — Hierarchical Retrieval
 
-Status: Current.
+Status: Complete.
 
 Learn:
 - document → section → chunk retrieval
@@ -128,6 +128,8 @@ Learn:
 - hierarchical indexes
 
 ## Phase 6 — Knowledge Graph & Claim/Evidence Retrieval
+
+Status: Current.
 
 Learn:
 - entities
