@@ -1,0 +1,30 @@
+[
+  {
+    "task_id":"semantic-entity-001",
+    "question":"What is the backup cadence of the customer-profile storage platform?",
+    "expected_entity_id":"borealis",
+    "should_resolve":true,
+    "category":"implicit_entity"
+  },
+  {
+    "task_id":"semantic-entity-002",
+    "question":"Which service is maintained by the infrastructure reliability group?",
+    "expected_entity_id":"platform_reliability",
+    "should_resolve":true,
+    "category":"unregistered_paraphrase"
+  },
+  {
+    "task_id":"semantic-entity-003",
+    "question":"Which database stores payroll tax records for contractors?",
+    "expected_entity_id":null,
+    "should_resolve":false,
+    "category":"unrelated_negative"
+  },
+  {
+    "task_id":"semantic-entity-004",
+    "question":"Which team manages office catering and meal deliveries?",
+    "expected_entity_id":null,
+    "should_resolve":false,
+    "category":"unrelated_negative"
+  }
+]
