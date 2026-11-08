@@ -11,43 +11,32 @@ ReductionVsNaive=0.1463
 ReductionVsSections=0.0000
 ```
 
-## What worked
+## Interpretation
 
-Deduplication removed overlap redundancy:
-
-```text
-27.33 → 23.33 words/query
-```
-
-This is a 14.63% reduction relative to naively returning overlapping chunks.
-
-Evidence retention remains perfect:
+Deduplication removes the redundancy introduced by overlapping chunks.
 
 ```text
-EvidenceRetentionRate=1.0000
+27.33 words → 23.33 words
 ```
 
-## What did not improve
+This is a 14.63% reduction versus naive concatenation.
 
-The deduplicated windows are exactly as large as the retained full sections:
+Evidence retention remains perfect.
 
-```text
-AvgDeduplicatedWindowWords=23.33
-AvgRetainedSectionWords=23.33
-```
+## Important negative result
 
-Therefore the chunk level does not yet reduce context below section retrieval on this corpus.
+The deduplicated local windows are exactly the same average size as the retained full sections.
+
+Therefore, on the current short synthetic sections, chunk-level neighbor expansion provides no context-size advantage over returning the full retained sections.
 
 ## Why
 
-The benchmark sections are very short.
+The source sections are themselves only about 8–15 words each.
 
-For Atlas, Borealis, and Cirrus, the selected top chunk plus its neighbor spans the entire relevant section.
-
-So merging adjacent ranges reconstructs the full section.
+Once the best chunk and its neighbor are merged, their union covers the full section.
 
 ## Conclusion
 
-EXP-049 validates deduplication but does not validate context savings versus section retrieval.
+The mechanism is correct, but the benchmark is too small to test the intended context-efficiency benefit of document → section → chunk retrieval.
 
-The next experiment must use longer sections where a local chunk window can be substantially smaller than the full section.
+The next experiment should use longer sections containing multiple facts and localized answer spans.
