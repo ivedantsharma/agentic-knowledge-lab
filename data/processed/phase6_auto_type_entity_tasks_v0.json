@@ -1,0 +1,56 @@
+[
+  {
+    "task_id":"type-auto-001",
+    "question":"Which storage platform contains production customer profile data?",
+    "mention_text":"storage platform containing production customer profile data",
+    "expected_entity_id":"borealis",
+    "expected_entity_type":"service",
+    "should_resolve":true,
+    "category":"implicit_service"
+  },
+  {
+    "task_id":"type-auto-002",
+    "question":"Which team operates the Atlas authentication service?",
+    "mention_text":"team operating the Atlas authentication service",
+    "expected_entity_id":"platform_reliability",
+    "expected_entity_type":"team",
+    "should_resolve":true,
+    "category":"implicit_team"
+  },
+  {
+    "task_id":"type-auto-003",
+    "question":"Which worker platform runs production asynchronous workloads?",
+    "mention_text":"worker platform running production asynchronous workloads",
+    "expected_entity_id":"cirrus",
+    "expected_entity_type":"service",
+    "should_resolve":true,
+    "category":"implicit_service"
+  },
+  {
+    "task_id":"type-auto-004",
+    "question":"Which group maintains the production session metadata cache?",
+    "mention_text":"group maintaining the production session metadata cache",
+    "expected_entity_id":"identity_foundations",
+    "expected_entity_type":"team",
+    "should_resolve":true,
+    "category":"implicit_team"
+  },
+  {
+    "task_id":"type-auto-005",
+    "question":"Which application handles employee parking permits?",
+    "mention_text":"application handling employee parking permits",
+    "expected_entity_id":null,
+    "expected_entity_type":"service",
+    "should_resolve":false,
+    "category":"unrelated_negative"
+  },
+  {
+    "task_id":"type-auto-006",
+    "question":"Which squad handles annual offsite planning?",
+    "mention_text":"squad handling annual offsite planning",
+    "expected_entity_id":null,
+    "expected_entity_type":"team",
+    "should_resolve":false,
+    "category":"unrelated_negative"
+  }
+]
