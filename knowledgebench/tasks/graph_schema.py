@@ -137,3 +137,32 @@ class SemanticEntityMentionTask(BaseModel):
                 "semantic mention task fields must not be blank"
             )
         return cleaned
+
+
+
+class RelationConstrainedEntityTask(BaseModel):
+    task_id: str
+    question: str
+    expected_entity_id: str
+    first_relation: str
+    category: str = "relation_constrained_entity"
+    metadata: dict[str, Any] = Field(default_factory=dict)
+
+    @field_validator(
+        "task_id",
+        "question",
+        "expected_entity_id",
+        "first_relation",
+        "category",
+    )
+    @classmethod
+    def validate_required_relation_task_text(
+        cls,
+        value: str,
+    ) -> str:
+        cleaned = value.strip()
+        if not cleaned:
+            raise ValueError(
+                "relation-constrained task fields must not be blank"
+            )
+        return cleaned
