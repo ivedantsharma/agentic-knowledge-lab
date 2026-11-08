@@ -10,96 +10,59 @@ PositiveTopScores=[0.545878, 0.498791]
 NegativeTopScores=[0.311179, 0.322663]
 ```
 
-## Positive case 1
+## Positive score separation
 
-Question:
-
-```text
-What is the backup cadence of the customer-profile storage platform?
-```
-
-Ranking:
+The two positive questions produced substantially higher top semantic scores than the unrelated negatives.
 
 ```text
-1. borealis              0.545878  correct
-2. platform_reliability  0.323625
-3. solstice              0.300118
+positive minimum top score = 0.498791
+negative maximum top score = 0.322663
 ```
 
-This is a successful implicit-entity semantic match.
+This suggests semantic profiles contain useful signal.
 
-## Positive case 2
+However, the sample is too small to justify a production threshold.
 
-Question:
+## Critical failure
+
+For the paraphrased Platform Reliability question:
 
 ```text
-Which service is maintained by the infrastructure reliability group?
+Borealis              0.498791
+Platform Reliability  0.491856
 ```
 
-Ranking:
+The correct start node ranks second.
 
-```text
-1. borealis              0.498791
-2. platform_reliability  0.491856  correct
-3. atlas                 0.450390
-```
-
-The gold entity is rank 2.
-
-## Negative cases
-
-Unrelated questions receive lower top scores:
-
-```text
-payroll database question → 0.311179
-office catering question  → 0.322663
-```
-
-There is useful score separation between these negatives and the two positive questions.
-
-## Why thresholding is not yet justified
-
-A threshold below approximately 0.49 would accept the second positive question, but its rank-1 entity is wrong.
-
-Therefore:
-
-```text
-high semantic score
-!=
-correct entity role
-```
-
-A top-score threshold alone would turn the second case into a confident false-positive link.
+A simple threshold on the top score would therefore accept the wrong entity.
 
 ## Diagnosis
 
-The ranker embeds the whole question.
+The semantic ranker matches the question to the correct local graph neighborhood but does not understand which node plays the required graph role.
 
-For:
-
-```text
-Which service is maintained by the infrastructure reliability group?
-```
-
-the question contains strong semantics about a service being maintained.
-
-Borealis is a service connected to Platform Reliability, so its profile scores slightly higher than the team entity actually mentioned by the phrase:
+Borealis and Platform Reliability share evidence:
 
 ```text
-infrastructure reliability group
+Platform Reliability maintains the Borealis storage system...
 ```
 
-This is an entity-role / mention-localization failure, not simply a weak embedding model.
+Both profiles therefore look relevant.
 
-## Next experiment
-
-Hold the semantic model and entity profiles fixed.
-
-Change only the semantic query representation:
+The missing signal is structural:
 
 ```text
-whole question
-→ gold entity mention span
+maintains_storage_system
+requires the start node to be a subject of that relation
 ```
 
-This isolates semantic entity mapping from mention detection.
+## Conclusion
+
+Do not implement:
+
+```text
+semantic top-1 + score threshold
+```
+
+yet.
+
+The next experiment should test whether the known first relation can constrain semantic candidate ranking to structurally valid start nodes.
