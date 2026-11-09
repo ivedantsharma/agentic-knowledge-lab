@@ -1,5 +1,8 @@
 import json
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from sentence_transformers import SentenceTransformer
 
@@ -7,7 +10,6 @@ from knowledge_engine.retrieval.bm25 import BM25Retriever
 from knowledge_engine.retrieval.vector_math import cosine_similarity
 from knowledgebench.documents.v2_schema import KnowledgeBenchV2Document
 from knowledgebench.tasks.v2_schema import KnowledgeBenchV2Task
-
 
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 

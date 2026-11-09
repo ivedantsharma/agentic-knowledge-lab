@@ -115,13 +115,12 @@ class KnowledgeBenchV2Task(BaseModel):
                     "should_answer=False requires unanswerable challenge"
                 )
 
-        if self.evidence_chain:
-            if not set(self.evidence_chain).issubset(
-                self.supporting_document_ids
-            ):
-                raise ValueError(
-                    "evidence_chain must be a subset of supporting documents"
-                )
+        if self.evidence_chain and not set(self.evidence_chain).issubset(
+            self.supporting_document_ids
+        ):
+            raise ValueError(
+                "evidence_chain must be a subset of supporting documents"
+            )
 
         if (
             KnowledgeChallenge.MULTI_HOP in self.challenge_types
