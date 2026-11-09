@@ -1,0 +1,59 @@
+[
+  {
+    "document_id":"kbv2-doc-atlas-org",
+    "title":"Atlas Ownership",
+    "text":"Atlas is operated by the Platform Reliability team.",
+    "source_type":"organization_record"
+  },
+  {
+    "document_id":"kbv2-doc-platform-current",
+    "title":"Platform Reliability Production Storage",
+    "text":"Platform Reliability maintains Borealis for production customer-profile storage.",
+    "source_type":"organization_record",
+    "effective_at":"2026-10-01"
+  },
+  {
+    "document_id":"kbv2-doc-borealis-current",
+    "title":"Borealis Production Backup Policy",
+    "text":"Production Borealis incremental backups run every six hours.",
+    "source_type":"service_manual",
+    "effective_at":"2026-10-01"
+  },
+  {
+    "document_id":"kbv2-doc-borealis-stale",
+    "title":"Borealis Legacy Backup Policy",
+    "text":"Borealis incremental backups run every twelve hours.",
+    "source_type":"service_manual",
+    "effective_at":"2025-01-15"
+  },
+  {
+    "document_id":"kbv2-doc-aurora-distractor",
+    "title":"Aurora Backup Policy",
+    "text":"Aurora, a legacy reporting storage system, performs incremental backups every twelve hours.",
+    "source_type":"service_manual"
+  },
+  {
+    "document_id":"kbv2-doc-cirrus-org",
+    "title":"Developer Productivity Worker Platform",
+    "text":"Developer Productivity maintains Cirrus for production asynchronous workloads.",
+    "source_type":"organization_record"
+  },
+  {
+    "document_id":"kbv2-doc-cirrus-manual",
+    "title":"Cirrus Retry Policy",
+    "text":"Production Cirrus retries failed jobs at most five times before dead-letter handling.",
+    "source_type":"service_manual"
+  },
+  {
+    "document_id":"kbv2-doc-cirrus-contradiction",
+    "title":"Cirrus Migration Draft",
+    "text":"A migration draft proposes reducing the Cirrus retry limit to three attempts. The proposal is not yet active.",
+    "source_type":"draft_proposal"
+  },
+  {
+    "document_id":"kbv2-doc-unrelated-payroll",
+    "title":"Payroll Operations",
+    "text":"Payroll Operations manages monthly salary processing and tax statements.",
+    "source_type":"organization_record"
+  }
+]
