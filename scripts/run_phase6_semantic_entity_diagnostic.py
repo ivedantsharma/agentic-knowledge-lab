@@ -1,5 +1,8 @@
 import json
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from sentence_transformers import SentenceTransformer
 
@@ -11,7 +14,6 @@ from knowledge_engine.graph.semantic_entity_resolution import (
     SemanticEntityRanker,
 )
 from knowledgebench.tasks.graph_schema import EntityResolutionTask
-
 
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 

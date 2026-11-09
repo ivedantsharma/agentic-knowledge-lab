@@ -7,7 +7,6 @@ from knowledge_engine.graph.entity_resolution import (
 from knowledge_engine.graph.schema import ClaimGraph
 from knowledgebench.tasks.graph_schema import EntityResolutionTask
 
-
 GRAPH_PATH = Path(
     "data/processed/phase6_claim_graph_entity_stress_v1.json"
 )

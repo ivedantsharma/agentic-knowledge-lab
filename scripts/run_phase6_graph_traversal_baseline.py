@@ -1,10 +1,12 @@
 import json
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from knowledge_engine.graph.schema import ClaimGraph
 from knowledge_engine.graph.traversal import ClaimGraphIndex
 from knowledgebench.tasks.graph_schema import GraphTraversalTask
-
 
 GRAPH_PATH = Path(
     "data/processed/phase6_claim_graph_v0.json"

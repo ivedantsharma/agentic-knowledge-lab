@@ -1,12 +1,17 @@
 import json
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from sentence_transformers import SentenceTransformer
 
-from knowledge_engine.graph.path_search import (\n    GraphPathEnumerator,\n    SemanticGraphPathRanker,\n)
+from knowledge_engine.graph.path_search import (
+    GraphPathEnumerator,
+    SemanticGraphPathRanker,
+)
 from knowledge_engine.graph.schema import ClaimGraph
 from knowledgebench.tasks.graph_schema import GraphTraversalTask
-
 
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 

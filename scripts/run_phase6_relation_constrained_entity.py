@@ -11,7 +11,6 @@ from knowledgebench.tasks.graph_schema import (
     RelationConstrainedEntityTask,
 )
 
-
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 
 GRAPH_PATH = Path(

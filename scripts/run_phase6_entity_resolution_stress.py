@@ -1,12 +1,14 @@
 import json
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from knowledge_engine.graph.entity_resolution import (
     LexicalEntityResolver,
 )
 from knowledge_engine.graph.schema import ClaimGraph
 from knowledgebench.tasks.graph_schema import EntityResolutionTask
-
 
 GRAPH_PATH = Path(
     "data/processed/phase6_claim_graph_entity_stress_v1.json"

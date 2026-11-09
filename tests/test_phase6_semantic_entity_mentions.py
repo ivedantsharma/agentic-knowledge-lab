@@ -5,7 +5,6 @@ from knowledgebench.tasks.graph_schema import (
     SemanticEntityMentionTask,
 )
 
-
 TASK_PATH = Path(
     "data/processed/phase6_semantic_entity_mentions_v0.json"
 )
