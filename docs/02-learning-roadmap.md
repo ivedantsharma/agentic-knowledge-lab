@@ -140,7 +140,7 @@ Learn:
 
 ## Phase 7 — KnowledgeBench v2: Hard Retrieval Evals
 
-Status: Current.
+Status: Complete.
 
 Learn:
 - multi-hop tasks
@@ -151,6 +151,8 @@ Learn:
 - unanswerable questions
 
 ## Phase 8 — Agent Evaluation & Graders
+
+Status: Current.
 
 Learn:
 - agent traces
