@@ -1,5 +1,8 @@
 import json
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from sentence_transformers import SentenceTransformer
 
@@ -14,7 +17,6 @@ from knowledge_engine.graph.schema import ClaimGraph
 from knowledgebench.tasks.graph_schema import (
     EndToEndGraphQATask,
 )
-
 
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 ENTITY_THRESHOLD = 0.39
@@ -79,7 +81,7 @@ def main() -> None:
             )
         except ValueError as exc:
             result = None
-            print(f"  system_result=ABSTAIN")
+            print("  system_result=ABSTAIN")
             print(f"  reason={exc}")
 
         if task.should_answer:
