@@ -1,0 +1,68 @@
+{
+  "cases": [
+    {
+      "case_id": "rel-001",
+      "question": "What incremental backup cadence is used by the production Borealis service?",
+      "evidence": "For the production Borealis service, full backups run every Sunday. Incremental backups run every six hours.",
+      "candidate_answer": "every six hours",
+      "expected_relation_aligned": true,
+      "category": "correct_relation"
+    },
+    {
+      "case_id": "rel-002",
+      "question": "What incremental backup cadence is used by the production Borealis service?",
+      "evidence": "For the production Borealis service, full backups run every Sunday. Incremental backups run every six hours.",
+      "candidate_answer": "every Sunday",
+      "expected_relation_aligned": false,
+      "category": "grounded_wrong_relation"
+    },
+    {
+      "case_id": "rel-003",
+      "question": "How many times are failed production Cirrus jobs retried before dead-letter handling?",
+      "evidence": "For the production Cirrus worker platform, failed jobs are retried at most five times before dead-letter handling. Jobs that exhaust retries are sent to the CIRRUS-DLQ dead-letter queue.",
+      "candidate_answer": "five times",
+      "expected_relation_aligned": true,
+      "category": "correct_relation"
+    },
+    {
+      "case_id": "rel-004",
+      "question": "Where are failed production Cirrus jobs sent after retries are exhausted?",
+      "evidence": "For the production Cirrus worker platform, failed jobs are retried at most five times before dead-letter handling. Jobs that exhaust retries are sent to the CIRRUS-DLQ dead-letter queue.",
+      "candidate_answer": "five times",
+      "expected_relation_aligned": false,
+      "category": "grounded_wrong_relation"
+    },
+    {
+      "case_id": "rel-005",
+      "question": "Where are failed production Cirrus jobs sent after retries are exhausted?",
+      "evidence": "For the production Cirrus worker platform, failed jobs are retried at most five times before dead-letter handling. Jobs that exhaust retries are sent to the CIRRUS-DLQ dead-letter queue.",
+      "candidate_answer": "CIRRUS-DLQ",
+      "expected_relation_aligned": true,
+      "category": "correct_relation"
+    },
+    {
+      "case_id": "rel-006",
+      "question": "How long is metadata cached by the production Solstice service?",
+      "evidence": "For the production Solstice cache service, validated session metadata is cached for ten minutes.",
+      "candidate_answer": "two minutes",
+      "expected_relation_aligned": false,
+      "category": "unsupported_answer"
+    },
+    {
+      "case_id": "rel-007",
+      "question": "How often do signing keys rotate for the production Meridian service?",
+      "evidence": "For the production Meridian signing service, signing keys rotate every twelve hours.",
+      "candidate_answer": "every twelve hours",
+      "expected_relation_aligned": true,
+      "category": "correct_relation"
+    },
+    {
+      "case_id": "rel-008",
+      "question": "How often do signing keys rotate for the production Meridian service?",
+      "evidence": "Security Platform maintains the Meridian signing service for production API credentials.",
+      "candidate_answer": "Meridian",
+      "expected_relation_aligned": false,
+      "category": "topically_related_wrong_type"
+    }
+  ]
+}
