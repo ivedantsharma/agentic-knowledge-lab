@@ -1,5 +1,8 @@
 import json
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from knowledgebench.documents.v2_schema import (
     KnowledgeBenchV2Document,
@@ -11,7 +14,6 @@ from knowledgebench.evaluation.v2_audit import (
 from knowledgebench.tasks.v2_schema import (
     KnowledgeBenchV2Task,
 )
-
 
 DOCUMENTS_PATH = Path(
     "data/processed/knowledgebench_v2_hard_documents_v0.json"

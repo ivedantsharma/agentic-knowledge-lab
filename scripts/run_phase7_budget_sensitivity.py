@@ -1,5 +1,8 @@
 import json
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from sentence_transformers import SentenceTransformer
 
@@ -11,7 +14,6 @@ from knowledgebench.evaluation.v2_retrieval_evaluator import (
     evaluate_v2_retrieval,
 )
 from knowledgebench.tasks.v2_schema import KnowledgeBenchV2Task
-
 
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 TOP_K_VALUES = [1, 3, 5]
