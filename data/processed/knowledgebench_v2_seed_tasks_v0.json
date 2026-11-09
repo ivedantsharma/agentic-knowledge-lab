@@ -1,0 +1,52 @@
+[
+  {
+    "task_id":"kbv2-seed-001",
+    "question":"What incremental backup cadence is used by the production storage system maintained by the team that operates Atlas?",
+    "challenge_types":["multi_hop","distractor","stale_knowledge"],
+    "should_answer":true,
+    "expected_answer":"every six hours",
+    "supporting_document_ids":[
+      "kbv2-doc-atlas-org",
+      "kbv2-doc-platform-current",
+      "kbv2-doc-borealis-current"
+    ],
+    "evidence_chain":[
+      "kbv2-doc-atlas-org",
+      "kbv2-doc-platform-current",
+      "kbv2-doc-borealis-current"
+    ],
+    "distractor_document_ids":[
+      "kbv2-doc-aurora-distractor"
+    ],
+    "stale_document_ids":[
+      "kbv2-doc-borealis-stale"
+    ],
+    "category":"multi_hop_temporal_distractor"
+  },
+  {
+    "task_id":"kbv2-seed-002",
+    "question":"How many times are failed production asynchronous jobs retried before dead-letter handling?",
+    "challenge_types":["multi_hop","contradiction"],
+    "should_answer":true,
+    "expected_answer":"five times",
+    "supporting_document_ids":[
+      "kbv2-doc-cirrus-org",
+      "kbv2-doc-cirrus-manual"
+    ],
+    "evidence_chain":[
+      "kbv2-doc-cirrus-org",
+      "kbv2-doc-cirrus-manual"
+    ],
+    "contradicting_document_ids":[
+      "kbv2-doc-cirrus-contradiction"
+    ],
+    "category":"multi_hop_contradiction"
+  },
+  {
+    "task_id":"kbv2-seed-003",
+    "question":"Which team owns the employee parking permit application?",
+    "challenge_types":["unanswerable"],
+    "should_answer":false,
+    "category":"unanswerable"
+  }
+]
