@@ -92,23 +92,32 @@ def audit_knowledgebench_v2(
         if KnowledgeChallenge.STALE_KNOWLEDGE not in task.challenge_types:
             continue
 
-        referenced_ids = (
-            task.supporting_document_ids
-            | task.stale_document_ids
-        )
-        referenced_documents = [
+        stale_documents = [
             document_by_id[document_id]
-            for document_id in referenced_ids
+            for document_id in task.stale_document_ids
+            if document_id in document_by_id
+        ]
+        supporting_documents = [
+            document_by_id[document_id]
+            for document_id in task.supporting_document_ids
             if document_id in document_by_id
         ]
 
-        if (
-            not task.stale_document_ids
-            or not referenced_documents
-            or any(
-                document.effective_at is None
-                for document in referenced_documents
+        has_dated_stale_evidence = (
+            bool(stale_documents)
+            and all(
+                document.effective_at is not None
+                for document in stale_documents
             )
+        )
+        has_dated_current_support = any(
+            document.effective_at is not None
+            for document in supporting_documents
+        )
+
+        if (
+            not has_dated_stale_evidence
+            or not has_dated_current_support
         ):
             temporal_failures.append(
                 task.task_id
