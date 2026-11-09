@@ -3,14 +3,14 @@ from knowledge_engine.graph.entity_type import (
 )
 
 
-def test_infers_team_from_group() -> None:
+def test_original_inferer_abstains_on_mixed_group_cache_cues() -> None:
     inferer = LexicalEntityTypeInferer()
 
     result = inferer.infer(
         "group maintaining the cache"
     )
 
-    assert result.entity_type == "team"
+    assert result.entity_type is None
 
 
 def test_infers_service_from_platform() -> None:
