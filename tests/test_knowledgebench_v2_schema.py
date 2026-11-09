@@ -66,3 +66,30 @@ def test_document_roles_must_not_overlap() -> None:
             supporting_document_ids={"doc-current"},
             stale_document_ids={"doc-current"},
         )
+
+
+
+def test_ambiguity_task_requires_candidate_documents() -> None:
+    with pytest.raises(ValidationError):
+        KnowledgeBenchV2Task(
+            task_id="kbv2-005",
+            question="What cache duration does Nimbus use?",
+            challenge_types={
+                KnowledgeChallenge.AMBIGUITY,
+                KnowledgeChallenge.UNANSWERABLE,
+            },
+            should_answer=False,
+        )
+
+
+def test_ambiguity_candidates_require_ambiguity_label() -> None:
+    with pytest.raises(ValidationError):
+        KnowledgeBenchV2Task(
+            task_id="kbv2-006",
+            question="Unknown fact?",
+            challenge_types={
+                KnowledgeChallenge.UNANSWERABLE,
+            },
+            should_answer=False,
+            ambiguity_candidate_document_ids={"a", "b"},
+        )
