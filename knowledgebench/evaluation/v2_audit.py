@@ -2,6 +2,8 @@ from dataclasses import dataclass
 from collections import Counter
 
 from knowledgebench.documents.v2_schema import KnowledgeBenchV2Document
+AUDIT_RULE_VERSION = "temporal-v2"
+
 from knowledgebench.tasks.v2_schema import (
     KnowledgeBenchV2Task,
     KnowledgeChallenge,
