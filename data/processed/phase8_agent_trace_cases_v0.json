@@ -1,0 +1,124 @@
+{
+  "tasks": [
+    {
+      "task_id": "phase8-trace-001",
+      "question": "What is the final policy value?",
+      "expected_answer": "six hours",
+      "required_document_ids": [
+        "bridge",
+        "policy"
+      ],
+      "max_reasonable_search_steps": 2
+    }
+  ],
+  "runs": [
+    {
+      "case_name": "ideal",
+      "task_id": "phase8-trace-001",
+      "steps": [
+        {
+          "step_index": 0,
+          "action_type": "search",
+          "query": "find owning service",
+          "retrieved_document_ids": [
+            "bridge"
+          ]
+        },
+        {
+          "step_index": 1,
+          "action_type": "search",
+          "query": "find policy for service",
+          "retrieved_document_ids": [
+            "policy"
+          ]
+        },
+        {
+          "step_index": 2,
+          "action_type": "stop",
+          "answer": "six hours"
+        }
+      ]
+    },
+    {
+      "case_name": "premature_stop",
+      "task_id": "phase8-trace-001",
+      "steps": [
+        {
+          "step_index": 0,
+          "action_type": "search",
+          "query": "find owning service",
+          "retrieved_document_ids": [
+            "bridge"
+          ]
+        },
+        {
+          "step_index": 1,
+          "action_type": "stop",
+          "answer": "six hours"
+        }
+      ]
+    },
+    {
+      "case_name": "redundant_search",
+      "task_id": "phase8-trace-001",
+      "steps": [
+        {
+          "step_index": 0,
+          "action_type": "search",
+          "query": "find owning service",
+          "retrieved_document_ids": [
+            "bridge"
+          ]
+        },
+        {
+          "step_index": 1,
+          "action_type": "search",
+          "query": "find owning service",
+          "retrieved_document_ids": [
+            "bridge"
+          ]
+        },
+        {
+          "step_index": 2,
+          "action_type": "search",
+          "query": "find policy for service",
+          "retrieved_document_ids": [
+            "policy"
+          ]
+        },
+        {
+          "step_index": 3,
+          "action_type": "stop",
+          "answer": "six hours"
+        }
+      ]
+    },
+    {
+      "case_name": "wrong_evidence",
+      "task_id": "phase8-trace-001",
+      "steps": [
+        {
+          "step_index": 0,
+          "action_type": "search",
+          "query": "find owning service",
+          "retrieved_document_ids": [
+            "bridge"
+          ]
+        },
+        {
+          "step_index": 1,
+          "action_type": "search",
+          "query": "find policy for service",
+          "retrieved_document_ids": [
+            "distractor"
+          ]
+        },
+        {
+          "step_index": 2,
+          "action_type": "stop",
+          "answer": "twelve hours"
+        }
+      ]
+    }
+  ]
+}
