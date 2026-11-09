@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Protocol
 
 from knowledge_engine.graph.entity_resolution import (
     EntityResolutionResult,
@@ -13,6 +14,14 @@ from knowledge_engine.graph.schema import (
     ClaimGraph,
     EvidenceReference,
 )
+
+
+class GraphEntityResolver(Protocol):
+    def resolve(
+        self,
+        question: str,
+    ) -> EntityResolutionResult:
+        ...
 
 
 @dataclass(frozen=True)
@@ -37,14 +46,17 @@ class ClaimGraphQAEngine:
         graph: ClaimGraph,
         path_ranker: SemanticGraphPathRanker,
         max_hops: int = 3,
+        entity_resolver: GraphEntityResolver | None = None,
     ) -> None:
         if max_hops <= 0:
             raise ValueError(
                 "max_hops must be positive"
             )
 
-        self.entity_resolver = LexicalEntityResolver(
-            graph
+        self.entity_resolver = (
+            entity_resolver
+            if entity_resolver is not None
+            else LexicalEntityResolver(graph)
         )
         self.path_enumerator = GraphPathEnumerator(
             graph
