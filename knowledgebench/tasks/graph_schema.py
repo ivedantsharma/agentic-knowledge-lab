@@ -248,3 +248,57 @@ class TypedEntityMentionResolutionTask(EntityMentionResolutionTask):
                 "expected_entity_type must not be blank"
             )
         return cleaned
+
+
+
+class EndToEndGraphQATask(BaseModel):
+    task_id: str
+    question: str
+    should_answer: bool
+    expected_entity_id: str | None = None
+    expected_answer: str | None = None
+    expected_claim_ids: list[str] = Field(default_factory=list)
+    category: str = "end_to_end_graph_qa"
+    metadata: dict[str, Any] = Field(default_factory=dict)
+
+    @field_validator(
+        "task_id",
+        "question",
+        "category",
+    )
+    @classmethod
+    def validate_required_end_to_end_text(
+        cls,
+        value: str,
+    ) -> str:
+        cleaned = value.strip()
+        if not cleaned:
+            raise ValueError(
+                "end-to-end task fields must not be blank"
+            )
+        return cleaned
+
+    @model_validator(mode="after")
+    def validate_expected_outputs(
+        self,
+    ) -> "EndToEndGraphQATask":
+        if self.should_answer:
+            if (
+                self.expected_entity_id is None
+                or self.expected_answer is None
+                or not self.expected_claim_ids
+            ):
+                raise ValueError(
+                    "answerable task requires entity, answer, and claims"
+                )
+        else:
+            if (
+                self.expected_entity_id is not None
+                or self.expected_answer is not None
+                or self.expected_claim_ids
+            ):
+                raise ValueError(
+                    "abstention task must not set expected outputs"
+                )
+
+        return self
