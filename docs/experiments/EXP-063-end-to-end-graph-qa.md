@@ -1,8 +1,8 @@
-# EXP-063: End-to-End Natural-Language Graph QA
+# EXP-063: End-to-End Explicit-Entity Claim-Graph QA
 
 ## Research question
 
-Can the Phase 6 components work together from a natural-language question to a provenance-backed answer without gold start-entity IDs or gold relation paths?
+Can the Phase 6 components work together from a natural-language question to a provenance-bearing answer without being given the start entity or relation path?
 
 ## Pipeline
 
@@ -11,48 +11,66 @@ question
 → lexical entity resolution
 → graph path enumeration
 → semantic path ranking
-→ deterministic traversal
-→ answer + evidence
+→ selected claim path
+→ answer + provenance
 ```
 
-## Removed oracle assumptions
+## Controlled assumptions
 
-EXP-053 supplied:
+No longer oracle:
 
-- gold start entity,
-- gold relation path.
+- start entity,
+- relation path.
 
-EXP-063 supplies neither.
+Still constrained:
 
-The current tasks explicitly name their start entities, so deterministic lexical linking is used rather than semantic fallback.
+- the start entity must appear explicitly by registered name or alias,
+- path search is bounded to three hops,
+- the graph is small and synthetic.
 
-## Fixed components
+## Why use the original four questions?
 
-- branching Phase 6 graph,
-- MiniLM path ranker,
-- maximum path length = 3,
-- deterministic traversal semantics,
-- existing Phase 6 task set.
+The individual components were validated separately.
+
+EXP-063 is an integration experiment, so we deliberately avoid simultaneously introducing semantic entity fallback, automatic mention extraction, or a new threshold policy.
+
+That keeps failures attributable.
 
 ## Metrics
 
-- EntityLinkAccuracy
+- EntityResolutionAccuracy
 - PathSelectionAccuracy
 - AnswerAccuracy
 - ProvenanceCoverage
+- EndToEndSuccessRate
+- AvgPathScoreMargin
 
-## What success would establish
+A task counts as end-to-end success only if entity, path, answer, and provenance are all correct.
 
-The independently tested Phase 6 components compose correctly into a single natural-language graph-QA pipeline on the current synthetic benchmark.
+## Margin diagnostic
 
-## What success would not establish
+EXP-062 showed a close path-ranking case for Atlas:
 
-It would not solve:
+```text
+correct Borealis path: 0.782214
+legacy Aurora path:    0.755725
+margin:                0.026489
+```
 
-- implicit start-entity mention extraction,
-- large-graph path search,
-- ambiguous duplicate claims,
-- qualifier-aware selection such as production vs staging,
-- independent generalization beyond the development corpus.
+Therefore EXP-063 records top-1/top-2 path margin rather than reporting accuracy alone.
 
-Those limitations remain explicit.
+## What success would prove
+
+The independently tested Phase 6 components can be composed into a reusable natural-language-to-claim-graph QA baseline.
+
+## What success would not prove
+
+It would not establish robust handling of:
+
+- implicit entity mentions,
+- ambiguous aliases,
+- large graphs,
+- unseen relation schemas,
+- qualifier-heavy claims,
+- calibrated confidence,
+- autonomous generative graph planning.
