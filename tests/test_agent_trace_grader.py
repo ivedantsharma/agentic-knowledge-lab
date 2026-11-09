@@ -2,6 +2,7 @@ import pytest
 from pydantic import ValidationError
 
 from knowledgebench.evaluation.agent_trace_grader import (
+    aggregate_agent_trace_grades,
     grade_agent_trace,
 )
 from knowledgebench.runs.agent_trace_schema import (
@@ -165,3 +166,60 @@ def test_trace_schema_rejects_search_after_stop() -> None:
                 ],
             }
         )
+
+
+
+def test_agent_trace_aggregate_separates_answer_and_process_quality() -> None:
+    ideal = AgentRunTrace.model_validate(
+        {
+            "task_id": "t1",
+            "steps": [
+                {
+                    "step_index": 0,
+                    "action_type": "search",
+                    "query": "find bridge",
+                    "retrieved_document_ids": ["bridge"],
+                },
+                {
+                    "step_index": 1,
+                    "action_type": "search",
+                    "query": "find policy",
+                    "retrieved_document_ids": ["policy"],
+                },
+                {
+                    "step_index": 2,
+                    "action_type": "stop",
+                    "answer": "six hours",
+                },
+            ],
+        }
+    )
+    premature = AgentRunTrace.model_validate(
+        {
+            "task_id": "t1",
+            "steps": [
+                {
+                    "step_index": 0,
+                    "action_type": "search",
+                    "query": "find bridge",
+                    "retrieved_document_ids": ["bridge"],
+                },
+                {
+                    "step_index": 1,
+                    "action_type": "stop",
+                    "answer": "six hours",
+                },
+            ],
+        }
+    )
+
+    aggregate = aggregate_agent_trace_grades(
+        [
+            grade_agent_trace(make_task(), ideal),
+            grade_agent_trace(make_task(), premature),
+        ]
+    )
+
+    assert aggregate.answer_accuracy == 1.0
+    assert aggregate.full_evidence_rate == 0.5
+    assert aggregate.premature_stop_rate == 0.5
