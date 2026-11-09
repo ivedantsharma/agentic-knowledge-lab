@@ -14,6 +14,7 @@ class KnowledgeBenchV2TaskReport:
     distractor_hit: bool
     contradiction_hit: bool
     stale_hit: bool
+    ambiguity_candidate_coverage: float
     retrieved_any: bool
 
 
@@ -28,6 +29,7 @@ class KnowledgeBenchV2RetrievalReport:
     distractor_hit_rate: float
     contradiction_hit_rate: float
     stale_hit_rate: float
+    mean_ambiguity_candidate_coverage: float
     unanswerable_retrieval_rate: float
     task_reports: list[KnowledgeBenchV2TaskReport]
 
@@ -66,6 +68,7 @@ def evaluate_v2_retrieval(
     distractor_hits: list[bool] = []
     contradiction_hits: list[bool] = []
     stale_hits: list[bool] = []
+    ambiguity_coverages: list[float] = []
     unanswerable_retrieval: list[bool] = []
 
     for task in tasks:
@@ -123,6 +126,22 @@ def evaluate_v2_retrieval(
             retrieved_set
             & task.stale_document_ids
         )
+        if task.ambiguity_candidate_document_ids:
+            ambiguity_candidate_coverage = (
+                len(
+                    retrieved_set
+                    & task.ambiguity_candidate_document_ids
+                )
+                / len(
+                    task.ambiguity_candidate_document_ids
+                )
+            )
+            ambiguity_coverages.append(
+                ambiguity_candidate_coverage
+            )
+        else:
+            ambiguity_candidate_coverage = 0.0
+
         retrieved_any = bool(retrieved)
 
         if task.distractor_document_ids:
@@ -159,6 +178,9 @@ def evaluate_v2_retrieval(
                     contradiction_hit
                 ),
                 stale_hit=stale_hit,
+                ambiguity_candidate_coverage=(
+                    ambiguity_candidate_coverage
+                ),
                 retrieved_any=retrieved_any,
             )
         )
@@ -209,6 +231,12 @@ def evaluate_v2_retrieval(
             sum(stale_hits)
             / len(stale_hits)
             if stale_hits
+            else 0.0
+        ),
+        mean_ambiguity_candidate_coverage=(
+            sum(ambiguity_coverages)
+            / len(ambiguity_coverages)
+            if ambiguity_coverages
             else 0.0
         ),
         unanswerable_retrieval_rate=(
