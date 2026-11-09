@@ -1,7 +1,4 @@
-from dataclasses import replace
-
 from knowledge_engine.graph.path_search import (
-    GraphPathCandidate,
     RankedGraphPath,
 )
 from knowledge_engine.graph.qa import (
