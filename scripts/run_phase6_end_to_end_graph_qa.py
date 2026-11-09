@@ -3,8 +3,11 @@ from pathlib import Path
 
 from sentence_transformers import SentenceTransformer
 
+from knowledge_engine.graph.path_search import (
+    SemanticGraphPathRanker,
+)
 from knowledge_engine.graph.qa import (
-    GraphQAPipeline,
+    ClaimGraphQAEngine,
 )
 from knowledge_engine.graph.schema import ClaimGraph
 from knowledgebench.tasks.graph_schema import (
@@ -34,10 +37,13 @@ def main() -> None:
     ]
 
     model = SentenceTransformer(MODEL_NAME)
-    pipeline = GraphQAPipeline(
-        graph=graph,
+    path_ranker = SemanticGraphPathRanker(
         model_name=MODEL_NAME,
         model=model,
+    )
+    engine = ClaimGraphQAEngine(
+        graph=graph,
+        path_ranker=path_ranker,
         max_hops=3,
     )
 
@@ -45,11 +51,22 @@ def main() -> None:
     path_hits = 0
     answer_hits = 0
     provenance_hits = 0
+    end_to_end_hits = 0
+    margins: list[float] = []
 
     for task in tasks:
-        result = pipeline.answer(
-            task.question
-        )
+        print(task.task_id)
+        print(f"question={task.question}")
+
+        try:
+            result = engine.answer(
+                task.question
+            )
+        except ValueError as exc:
+            print(f"  error={exc}")
+            print("  end_to_end_hit=False")
+            print()
+            continue
 
         entity_hit = (
             result.entity_resolution.entity_id
@@ -60,16 +77,24 @@ def main() -> None:
             == task.expected_claim_ids
         )
         answer_hit = (
-            result.final_value.casefold()
+            result.answer.casefold()
             == task.expected_answer.casefold()
         )
         provenance_hit = (
             len(result.evidence)
-            == len(task.expected_claim_ids)
+            == len(result.claim_ids)
             and all(
-                item.document_id
-                for item in result.evidence
+                evidence.document_id
+                for evidence in result.evidence
             )
+        )
+        end_to_end_hit = all(
+            [
+                entity_hit,
+                path_hit,
+                answer_hit,
+                provenance_hit,
+            ]
         )
 
         entity_hits += int(entity_hit)
@@ -78,9 +103,15 @@ def main() -> None:
         provenance_hits += int(
             provenance_hit
         )
+        end_to_end_hits += int(
+            end_to_end_hit
+        )
 
-        print(task.task_id)
-        print(f"question={task.question}")
+        if result.path_score_margin is not None:
+            margins.append(
+                result.path_score_margin
+            )
+
         print(
             "  resolved_entity_id="
             f"{result.entity_resolution.entity_id}"
@@ -90,28 +121,42 @@ def main() -> None:
             f"{result.entity_resolution.matched_surface!r}"
         )
         print(
-            "  selected_relations="
-            f"{result.selected_path.candidate.relation_path}"
+            f"  candidate_paths={result.candidate_path_count}"
         )
         print(
-            "  path_score="
-            f"{result.selected_path.score:.6f}"
+            f"  selected_relations={result.relation_path}"
         )
         print(
-            f"  claim_ids={result.claim_ids}"
+            f"  selected_claim_ids={result.claim_ids}"
         )
-        print(
-            f"  final_value={result.final_value!r}"
-        )
+        print(f"  answer={result.answer!r}")
         print(
             "  evidence_documents="
             f"{[item.document_id for item in result.evidence]}"
         )
+        print(
+            f"  top_path_score={result.top_path_score:.6f}"
+        )
+        if result.second_path_score is None:
+            print("  second_path_score=None")
+            print("  path_score_margin=None")
+        else:
+            print(
+                "  second_path_score="
+                f"{result.second_path_score:.6f}"
+            )
+            print(
+                "  path_score_margin="
+                f"{result.path_score_margin:.6f}"
+            )
         print(f"  entity_hit={entity_hit}")
         print(f"  path_hit={path_hit}")
         print(f"  answer_hit={answer_hit}")
         print(
             f"  provenance_hit={provenance_hit}"
+        )
+        print(
+            f"  end_to_end_hit={end_to_end_hit}"
         )
         print()
 
@@ -120,7 +165,7 @@ def main() -> None:
     print("Aggregate")
     print(f"tasks={task_count}")
     print(
-        "EntityLinkAccuracy="
+        "EntityResolutionAccuracy="
         f"{entity_hits / task_count:.4f}"
     )
     print(
@@ -134,6 +179,16 @@ def main() -> None:
     print(
         "ProvenanceCoverage="
         f"{provenance_hits / task_count:.4f}"
+    )
+    print(
+        "EndToEndSuccessRate="
+        f"{end_to_end_hits / task_count:.4f}"
+    )
+    print(
+        "AvgPathScoreMargin="
+        f"{sum(margins) / len(margins):.6f}"
+        if margins
+        else "AvgPathScoreMargin=None"
     )
 
 
