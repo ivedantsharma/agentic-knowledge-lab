@@ -1,0 +1,141 @@
+[
+  {
+    "document_id": "kbv2-doc-atlas-org",
+    "title": "Atlas Ownership",
+    "text": "Atlas is operated by the Platform Reliability team.",
+    "source_type": "organization_record"
+  },
+  {
+    "document_id": "kbv2-doc-platform-current",
+    "title": "Platform Reliability Production Storage",
+    "text": "Platform Reliability maintains Borealis for production customer-profile storage.",
+    "source_type": "organization_record",
+    "effective_at": "2026-10-01"
+  },
+  {
+    "document_id": "kbv2-doc-borealis-current",
+    "title": "Borealis Production Backup Policy",
+    "text": "Production Borealis incremental backups run every six hours.",
+    "source_type": "service_manual",
+    "effective_at": "2026-10-01"
+  },
+  {
+    "document_id": "kbv2-doc-borealis-stale",
+    "title": "Borealis Production Backup Policy — Previous Revision",
+    "text": "Production Borealis incremental backups run every twelve hours. This was the previous production backup policy before the current six-hour cadence.",
+    "source_type": "service_manual_previous_revision",
+    "effective_at": "2025-01-15"
+  },
+  {
+    "document_id": "kbv2-doc-aurora-distractor",
+    "title": "Aurora Backup Policy",
+    "text": "Aurora, a legacy reporting storage system, performs incremental backups every twelve hours.",
+    "source_type": "service_manual"
+  },
+  {
+    "document_id": "kbv2-doc-cirrus-org",
+    "title": "Developer Productivity Worker Platform",
+    "text": "Developer Productivity maintains Cirrus for production asynchronous workloads.",
+    "source_type": "organization_record"
+  },
+  {
+    "document_id": "kbv2-doc-cirrus-manual",
+    "title": "Cirrus Retry Policy",
+    "text": "Production Cirrus retries failed jobs at most five times before dead-letter handling.",
+    "source_type": "service_manual"
+  },
+  {
+    "document_id": "kbv2-doc-cirrus-contradiction",
+    "title": "Cirrus Production Retry Policy — Pending Revision",
+    "text": "Production Cirrus failed jobs use a retry limit of three attempts under the pending retry-policy revision. The revision has not yet taken effect.",
+    "source_type": "pending_policy_revision"
+  },
+  {
+    "document_id": "kbv2-doc-unrelated-payroll",
+    "title": "Payroll Operations",
+    "text": "Payroll Operations manages monthly salary processing and tax statements.",
+    "source_type": "organization_record"
+  },
+  {
+    "document_id": "kbv2-doc-nimbus-session",
+    "title": "Nimbus Session Cache",
+    "text": "Nimbus Session Cache stores authenticated session metadata for ten minutes.",
+    "source_type": "service_manual"
+  },
+  {
+    "document_id": "kbv2-doc-nimbus-analytics",
+    "title": "Nimbus Analytics Cache",
+    "text": "Nimbus Analytics Cache stores dashboard aggregates for thirty minutes.",
+    "source_type": "service_manual"
+  },
+  {
+    "document_id": "kbv2-doc-helios-org",
+    "title": "Helios Ownership",
+    "text": "Helios is operated by the Identity Foundations team.",
+    "source_type": "organization_record"
+  },
+  {
+    "document_id": "kbv2-doc-identity-current",
+    "title": "Identity Foundations Production Cache",
+    "text": "Identity Foundations maintains Solstice for production session metadata caching.",
+    "source_type": "organization_record",
+    "effective_at": "2026-10-01"
+  },
+  {
+    "document_id": "kbv2-doc-solstice-current",
+    "title": "Solstice Production Cache Policy",
+    "text": "Production Solstice caches validated session metadata for ten minutes.",
+    "source_type": "service_manual",
+    "effective_at": "2026-10-01"
+  },
+  {
+    "document_id": "kbv2-doc-solstice-stale",
+    "title": "Solstice Production Cache Policy — Previous Revision",
+    "text": "Production Solstice caches validated session metadata for twenty minutes. This was the previous policy before the current ten-minute duration.",
+    "source_type": "service_manual_previous_revision",
+    "effective_at": "2025-08-01"
+  },
+  {
+    "document_id": "kbv2-doc-security-org",
+    "title": "Security Platform Signing Service",
+    "text": "Security Platform maintains Meridian for production API credential signing.",
+    "source_type": "organization_record"
+  },
+  {
+    "document_id": "kbv2-doc-meridian-current",
+    "title": "Meridian Production Key Rotation",
+    "text": "Production Meridian signing keys rotate every twelve hours.",
+    "source_type": "service_manual",
+    "effective_at": "2026-10-01"
+  },
+  {
+    "document_id": "kbv2-doc-meridian-pending",
+    "title": "Meridian Key Rotation — Pending Revision",
+    "text": "A pending Meridian production policy sets signing-key rotation to every six hours. The revision has not yet taken effect.",
+    "source_type": "pending_policy_revision"
+  },
+  {
+    "document_id": "kbv2-doc-cumulus-retry",
+    "title": "Cumulus Worker Retry Policy",
+    "text": "Cumulus worker jobs retry failed asynchronous tasks seven times before quarantine handling.",
+    "source_type": "service_manual"
+  },
+  {
+    "document_id": "kbv2-doc-cafeteria",
+    "title": "Cafeteria Menu Operations",
+    "text": "Cafeteria Menu Operations publishes weekday lunch menus and ingredient notices.",
+    "source_type": "organization_record"
+  },
+  {
+    "document_id": "kbv2-doc-orion-logs",
+    "title": "Orion Log Retention",
+    "text": "Orion Log Service retains diagnostic logs for seven days.",
+    "source_type": "service_manual"
+  },
+  {
+    "document_id": "kbv2-doc-orion-metrics",
+    "title": "Orion Metrics Retention",
+    "text": "Orion Metrics Service retains aggregated metrics for thirty days.",
+    "source_type": "service_manual"
+  }
+]
