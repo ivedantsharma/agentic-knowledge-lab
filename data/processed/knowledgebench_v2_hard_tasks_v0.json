@@ -1,0 +1,176 @@
+[
+  {
+    "task_id": "kbv2-hard-001",
+    "question": "What incremental backup cadence is used by the production storage system maintained by the team that operates Atlas?",
+    "challenge_types": [
+      "multi_hop",
+      "distractor",
+      "stale_knowledge"
+    ],
+    "should_answer": true,
+    "expected_answer": "every six hours",
+    "supporting_document_ids": [
+      "kbv2-doc-atlas-org",
+      "kbv2-doc-platform-current",
+      "kbv2-doc-borealis-current"
+    ],
+    "evidence_chain": [
+      "kbv2-doc-atlas-org",
+      "kbv2-doc-platform-current",
+      "kbv2-doc-borealis-current"
+    ],
+    "distractor_document_ids": [
+      "kbv2-doc-aurora-distractor"
+    ],
+    "stale_document_ids": [
+      "kbv2-doc-borealis-stale"
+    ],
+    "category": "multi_hop_temporal_distractor"
+  },
+  {
+    "task_id": "kbv2-hard-002",
+    "question": "How many times are failed production asynchronous jobs retried before dead-letter handling?",
+    "challenge_types": [
+      "multi_hop",
+      "contradiction"
+    ],
+    "should_answer": true,
+    "expected_answer": "five times",
+    "supporting_document_ids": [
+      "kbv2-doc-cirrus-org",
+      "kbv2-doc-cirrus-manual"
+    ],
+    "evidence_chain": [
+      "kbv2-doc-cirrus-org",
+      "kbv2-doc-cirrus-manual"
+    ],
+    "contradicting_document_ids": [
+      "kbv2-doc-cirrus-contradiction"
+    ],
+    "category": "multi_hop_contradiction"
+  },
+  {
+    "task_id": "kbv2-hard-003",
+    "question": "Which team owns the employee parking permit application?",
+    "challenge_types": [
+      "unanswerable"
+    ],
+    "should_answer": false,
+    "category": "unanswerable"
+  },
+  {
+    "task_id": "kbv2-hard-004",
+    "question": "What cache duration does Nimbus use?",
+    "challenge_types": [
+      "ambiguity",
+      "unanswerable"
+    ],
+    "should_answer": false,
+    "ambiguity_candidate_document_ids": [
+      "kbv2-doc-nimbus-session",
+      "kbv2-doc-nimbus-analytics"
+    ],
+    "category": "ambiguous_entity_unanswerable"
+  },
+  {
+    "task_id": "kbv2-hard-005",
+    "question": "What cache duration is used by the production service maintained by the team that operates Helios?",
+    "challenge_types": [
+      "multi_hop",
+      "stale_knowledge"
+    ],
+    "should_answer": true,
+    "expected_answer": "ten minutes",
+    "supporting_document_ids": [
+      "kbv2-doc-helios-org",
+      "kbv2-doc-identity-current",
+      "kbv2-doc-solstice-current"
+    ],
+    "evidence_chain": [
+      "kbv2-doc-helios-org",
+      "kbv2-doc-identity-current",
+      "kbv2-doc-solstice-current"
+    ],
+    "stale_document_ids": [
+      "kbv2-doc-solstice-stale"
+    ],
+    "category": "multi_hop_temporal"
+  },
+  {
+    "task_id": "kbv2-hard-006",
+    "question": "How often do production signing keys rotate for the service maintained by Security Platform?",
+    "challenge_types": [
+      "multi_hop",
+      "contradiction"
+    ],
+    "should_answer": true,
+    "expected_answer": "every twelve hours",
+    "supporting_document_ids": [
+      "kbv2-doc-security-org",
+      "kbv2-doc-meridian-current"
+    ],
+    "evidence_chain": [
+      "kbv2-doc-security-org",
+      "kbv2-doc-meridian-current"
+    ],
+    "contradicting_document_ids": [
+      "kbv2-doc-meridian-pending"
+    ],
+    "category": "multi_hop_contradiction"
+  },
+  {
+    "task_id": "kbv2-hard-007",
+    "question": "How many retries does Cirrus use before dead-letter handling?",
+    "challenge_types": [
+      "distractor"
+    ],
+    "should_answer": true,
+    "expected_answer": "five times",
+    "supporting_document_ids": [
+      "kbv2-doc-cirrus-manual"
+    ],
+    "distractor_document_ids": [
+      "kbv2-doc-cumulus-retry"
+    ],
+    "category": "single_hop_distractor"
+  },
+  {
+    "task_id": "kbv2-hard-008",
+    "question": "Which team owns the cafeteria menu publishing application?",
+    "challenge_types": [
+      "unanswerable"
+    ],
+    "should_answer": false,
+    "category": "unanswerable"
+  },
+  {
+    "task_id": "kbv2-hard-009",
+    "question": "What retention window does Orion use?",
+    "challenge_types": [
+      "ambiguity",
+      "unanswerable"
+    ],
+    "should_answer": false,
+    "ambiguity_candidate_document_ids": [
+      "kbv2-doc-orion-logs",
+      "kbv2-doc-orion-metrics"
+    ],
+    "category": "ambiguous_entity_unanswerable"
+  },
+  {
+    "task_id": "kbv2-hard-010",
+    "question": "What is the current production incremental backup cadence for Borealis?",
+    "challenge_types": [
+      "stale_knowledge"
+    ],
+    "should_answer": true,
+    "expected_answer": "every six hours",
+    "supporting_document_ids": [
+      "kbv2-doc-borealis-current"
+    ],
+    "stale_document_ids": [
+      "kbv2-doc-borealis-stale"
+    ],
+    "category": "single_hop_temporal"
+  }
+]
