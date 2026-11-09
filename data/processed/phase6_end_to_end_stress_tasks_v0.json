@@ -1,0 +1,68 @@
+[
+  {
+    "task_id":"e2e-hard-001",
+    "question":"What backup cadence is used by the storage system maintained by the team that operates Atlas?",
+    "should_answer":true,
+    "expected_entity_id":"atlas",
+    "expected_answer":"every six hours",
+    "expected_claim_ids":[
+      "claim-atlas-operated-by",
+      "claim-platform-maintains-borealis",
+      "claim-borealis-backup-cadence"
+    ],
+    "category":"explicit_entity_branching"
+  },
+  {
+    "task_id":"e2e-hard-002",
+    "question":"What is the incremental backup cadence for the storage platform containing production customer profile data?",
+    "should_answer":true,
+    "expected_entity_id":"borealis",
+    "expected_answer":"every six hours",
+    "expected_claim_ids":[
+      "claim-borealis-backup-cadence"
+    ],
+    "category":"implicit_service"
+  },
+  {
+    "task_id":"e2e-hard-003",
+    "question":"For the team responsible for the production customer profile storage system, what incremental backup cadence does that system use?",
+    "should_answer":true,
+    "expected_entity_id":"platform_reliability",
+    "expected_answer":"every six hours",
+    "expected_claim_ids":[
+      "claim-platform-maintains-borealis",
+      "claim-borealis-backup-cadence"
+    ],
+    "category":"implicit_team_branching"
+  },
+  {
+    "task_id":"e2e-hard-004",
+    "question":"For the team responsible for the production asynchronous worker platform, how many retries are used before dead-letter handling?",
+    "should_answer":true,
+    "expected_entity_id":"developer_productivity",
+    "expected_answer":"five times",
+    "expected_claim_ids":[
+      "claim-devprod-maintains-cirrus",
+      "claim-cirrus-retry-limit"
+    ],
+    "category":"implicit_team_branching"
+  },
+  {
+    "task_id":"e2e-hard-005",
+    "question":"For the team responsible for employee travel reimbursements, what platform do they maintain?",
+    "should_answer":false,
+    "expected_entity_id":null,
+    "expected_answer":null,
+    "expected_claim_ids":[],
+    "category":"unrelated_team_abstention"
+  },
+  {
+    "task_id":"e2e-hard-006",
+    "question":"What retry limit is used by the service that processes cafeteria menu updates?",
+    "should_answer":false,
+    "expected_entity_id":null,
+    "expected_answer":null,
+    "expected_claim_ids":[],
+    "category":"unrelated_service_abstention"
+  }
+]
