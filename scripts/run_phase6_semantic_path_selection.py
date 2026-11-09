@@ -3,7 +3,7 @@ from pathlib import Path
 
 from sentence_transformers import SentenceTransformer
 
-from knowledge_engine.graph.path_search import GraphPathEnumerator, SemanticGraphPathRanker
+from knowledge_engine.graph.path_search import (\n    GraphPathEnumerator,\n    SemanticGraphPathRanker,\n)
 from knowledge_engine.graph.schema import ClaimGraph
 from knowledgebench.tasks.graph_schema import GraphTraversalTask
 
