@@ -28,6 +28,9 @@ class KnowledgeBenchV2Task(BaseModel):
     distractor_document_ids: set[str] = Field(default_factory=set)
     contradicting_document_ids: set[str] = Field(default_factory=set)
     stale_document_ids: set[str] = Field(default_factory=set)
+    ambiguity_candidate_document_ids: set[str] = Field(
+        default_factory=set
+    )
 
     category: str = "knowledgebench_v2"
     metadata: dict[str, Any] = Field(default_factory=dict)
@@ -128,17 +131,37 @@ class KnowledgeBenchV2Task(BaseModel):
                 "multi_hop task requires at least two evidence-chain documents"
             )
 
+        if (
+            self.ambiguity_candidate_document_ids
+            and KnowledgeChallenge.AMBIGUITY
+            not in self.challenge_types
+        ):
+            raise ValueError(
+                "ambiguity candidates require ambiguity challenge"
+            )
+
+        if (
+            KnowledgeChallenge.AMBIGUITY
+            in self.challenge_types
+            and not self.ambiguity_candidate_document_ids
+        ):
+            raise ValueError(
+                "ambiguity task requires ambiguity candidates"
+            )
+
         labeled_sets = [
             self.supporting_document_ids,
             self.distractor_document_ids,
             self.contradicting_document_ids,
             self.stale_document_ids,
+            self.ambiguity_candidate_document_ids,
         ]
         labels = [
             "supporting",
             "distractor",
             "contradicting",
             "stale",
+            "ambiguity_candidate",
         ]
 
         for left_index, left in enumerate(labeled_sets):
