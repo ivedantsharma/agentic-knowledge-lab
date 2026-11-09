@@ -152,7 +152,7 @@ Learn:
 
 ## Phase 8 — Agent Evaluation & Graders
 
-Status: Current.
+Status: Complete.
 
 Learn:
 - agent traces
@@ -163,6 +163,8 @@ Learn:
 - groundedness
 
 ## Phase 9 — Adversarial Robustness & Failure Analysis
+
+Status: Current.
 
 Learn:
 - prompt-injection documents
