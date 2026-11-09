@@ -1,5 +1,8 @@
+import sys
 from collections.abc import Callable
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from sentence_transformers import SentenceTransformer
 
@@ -42,7 +45,6 @@ from knowledgebench.tasks.multihop_loader import (
     load_multihop_tasks_json,
 )
 from knowledgebench.tasks.multihop_schema import MultiHopTask
-
 
 EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 CORPUS_PATH = Path(

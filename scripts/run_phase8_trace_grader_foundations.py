@@ -1,5 +1,8 @@
 import json
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from knowledgebench.evaluation.agent_trace_grader import (
     grade_agent_trace,
@@ -10,7 +13,6 @@ from knowledgebench.runs.agent_trace_schema import (
 from knowledgebench.tasks.agent_eval_schema import (
     AgentEvalTask,
 )
-
 
 CASES_PATH = Path(
     "data/processed/phase8_agent_trace_cases_v0.json"

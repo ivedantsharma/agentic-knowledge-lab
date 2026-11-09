@@ -168,6 +168,42 @@ def test_trace_schema_rejects_search_after_stop() -> None:
         )
 
 
+def test_planner_failure_can_have_no_trace_steps() -> None:
+    run = AgentRunTrace.model_validate(
+        {
+            "task_id": "t1",
+            "steps": [],
+            "metadata": {
+                "planner_failed": True,
+                "planner_error": "cannot form initial query",
+            },
+        }
+    )
+
+    grade = grade_agent_trace(
+        make_task(),
+        run,
+    )
+
+    assert grade.search_steps == 0
+    assert grade.stopped is False
+    assert grade.answer_correct is False
+    assert grade.required_evidence_coverage == 0.0
+
+
+def test_empty_trace_requires_planner_failure_metadata() -> None:
+    with pytest.raises(
+        ValidationError,
+        match="trace without steps must be marked as planner_failed",
+    ):
+        AgentRunTrace.model_validate(
+            {
+                "task_id": "t1",
+                "steps": [],
+            }
+        )
+
+
 
 def test_agent_trace_aggregate_separates_answer_and_process_quality() -> None:
     ideal = AgentRunTrace.model_validate(

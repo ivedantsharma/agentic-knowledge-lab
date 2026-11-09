@@ -1,10 +1,12 @@
 import json
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from knowledge_engine.agent.qwen_relation_verifier import (
     QwenRelationVerifier,
 )
-
 
 CASES_PATH = Path(
     "data/processed/phase8_relation_grader_cases_v0.json"

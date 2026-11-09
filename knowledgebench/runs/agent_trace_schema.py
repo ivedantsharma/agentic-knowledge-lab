@@ -67,9 +67,7 @@ class AgentTraceStep(BaseModel):
 
 class AgentRunTrace(BaseModel):
     task_id: str
-    steps: list[AgentTraceStep] = Field(
-        min_length=1
-    )
+    steps: list[AgentTraceStep]
     metadata: dict[str, Any] = Field(
         default_factory=dict
     )
@@ -91,6 +89,13 @@ class AgentRunTrace(BaseModel):
     def validate_step_order(
         self,
     ) -> "AgentRunTrace":
+        if not self.steps and self.metadata.get(
+            "planner_failed"
+        ) is not True:
+            raise ValueError(
+                "trace without steps must be marked as planner_failed"
+            )
+
         expected = list(
             range(len(self.steps))
         )
