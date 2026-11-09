@@ -112,3 +112,57 @@ def grade_agent_trace(
             retrieved_required_evidence
         ),
     )
+
+
+
+@dataclass(frozen=True)
+class AgentTraceAggregateGrade:
+    tasks: int
+    answer_accuracy: float
+    full_evidence_rate: float
+    premature_stop_rate: float
+    efficient_search_rate: float
+    average_search_steps: float
+    average_repeated_searches: float
+
+
+def aggregate_agent_trace_grades(
+    grades: list[AgentTraceGrade],
+) -> AgentTraceAggregateGrade:
+    if not grades:
+        raise ValueError(
+            "agent trace aggregation requires grades"
+        )
+
+    tasks = len(grades)
+
+    return AgentTraceAggregateGrade(
+        tasks=tasks,
+        answer_accuracy=(
+            sum(grade.answer_correct for grade in grades)
+            / tasks
+        ),
+        full_evidence_rate=(
+            sum(
+                grade.retrieved_required_evidence
+                for grade in grades
+            )
+            / tasks
+        ),
+        premature_stop_rate=(
+            sum(grade.premature_stop for grade in grades)
+            / tasks
+        ),
+        efficient_search_rate=(
+            sum(grade.efficient_search for grade in grades)
+            / tasks
+        ),
+        average_search_steps=(
+            sum(grade.search_steps for grade in grades)
+            / tasks
+        ),
+        average_repeated_searches=(
+            sum(grade.repeated_searches for grade in grades)
+            / tasks
+        ),
+    )
