@@ -11,6 +11,7 @@ def test_original_inferer_abstains_on_mixed_group_cache_cues() -> None:
     )
 
     assert result.entity_type is None
+    assert result.matched_cue is None
 
 
 def test_infers_service_from_platform() -> None:
