@@ -5,6 +5,7 @@ from knowledgebench.documents.v2_schema import (
     KnowledgeBenchV2Document,
 )
 from knowledgebench.evaluation.v2_audit import (
+    AUDIT_RULE_VERSION,
     audit_knowledgebench_v2,
 )
 from knowledgebench.tasks.v2_schema import (
@@ -40,6 +41,7 @@ def main() -> None:
     )
 
     print("KnowledgeBench v2 Hard v0 — Integrity Audit")
+    print(f"audit_rule_version={AUDIT_RULE_VERSION}")
     print(f"documents={report.document_count}")
     print(f"tasks={report.task_count}")
     print(f"answerable_tasks={report.answerable_tasks}")
