@@ -65,3 +65,36 @@ def test_v2_evaluator_tracks_unanswerable_retrieval() -> None:
         report.unanswerable_retrieval_rate
         == 1.0
     )
+
+
+
+def test_v2_evaluator_tracks_ambiguity_candidate_coverage() -> None:
+    task = KnowledgeBenchV2Task(
+        task_id="t3",
+        question="What cache duration does Nimbus use?",
+        challenge_types={
+            KnowledgeChallenge.AMBIGUITY,
+            KnowledgeChallenge.UNANSWERABLE,
+        },
+        should_answer=False,
+        ambiguity_candidate_document_ids={"a", "b"},
+    )
+
+    report = evaluate_v2_retrieval(
+        tasks=[task],
+        retrieved_by_task={
+            "t3": ["a", "other"],
+        },
+        k=2,
+    )
+
+    task_report = report.task_reports[0]
+
+    assert (
+        task_report.ambiguity_candidate_coverage
+        == 0.5
+    )
+    assert (
+        report.mean_ambiguity_candidate_coverage
+        == 0.5
+    )
