@@ -1,4 +1,5 @@
 from knowledgebench.evaluation.v2_retrieval_evaluator import (
+    evaluate_v2_by_challenge,
     evaluate_v2_retrieval,
 )
 from knowledgebench.tasks.v2_schema import (
@@ -97,4 +98,51 @@ def test_v2_evaluator_tracks_ambiguity_candidate_coverage() -> None:
     assert (
         report.mean_ambiguity_candidate_coverage
         == 0.5
+    )
+
+
+
+def test_v2_evaluator_reports_per_challenge_slices() -> None:
+    tasks = [
+        KnowledgeBenchV2Task(
+            task_id="m",
+            question="Multi-hop?",
+            challenge_types={
+                KnowledgeChallenge.MULTI_HOP,
+            },
+            should_answer=True,
+            expected_answer="x",
+            supporting_document_ids={"a", "b"},
+            evidence_chain=["a", "b"],
+        ),
+        KnowledgeBenchV2Task(
+            task_id="u",
+            question="Unknown?",
+            challenge_types={
+                KnowledgeChallenge.UNANSWERABLE,
+            },
+            should_answer=False,
+        ),
+    ]
+
+    reports = evaluate_v2_by_challenge(
+        tasks=tasks,
+        retrieved_by_task={
+            "m": ["a"],
+            "u": ["other"],
+        },
+        k=1,
+    )
+
+    assert set(reports) == {
+        "multi_hop",
+        "unanswerable",
+    }
+    assert (
+        reports["multi_hop"].mean_supporting_recall_at_k
+        == 0.5
+    )
+    assert (
+        reports["unanswerable"].unanswerable_retrieval_rate
+        == 1.0
     )
