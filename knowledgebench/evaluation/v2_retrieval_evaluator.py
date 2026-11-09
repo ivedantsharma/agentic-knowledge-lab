@@ -247,3 +247,35 @@ def evaluate_v2_retrieval(
         ),
         task_reports=task_reports,
     )
+
+
+
+def evaluate_v2_by_challenge(
+    tasks: list[KnowledgeBenchV2Task],
+    retrieved_by_task: dict[str, list[str]],
+    k: int,
+) -> dict[str, KnowledgeBenchV2RetrievalReport]:
+    challenge_values = sorted(
+        {
+            challenge.value
+            for task in tasks
+            for challenge in task.challenge_types
+        }
+    )
+
+    return {
+        challenge_value: evaluate_v2_retrieval(
+            tasks=[
+                task
+                for task in tasks
+                if challenge_value
+                in {
+                    challenge.value
+                    for challenge in task.challenge_types
+                }
+            ],
+            retrieved_by_task=retrieved_by_task,
+            k=k,
+        )
+        for challenge_value in challenge_values
+    }
