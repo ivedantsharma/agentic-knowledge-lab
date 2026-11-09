@@ -129,7 +129,7 @@ Learn:
 
 ## Phase 6 — Knowledge Graph & Claim/Evidence Retrieval
 
-Status: Current.
+Status: Complete.
 
 Learn:
 - entities
@@ -139,6 +139,8 @@ Learn:
 - retrieval over structure
 
 ## Phase 7 — KnowledgeBench v2: Hard Retrieval Evals
+
+Status: Current.
 
 Learn:
 - multi-hop tasks
