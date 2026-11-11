@@ -1,0 +1,42 @@
+[
+  {
+    "task_id": "kbv2-hard-001",
+    "original_question": "What incremental backup cadence is used by the production storage system maintained by the team that operates Atlas?",
+    "supporting_document_ids": [
+      "kbv2-doc-atlas-org",
+      "kbv2-doc-platform-current",
+      "kbv2-doc-borealis-current"
+    ],
+    "transformed_queries": [
+      "Which team operates Atlas?",
+      "Which production storage system is maintained by Platform Reliability?",
+      "What is the current production incremental backup cadence for Borealis?"
+    ]
+  },
+  {
+    "task_id": "kbv2-hard-005",
+    "original_question": "What cache duration is used by the production service maintained by the team that operates Helios?",
+    "supporting_document_ids": [
+      "kbv2-doc-helios-org",
+      "kbv2-doc-identity-current",
+      "kbv2-doc-solstice-current"
+    ],
+    "transformed_queries": [
+      "Which team operates Helios?",
+      "Which production session metadata cache is maintained by Identity Foundations?",
+      "What cache duration does production Solstice use?"
+    ]
+  },
+  {
+    "task_id": "kbv2-hard-006",
+    "original_question": "How often do production signing keys rotate for the service maintained by Security Platform?",
+    "supporting_document_ids": [
+      "kbv2-doc-security-org",
+      "kbv2-doc-meridian-current"
+    ],
+    "transformed_queries": [
+      "Which production API credential signing service is maintained by Security Platform?",
+      "How often do production Meridian signing keys rotate?"
+    ]
+  }
+]
