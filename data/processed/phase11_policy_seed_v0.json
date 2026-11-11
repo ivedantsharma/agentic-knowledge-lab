@@ -1,0 +1,62 @@
+[
+  {
+    "example_id": "p11-seed-001",
+    "source_task_id": "kbv2-hard-001",
+    "question": "What incremental backup cadence is used by the production storage system maintained by the team that operates Atlas?",
+    "target_action": "SEARCH_HYBRID_K5",
+    "metadata": {
+      "label_source": "phase10_budget_oracle",
+      "reason": "full supporting recall first reached at k=5"
+    }
+  },
+  {
+    "example_id": "p11-seed-002",
+    "source_task_id": "kbv2-hard-002",
+    "question": "How many times are failed production asynchronous jobs retried before dead-letter handling?",
+    "target_action": "SEARCH_HYBRID_K5",
+    "metadata": {
+      "label_source": "phase10_budget_oracle",
+      "reason": "full supporting recall first reached at k=5"
+    }
+  },
+  {
+    "example_id": "p11-seed-003",
+    "source_task_id": "kbv2-hard-005",
+    "question": "What cache duration is used by the production service maintained by the team that operates Helios?",
+    "target_action": "REFORMULATE",
+    "metadata": {
+      "label_source": "phase10_saturation_failure",
+      "reason": "single-shot Hybrid recall saturated at 0.3333 through k=5; decomposition improved recall"
+    }
+  },
+  {
+    "example_id": "p11-seed-004",
+    "source_task_id": "kbv2-hard-006",
+    "question": "How often do production signing keys rotate for the service maintained by Security Platform?",
+    "target_action": "SEARCH_HYBRID_K2",
+    "metadata": {
+      "label_source": "phase10_budget_oracle",
+      "reason": "full supporting recall first reached at k=2"
+    }
+  },
+  {
+    "example_id": "p11-seed-005",
+    "source_task_id": "kbv2-hard-007",
+    "question": "How many retries does Cirrus use before dead-letter handling?",
+    "target_action": "SEARCH_HYBRID_K1",
+    "metadata": {
+      "label_source": "phase10_budget_oracle",
+      "reason": "full supporting recall reached at k=1"
+    }
+  },
+  {
+    "example_id": "p11-seed-006",
+    "source_task_id": "kbv2-hard-010",
+    "question": "What is the current production incremental backup cadence for Borealis?",
+    "target_action": "SEARCH_HYBRID_K1",
+    "metadata": {
+      "label_source": "phase10_budget_oracle",
+      "reason": "full supporting recall reached at k=1"
+    }
+  }
+]
