@@ -175,7 +175,7 @@ Learn:
 
 ## Phase 10 — Adaptive Retrieval & Query Understanding
 
-Status: Current.
+Status: Complete.
 
 Learn:
 - BM25 vs dense vs hybrid vs graph routing
@@ -185,6 +185,8 @@ Learn:
 - retrieval policies
 
 ## Phase 11 — Fine-Tuning Retrieval/Search Behavior
+
+Status: Current.
 
 Learn:
 - PyTorch basics
