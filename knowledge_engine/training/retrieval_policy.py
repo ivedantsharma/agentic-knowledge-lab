@@ -12,11 +12,18 @@ class RetrievalPolicyAction(StrEnum):
     REFORMULATE = "REFORMULATE"
 
 
+class RetrievalPolicySplit(StrEnum):
+    TRAIN = "train"
+    DEV = "dev"
+    HELDOUT = "heldout"
+
+
 class RetrievalPolicyExample(BaseModel):
     example_id: str
     source_task_id: str
     question: str
     target_action: RetrievalPolicyAction
+    split: RetrievalPolicySplit | None = None
     metadata: dict[str, Any] = Field(
         default_factory=dict
     )
