@@ -33,8 +33,7 @@ def canonicalize_short_answer(
     ]
     normalized = " ".join(tokens)
 
-    if normalized.startswith("every "):
-        normalized = normalized[len("every "):]
+    normalized = normalized.removeprefix("every ")
 
     return normalized
 

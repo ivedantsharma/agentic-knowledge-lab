@@ -2,7 +2,6 @@ import re
 
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-
 DEFAULT_MODEL_NAME = "Qwen/Qwen2.5-1.5B-Instruct"
 
 

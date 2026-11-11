@@ -17,7 +17,6 @@ from knowledgebench.evaluation.short_answer_equivalence import (
     short_answers_equivalent,
 )
 
-
 CASES_PATH = Path(
     "data/processed/phase9_sanitizer_generalization_v0.json"
 )

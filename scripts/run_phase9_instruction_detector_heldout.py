@@ -11,7 +11,6 @@ from knowledge_engine.agent.semantic_instruction_detector import (
     SemanticInstructionDetector,
 )
 
-
 CASES_PATH = Path(
     "data/processed/phase9_instruction_classifier_heldout_v0.json"
 )

@@ -15,7 +15,6 @@ from knowledgebench.evaluation.short_answer_equivalence import (
     short_answers_equivalent,
 )
 
-
 CASES_PATH = Path(
     "data/processed/phase9_prompt_injection_position_v0.json"
 )

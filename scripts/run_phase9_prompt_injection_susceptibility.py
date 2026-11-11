@@ -11,7 +11,6 @@ from knowledgebench.evaluation.prompt_injection_grader import (
     grade_prompt_injection_pair,
 )
 
-
 CASES_PATH = Path(
     "data/processed/phase9_prompt_injection_pairs_v0.json"
 )
