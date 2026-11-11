@@ -1,0 +1,128 @@
+[
+  {
+    "example_id": "p11-train-001a",
+    "source_task_id": "kbv2-hard-001",
+    "split": "train",
+    "question": "What incremental backup cadence is used by the production storage system maintained by the team that operates Atlas?",
+    "target_action": "SEARCH_HYBRID_K5"
+  },
+  {
+    "example_id": "p11-train-001b",
+    "source_task_id": "kbv2-hard-001",
+    "split": "train",
+    "question": "How often are incremental backups run for the live storage service owned by the team operating Atlas?",
+    "target_action": "SEARCH_HYBRID_K5"
+  },
+  {
+    "example_id": "p11-train-001c",
+    "source_task_id": "kbv2-hard-001",
+    "split": "train",
+    "question": "For the production storage system linked through Atlas's operating team, what is the incremental backup interval?",
+    "target_action": "SEARCH_HYBRID_K5"
+  },
+  {
+    "example_id": "p11-train-005a",
+    "source_task_id": "kbv2-hard-005",
+    "split": "train",
+    "question": "What cache duration is used by the production service maintained by the team that operates Helios?",
+    "target_action": "REFORMULATE"
+  },
+  {
+    "example_id": "p11-train-005b",
+    "source_task_id": "kbv2-hard-005",
+    "split": "train",
+    "question": "How long does the production cache last for the service reached through the team operating Helios?",
+    "target_action": "REFORMULATE"
+  },
+  {
+    "example_id": "p11-train-005c",
+    "source_task_id": "kbv2-hard-005",
+    "split": "train",
+    "question": "Find the cache duration of the live service maintained by the organization responsible for Helios.",
+    "target_action": "REFORMULATE"
+  },
+  {
+    "example_id": "p11-train-006a",
+    "source_task_id": "kbv2-hard-006",
+    "split": "train",
+    "question": "How often do production signing keys rotate for the service maintained by Security Platform?",
+    "target_action": "SEARCH_HYBRID_K2"
+  },
+  {
+    "example_id": "p11-train-006b",
+    "source_task_id": "kbv2-hard-006",
+    "split": "train",
+    "question": "What is the rotation interval for live signing keys on the service owned by Security Platform?",
+    "target_action": "SEARCH_HYBRID_K2"
+  },
+  {
+    "example_id": "p11-train-006c",
+    "source_task_id": "kbv2-hard-006",
+    "split": "train",
+    "question": "For Security Platform's production signing service, how frequently are signing keys rotated?",
+    "target_action": "SEARCH_HYBRID_K2"
+  },
+  {
+    "example_id": "p11-train-007a",
+    "source_task_id": "kbv2-hard-007",
+    "split": "train",
+    "question": "How many retries does Cirrus use before dead-letter handling?",
+    "target_action": "SEARCH_HYBRID_K1"
+  },
+  {
+    "example_id": "p11-train-007b",
+    "source_task_id": "kbv2-hard-007",
+    "split": "train",
+    "question": "What retry count does Cirrus allow before sending work to dead-letter handling?",
+    "target_action": "SEARCH_HYBRID_K1"
+  },
+  {
+    "example_id": "p11-train-007c",
+    "source_task_id": "kbv2-hard-007",
+    "split": "train",
+    "question": "Before dead-letter processing, how many retry attempts does Cirrus make?",
+    "target_action": "SEARCH_HYBRID_K1"
+  },
+  {
+    "example_id": "p11-dev-002a",
+    "source_task_id": "kbv2-hard-002",
+    "split": "dev",
+    "question": "How many times are failed production asynchronous jobs retried before dead-letter handling?",
+    "target_action": "SEARCH_HYBRID_K5"
+  },
+  {
+    "example_id": "p11-dev-002b",
+    "source_task_id": "kbv2-hard-002",
+    "split": "dev",
+    "question": "For failed live asynchronous jobs, how many retry attempts occur before dead-letter processing?",
+    "target_action": "SEARCH_HYBRID_K5"
+  },
+  {
+    "example_id": "p11-dev-002c",
+    "source_task_id": "kbv2-hard-002",
+    "split": "dev",
+    "question": "What is the retry limit for production async work before it goes to dead-letter handling?",
+    "target_action": "SEARCH_HYBRID_K5"
+  },
+  {
+    "example_id": "p11-heldout-010a",
+    "source_task_id": "kbv2-hard-010",
+    "split": "heldout",
+    "question": "What is the current production incremental backup cadence for Borealis?",
+    "target_action": "SEARCH_HYBRID_K1"
+  },
+  {
+    "example_id": "p11-heldout-010b",
+    "source_task_id": "kbv2-hard-010",
+    "split": "heldout",
+    "question": "How frequently does Borealis run current production incremental backups?",
+    "target_action": "SEARCH_HYBRID_K1"
+  },
+  {
+    "example_id": "p11-heldout-010c",
+    "source_task_id": "kbv2-hard-010",
+    "split": "heldout",
+    "question": "What is the live incremental backup interval for Borealis?",
+    "target_action": "SEARCH_HYBRID_K1"
+  }
+]
