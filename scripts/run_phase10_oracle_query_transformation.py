@@ -20,7 +20,6 @@ from knowledgebench.tasks.query_transformation_schema import (
     OracleQueryTransformation,
 )
 
-
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 SINGLE_SHOT_K = 5
 PER_QUERY_K = 1

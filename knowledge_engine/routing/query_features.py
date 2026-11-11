@@ -1,6 +1,5 @@
-from dataclasses import dataclass
 import re
-
+from dataclasses import dataclass
 
 _TEMPORAL_TERMS = {
     "current",

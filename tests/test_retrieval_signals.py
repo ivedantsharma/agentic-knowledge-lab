@@ -1,3 +1,5 @@
+import pytest
+
 from knowledge_engine.routing.retrieval_signals import (
     build_retrieval_confidence_signals,
 )
@@ -19,7 +21,7 @@ def test_builds_score_margin_and_overlap_signals() -> None:
 
     assert signals.bm25_margin == 1.0
     assert signals.bm25_nonzero_count == 2
-    assert signals.dense_margin == 0.1
+    assert signals.dense_margin == pytest.approx(0.1)
     assert signals.top1_agreement is True
     assert signals.top3_overlap_count == 2
     assert signals.top3_jaccard == 0.5

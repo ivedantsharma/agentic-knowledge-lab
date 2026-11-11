@@ -13,23 +13,35 @@ def build_qualifier_preserving_queries(
     mapping = {
         "kbv2-hard-001": (
             "Which team operates Atlas?",
-            "Which current production storage system is "
-            "maintained by Platform Reliability?",
-            "What is the current production incremental "
-            "backup cadence for Borealis?",
+            (
+                "Which current production storage system is "
+                "maintained by Platform Reliability?"
+            ),
+            (
+                "What is the current production incremental "
+                "backup cadence for Borealis?"
+            ),
         ),
         "kbv2-hard-005": (
             "Which team operates Helios?",
-            "Which current production session metadata "
-            "cache is maintained by Identity Foundations?",
-            "What is the current production cache duration "
-            "for Solstice?",
+            (
+                "Which current production session metadata "
+                "cache is maintained by Identity Foundations?"
+            ),
+            (
+                "What is the current production cache duration "
+                "for Solstice?"
+            ),
         ),
         "kbv2-hard-006": (
-            "Which current production API credential signing "
-            "service is maintained by Security Platform?",
-            "How often do current production Meridian signing "
-            "keys rotate?",
+            (
+                "Which current production API credential signing "
+                "service is maintained by Security Platform?"
+            ),
+            (
+                "How often do current production Meridian signing "
+                "keys rotate?"
+            ),
         ),
     }
 

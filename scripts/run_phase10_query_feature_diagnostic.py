@@ -11,7 +11,6 @@ from knowledgebench.tasks.v2_schema import (
     KnowledgeBenchV2Task,
 )
 
-
 TASKS_PATH = Path(
     "data/processed/knowledgebench_v2_hard_tasks_v0.json"
 )
