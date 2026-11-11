@@ -164,7 +164,7 @@ Learn:
 
 ## Phase 9 — Adversarial Robustness & Failure Analysis
 
-Status: Current.
+Status: Complete.
 
 Learn:
 - prompt-injection documents
@@ -174,6 +174,8 @@ Learn:
 - failure taxonomies
 
 ## Phase 10 — Adaptive Retrieval & Query Understanding
+
+Status: Current.
 
 Learn:
 - BM25 vs dense vs hybrid vs graph routing
