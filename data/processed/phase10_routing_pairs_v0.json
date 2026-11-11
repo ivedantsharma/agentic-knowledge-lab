@@ -1,0 +1,110 @@
+[
+  {
+    "task_id": "route-001",
+    "pair_id": "borealis_backup",
+    "query_style": "lexical_explicit",
+    "question": "What is the current production incremental backup cadence for Borealis?",
+    "supporting_document_ids": [
+      "kbv2-doc-borealis-current"
+    ]
+  },
+  {
+    "task_id": "route-002",
+    "pair_id": "borealis_backup",
+    "query_style": "semantic_paraphrase",
+    "question": "How frequently does Borealis create live incremental copies of production data?",
+    "supporting_document_ids": [
+      "kbv2-doc-borealis-current"
+    ]
+  },
+  {
+    "task_id": "route-003",
+    "pair_id": "cirrus_retry",
+    "query_style": "lexical_explicit",
+    "question": "What is the production Cirrus retry limit before dead-letter handling?",
+    "supporting_document_ids": [
+      "kbv2-doc-cirrus-manual"
+    ]
+  },
+  {
+    "task_id": "route-004",
+    "pair_id": "cirrus_retry",
+    "query_style": "semantic_paraphrase",
+    "question": "How many failed-job attempts are allowed on Cirrus before work is sent aside for dead-letter processing?",
+    "supporting_document_ids": [
+      "kbv2-doc-cirrus-manual"
+    ]
+  },
+  {
+    "task_id": "route-005",
+    "pair_id": "solstice_cache",
+    "query_style": "lexical_explicit",
+    "question": "How long does production Solstice cache validated session metadata?",
+    "supporting_document_ids": [
+      "kbv2-doc-solstice-current"
+    ]
+  },
+  {
+    "task_id": "route-006",
+    "pair_id": "solstice_cache",
+    "query_style": "semantic_paraphrase",
+    "question": "For how much time does Solstice retain verified login-session information in its live cache?",
+    "supporting_document_ids": [
+      "kbv2-doc-solstice-current"
+    ]
+  },
+  {
+    "task_id": "route-007",
+    "pair_id": "meridian_rotation",
+    "query_style": "lexical_explicit",
+    "question": "What is the current production Meridian signing-key rotation interval?",
+    "supporting_document_ids": [
+      "kbv2-doc-meridian-current"
+    ]
+  },
+  {
+    "task_id": "route-008",
+    "pair_id": "meridian_rotation",
+    "query_style": "semantic_paraphrase",
+    "question": "How frequently are live Meridian API signing credentials replaced?",
+    "supporting_document_ids": [
+      "kbv2-doc-meridian-current"
+    ]
+  },
+  {
+    "task_id": "route-009",
+    "pair_id": "nimbus_session",
+    "query_style": "lexical_explicit",
+    "question": "What cache duration does Nimbus Session Cache use?",
+    "supporting_document_ids": [
+      "kbv2-doc-nimbus-session"
+    ]
+  },
+  {
+    "task_id": "route-010",
+    "pair_id": "nimbus_session",
+    "query_style": "semantic_paraphrase",
+    "question": "How long are authenticated-session details kept by Nimbus's session-oriented cache?",
+    "supporting_document_ids": [
+      "kbv2-doc-nimbus-session"
+    ]
+  },
+  {
+    "task_id": "route-011",
+    "pair_id": "orion_logs",
+    "query_style": "lexical_explicit",
+    "question": "How long does Orion Log Service retain diagnostic logs?",
+    "supporting_document_ids": [
+      "kbv2-doc-orion-logs"
+    ]
+  },
+  {
+    "task_id": "route-012",
+    "pair_id": "orion_logs",
+    "query_style": "semantic_paraphrase",
+    "question": "For what period does Orion keep troubleshooting event records in its logging service?",
+    "supporting_document_ids": [
+      "kbv2-doc-orion-logs"
+    ]
+  }
+]
