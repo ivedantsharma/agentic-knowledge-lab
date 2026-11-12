@@ -1,0 +1,155 @@
+[
+  {
+    "example_id": "p11v1-atlas-001",
+    "source_task_id": "kbv2-hard-001",
+    "evidence_family": "atlas_borealis",
+    "split": "dev",
+    "question": "What incremental backup cadence is used by the production storage system maintained by the team that operates Atlas?",
+    "target_action": "SEARCH_HYBRID_K5",
+    "label_source": "EXP-098"
+  },
+  {
+    "example_id": "p11v1-borealis-001",
+    "source_task_id": "route-001",
+    "evidence_family": "atlas_borealis",
+    "split": "dev",
+    "question": "What is the current production incremental backup cadence for Borealis?",
+    "target_action": "SEARCH_HYBRID_K1",
+    "label_source": "EXP-107"
+  },
+  {
+    "example_id": "p11v1-borealis-002",
+    "source_task_id": "route-002",
+    "evidence_family": "atlas_borealis",
+    "split": "dev",
+    "question": "How frequently does Borealis create live incremental copies of production data?",
+    "target_action": "SEARCH_HYBRID_K1",
+    "label_source": "EXP-107"
+  },
+  {
+    "example_id": "p11v1-cirrus-hard-002",
+    "source_task_id": "kbv2-hard-002",
+    "evidence_family": "cirrus",
+    "split": "train",
+    "question": "How many times are failed production asynchronous jobs retried before dead-letter handling?",
+    "target_action": "SEARCH_HYBRID_K5",
+    "label_source": "EXP-098"
+  },
+  {
+    "example_id": "p11v1-cirrus-hard-007",
+    "source_task_id": "kbv2-hard-007",
+    "evidence_family": "cirrus",
+    "split": "train",
+    "question": "How many retries does Cirrus use before dead-letter handling?",
+    "target_action": "SEARCH_HYBRID_K1",
+    "label_source": "EXP-098"
+  },
+  {
+    "example_id": "p11v1-cirrus-route-003",
+    "source_task_id": "route-003",
+    "evidence_family": "cirrus",
+    "split": "train",
+    "question": "What is the production Cirrus retry limit before dead-letter handling?",
+    "target_action": "SEARCH_HYBRID_K2",
+    "label_source": "EXP-107"
+  },
+  {
+    "example_id": "p11v1-cirrus-route-004",
+    "source_task_id": "route-004",
+    "evidence_family": "cirrus",
+    "split": "train",
+    "question": "How many failed-job attempts are allowed on Cirrus before work is sent aside for dead-letter processing?",
+    "target_action": "SEARCH_HYBRID_K1",
+    "label_source": "EXP-107"
+  },
+  {
+    "example_id": "p11v1-helios-005",
+    "source_task_id": "kbv2-hard-005",
+    "evidence_family": "helios_solstice",
+    "split": "train",
+    "question": "What cache duration is used by the production service maintained by the team that operates Helios?",
+    "target_action": "REFORMULATE",
+    "label_source": "EXP-098_EXP-099"
+  },
+  {
+    "example_id": "p11v1-solstice-005",
+    "source_task_id": "route-005",
+    "evidence_family": "helios_solstice",
+    "split": "train",
+    "question": "How long does production Solstice cache validated session metadata?",
+    "target_action": "SEARCH_HYBRID_K1",
+    "label_source": "EXP-107"
+  },
+  {
+    "example_id": "p11v1-solstice-006",
+    "source_task_id": "route-006",
+    "evidence_family": "helios_solstice",
+    "split": "train",
+    "question": "For how much time does Solstice retain verified login-session information in its live cache?",
+    "target_action": "SEARCH_HYBRID_K2",
+    "label_source": "EXP-107"
+  },
+  {
+    "example_id": "p11v1-meridian-hard-006",
+    "source_task_id": "kbv2-hard-006",
+    "evidence_family": "security_meridian",
+    "split": "heldout",
+    "question": "How often do production signing keys rotate for the service maintained by Security Platform?",
+    "target_action": "SEARCH_HYBRID_K2",
+    "label_source": "EXP-098"
+  },
+  {
+    "example_id": "p11v1-meridian-route-007",
+    "source_task_id": "route-007",
+    "evidence_family": "security_meridian",
+    "split": "heldout",
+    "question": "What is the current production Meridian signing-key rotation interval?",
+    "target_action": "SEARCH_HYBRID_K2",
+    "label_source": "EXP-107"
+  },
+  {
+    "example_id": "p11v1-meridian-route-008",
+    "source_task_id": "route-008",
+    "evidence_family": "security_meridian",
+    "split": "heldout",
+    "question": "How frequently are live Meridian API signing credentials replaced?",
+    "target_action": "SEARCH_HYBRID_K2",
+    "label_source": "EXP-107"
+  },
+  {
+    "example_id": "p11v1-nimbus-009",
+    "source_task_id": "route-009",
+    "evidence_family": "nimbus",
+    "split": "train",
+    "question": "What cache duration does Nimbus Session Cache use?",
+    "target_action": "SEARCH_HYBRID_K1",
+    "label_source": "EXP-107"
+  },
+  {
+    "example_id": "p11v1-nimbus-010",
+    "source_task_id": "route-010",
+    "evidence_family": "nimbus",
+    "split": "train",
+    "question": "How long are authenticated-session details kept by Nimbus's session-oriented cache?",
+    "target_action": "SEARCH_HYBRID_K1",
+    "label_source": "EXP-107"
+  },
+  {
+    "example_id": "p11v1-orion-011",
+    "source_task_id": "route-011",
+    "evidence_family": "orion",
+    "split": "train",
+    "question": "How long does Orion Log Service retain diagnostic logs?",
+    "target_action": "SEARCH_HYBRID_K1",
+    "label_source": "EXP-107"
+  },
+  {
+    "example_id": "p11v1-orion-012",
+    "source_task_id": "route-012",
+    "evidence_family": "orion",
+    "split": "train",
+    "question": "For what period does Orion keep troubleshooting event records in its logging service?",
+    "target_action": "SEARCH_HYBRID_K1",
+    "label_source": "EXP-107"
+  }
+]
