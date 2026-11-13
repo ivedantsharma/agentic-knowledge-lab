@@ -239,7 +239,7 @@ Key result:
 
 ## Phase 13 — Full Research Campaign
 
-Status: Current (EXP-120 provenance/registry audit complete; EXP-121 fixed-retriever baseline comparison next).
+Status: Current (EXP-120 verified; EXP-121 fixed-retriever protocol and CI tests complete, numerical full-model run pending).
 
 Learn:
 - preregistered research questions, hypotheses, controls and ablations
