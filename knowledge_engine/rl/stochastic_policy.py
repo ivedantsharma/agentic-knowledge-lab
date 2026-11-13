@@ -48,7 +48,7 @@ class StochasticBudgetPolicy:
 
     def __post_init__(self) -> None:
         if not isinstance(self.target, RetrievalRLAction):
-            raise ValueError("target must be a RetrievalRLAction")
+            raise TypeError("target must be a RetrievalRLAction")
         if not isfinite(self.epsilon) or not 0 <= self.epsilon <= 1:
             raise ValueError("epsilon must be finite and in [0, 1]")
 
