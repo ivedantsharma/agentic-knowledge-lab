@@ -121,3 +121,15 @@ uv run pytest
 uv run ruff check .
 uv run python scripts/run_phase13_shared_policy_contract.py
 ```
+
+## Final disposition — stopped / inconclusive (2026-11-14)
+
+**Status: CLOSED ADMINISTRATIVELY AS BLOCKED / INCONCLUSIVE, NOT COMPLETED AS A LEARNED-POLICY GENERALIZATION EXPERIMENT.** The project's Codespace became unavailable due to billing, and there are no compatible retrained SFT/RL inference checkpoints or genuinely new sealed evidence families. There is no scientific basis for replacing missing measurements with guessed values.
+
+The actually completed Gate B0 common BM25 runtime passed GitHub Actions run `43510455499`: **458 tests passed in 20.56 seconds**, Ruff and source audits succeeded; the fixed-policy development outputs were K1 +1.5333, K2 +2.3833, K3 +2.6000, K5 +2.4000 mean discounted returns, using 12 exposed tasks. The shared `SEARCH_K1/K2/K3/K5/STOP` interface provides a future training contract, **not** valid cross-model comparison. Older SFT and RL policies remain incompatible with that protocol and with one another.
+
+**Outstanding claims, explicitly NOT tested:** unseen-family SFT vs RL recall, advantage over fixed K3, reloaded model checkpoints, five-seed performance on new families, matched final-answer accuracy, training compute, confidence intervals on independent families. Mark these as *not measured*, not failures or successes.
+
+A deliberately **fictional** scenario table for explanatory purposes is stored separately at `docs/experiments/EXP-124-illustrative-hypothetical-simulation-NOT-RESULTS.md`. **Its invented values are not observations, should never be entered in the real results, and must never be used in a resume or application.**
+
+**Reopening conditions:** restore a suitable execution environment; collect genuinely new source families; pre-register sealed family-disjoint splits; train and checkpoint both policies on a single protocol; evaluate alongside strong fixed controls and publish all per-family/seed results. Until those conditions are met, this experiment remains an **inconclusive stopped study**.
