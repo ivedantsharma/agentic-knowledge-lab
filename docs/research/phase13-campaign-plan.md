@@ -1,6 +1,6 @@
 # Phase 13 Research Campaign Plan — Preregistered Order
 
-> **Current status (2026-11-14): 5/6 experiments completed (~83%).** EXP-120, 121, 122, 123 and 125 have archived numerical results (or provenance audit for EXP-120). EXP-124 is **blocked** by incompatible SFT/RL action/retriever/termination and missing uninspected evaluation families; **Phase 13 final review not completed**. Earlier chronological status paragraphs below are historical updates, not current gates. See `docs/experiments/EXP-125-hard-robustness-result.md` and `docs/experiments/EXP-124-learned-policy-comparison-result.md`.
+> **Current status (2026-11-14): 5/6 experiments completed (~83%).** EXP-120, 121, 122, 123 and 125 have archived numerical results (or provenance audit for EXP-120). EXP-124 has a **validated new shared BM25 episode contract (Gate B0)**, but the original learned SFT/RL comparison is still blocked by incompatible historical policies, no retrained matched checkpoints and missing independent test families; **Phase 13 final review not completed**. Earlier chronological status paragraphs below are historical updates, not current gates. See `docs/experiments/EXP-125-hard-robustness-result.md` and `docs/experiments/EXP-124-learned-policy-comparison-result.md`.
 
 
 ## Central question
