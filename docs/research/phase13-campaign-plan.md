@@ -34,4 +34,4 @@ Use `docs/experiments/EXP-TEMPLATE.md` and a separate `-result.md` after actual 
 Do not promote a learned policy unless it improves heldout answer-quality / evidence completeness beyond strong fixed baselines at comparable cost, across independent seeds and new families. Promote *negative findings* and architecture limitations into ADRs. Do not assume higher model scale yields retrieval improvement.
 
 ## Next task
-Implement and execute EXP-120 provenance + integrity audit before beginning EXP-121.
+EXP-120 provenance gate is complete (390 tests at initial closeout; EXP-121 CI now 400 tests). EXP-121's fixed-retriever evaluator, protocol, tests and result-status record are implemented; its full MiniLM benchmark measurements remain pending. Next execute `uv run python scripts/run_phase13_fixed_retriever_comparison.py` and archive the numerical per-K and family-cluster interval outputs before selecting EXP-122.
