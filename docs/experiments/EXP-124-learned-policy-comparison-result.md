@@ -1,0 +1,75 @@
+# EXP-124 Result — Gate A Policy Compatibility Feasibility
+
+## Status
+**Gate A source-level audit complete and CI-validated; direct SFT-versus-RL learned-policy comparison BLOCKED.** EXP-124 is **not** yet a completed generalization experiment. No retraining, Qwen model inference, REINFORCE policy inference, or fresh-family validation was performed.
+
+## Reproducibility
+GitHub Actions on `main`, run `43505656113`, commit `2a541c10ebd3fa5541706e110b31e16c2f0e19d6`: **439 tests passed in 17.72s**, Ruff **All checks passed**, EXP-120 provenance audit passed, EXP-122 common representation audit passed, and standalone EXP-124 driver **passed as an expected BLOCKED diagnostic**.
+
+```bash
+git pull
+uv run pytest
+uv run ruff check .
+uv run python scripts/run_phase13_policy_feasibility_audit.py
+```
+
+### Observed input/source SHA-256
+
+| Source file | SHA-256 |
+|---|---|
+| `data/processed/knowledgebench_v2_hard_documents_v0.json` | `9015e8924fffcb461a7278c24e7f108d7a33377fcb6967d0f7bf0539fe9022be` |
+| `data/processed/phase10_routing_pairs_v0.json` | `996514ff172e71756e300a9b43fc189603d14ba914da18e5c7cf12129d014ef2` |
+| `data/processed/phase11_policy_dataset_v1.json` | `233e6d83a4607070d9937a3f302c27dd4a243b9373c4b692351a5f560bc3c549` |
+| `scripts/run_phase11_class_balanced_lora_sft.py` | `70fe75da9f298407e75f69e5de511ce7a73c4396ffc6c7320a71699732a368b3` |
+| `scripts/run_phase12_family_disjoint_transfer.py` | `a04c6763a2420b5a9aee3cbed191b1f225e2188050903a82c15044157c55b0bf` |
+
+### Actual action spaces
+
+Phase 11 SFT:
+`SEARCH_HYBRID_K1`, `SEARCH_HYBRID_K2`, `SEARCH_HYBRID_K3`, `SEARCH_HYBRID_K5`, `REFORMULATE`.
+
+Phase 12 RL:
+`SEARCH_K1`, `SEARCH_K2`, `SEARCH_K3`, `SEARCH_K5`, `STOP`.
+
+`REFORMULATE` has no RL equivalent and `STOP` has no SFT equivalent. The similarly numbered K actions are **not semantically interchangeable** because the baseline retriever, objective, episode horizon and stopping protocol differ.
+
+### Data and label audit
+
+- SFT examples: **17**; `train=11`, `dev=3`, `heldout=3`.
+- Routing tasks: **12**; shared route questions with SFT examples: **12**.
+- Supervised families/splits: `atlas_borealis:dev`, `cirrus:train`, `helios_solstice:train`, `nimbus:train`, `orion:train`, `security_meridian:heldout`.
+- Among the 12 route labels, **9** SFT Hybrid budget targets happen to equal BM25's smallest sufficient budget, **3 do not**, **0 unmappable** in the route subset. These comparisons are **LABEL ALIGNMENT ONLY**—not learned policy predictions or performance.
+
+### Hard Gate A readiness checks
+
+| Gate | Audit |
+|---|---|
+| Identical action space | **False** |
+| Shared retriever | **False** |
+| Shared terminal/STOP protocol | **False** |
+| Same heldout split | **False** |
+| Genuinely independent new families available in these sources | **False** |
+| Two inspected training scripts persist checkpoints | **False** |
+| Ready for direct learned comparison | **False** |
+
+The checkpoint persistence test is a **source-code inspection of two named experiment scripts only**. It does not prove that no checkpoints exist in the user's workspace, external storage, or other repository locations.
+
+## Scientific conclusion
+
+**Blocked feasibility gate, not negative trained-model performance.** A fair head-to-head model outcome cannot be inferred by comparing Phase 11 heldout action classification accuracy with Phase 12 on-policy discounted returns. The existing reported RL model also failed to beat fixed BM25 K3 on EXP-118's exposed heldout questions. No hypothesis test or generalization claim is justified.
+
+**Required before Gate C:**
+1. Define one frozen, evaluator-safe action/observation/retriever/termination/reward protocol for both policies, including STOP and query reformulation semantics.
+2. Source and freeze genuinely new, independent evidence families and split them before training/tuning.
+3. Implement checkpoint saving/loading and verified learned-policy inference under the shared protocol.
+4. Reevaluate strong fixed baselines and policy controllers across independent training seeds and new families with separately measured answer quality (only when all arms have matched answer generation).
+
+This gate should not be waved through by renaming Hybrid actions to BM25 names, relabeling existing OOD questions as new holdout, or reusing an oracle's evaluator labels as policy input.
+
+## Implementation
+- `scripts/run_phase13_policy_feasibility_audit.py` — source hashes, enum/split audit, source-level checkpoint persistence gate.
+- `tests/test_phase13_policy_feasibility_audit.py` — real-data checks, duplicate/split leakage rejection, unsupported SFT action rejection, reproducibility and no-false-comparison assertions.
+- `docs/experiments/EXP-124-learned-policy-comparison.md` — preregistered later gates.
+
+## Campaign status
+EXP-120–123 are finished as scoped research studies. **EXP-124 remains in progress** at Gate A, with unresolved genuine data and protocol prerequisites. EXP-125 is unstarted. Phase 13 core study count therefore remains **4/6 (~67%)**, with two studies plus the Phase 13 final review outstanding.
