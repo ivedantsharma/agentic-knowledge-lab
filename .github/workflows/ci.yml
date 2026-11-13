@@ -33,3 +33,6 @@ jobs:
 
       - name: Audit Phase 13 benchmark provenance
         run: uv run python scripts/run_phase13_campaign_inventory.py
+
+      - name: Audit Phase 13 common representation contract
+        run: uv run python scripts/run_phase13_common_representation_contract.py
