@@ -1,11 +1,11 @@
 import pytest
 
-from knowledge_engine.rl.reward_audit import audit_trajectory
 from knowledge_engine.rl.retrieval_environment import (
     RetrievalEpisode,
     RetrievalEpisodeV2,
     RetrievalRLAction,
 )
+from knowledge_engine.rl.reward_audit import audit_trajectory
 
 
 def _episode(cls, max_steps: int):
