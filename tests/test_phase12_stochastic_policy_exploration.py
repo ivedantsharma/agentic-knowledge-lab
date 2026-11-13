@@ -13,7 +13,6 @@ from knowledge_engine.rl.stochastic_policy import (
     sample_rollout,
 )
 
-
 RANKING = ["pending", "current", "distractor", "other", "late"]
 
 
