@@ -17,7 +17,6 @@ from knowledge_engine.rl.retrieval_environment import (
 from knowledgebench.documents.v2_schema import KnowledgeBenchV2Document
 from knowledgebench.tasks.routing_schema import RoutingBenchmarkTask
 
-
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 DOCS = Path("data/processed/knowledgebench_v2_hard_documents_v0.json")
 TASKS = Path("data/processed/phase10_routing_pairs_v0.json")

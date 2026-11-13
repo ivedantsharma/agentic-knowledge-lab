@@ -4,9 +4,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from knowledge_engine.rl.reward_audit import audit_trajectory
 from knowledge_engine.rl.retrieval_environment import RetrievalRLAction
-
+from knowledge_engine.rl.reward_audit import audit_trajectory
 
 DOCUMENTS_PATH = Path("data/processed/knowledgebench_v2_hard_documents_v0.json")
 TASKS_PATH = Path("data/processed/phase10_routing_pairs_v0.json")
@@ -51,12 +50,12 @@ def main() -> None:
     print("Conflicting exposure is NOT proven answer contamination.")
     print()
 
-    common = dict(
-        question=task["question"],
-        ranked_ids=RANKING,
-        supporting_ids=supporting_ids,
-        conflicting_ids=conflicting_ids,
-    )
+    common = {
+        "question": task["question"],
+        "ranked_ids": RANKING,
+        "supporting_ids": supporting_ids,
+        "conflicting_ids": conflicting_ids,
+    }
     show(
         "A: stop early",
         **common,
