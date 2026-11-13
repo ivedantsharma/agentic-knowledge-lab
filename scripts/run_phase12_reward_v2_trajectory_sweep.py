@@ -13,8 +13,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from knowledge_engine.rl.reward_audit import RewardAudit, audit_trajectory
 from knowledge_engine.rl.retrieval_environment import RetrievalRLAction
+from knowledge_engine.rl.reward_audit import RewardAudit, audit_trajectory
 
 DOCS = Path("data/processed/knowledgebench_v2_hard_documents_v0.json")
 TASKS = Path("data/processed/phase10_routing_pairs_v0.json")
@@ -86,12 +86,12 @@ def increasing_search_prefixes() -> tuple[tuple[RetrievalRLAction, ...], ...]:
 def sweep_case(case: AuditCase) -> list[SweepResult]:
     """Compare a forced timeout against STOP after the *identical* prefix."""
     results = []
-    common = dict(
-        question=case.question,
-        ranked_ids=list(case.ranked_ids),
-        supporting_ids=set(case.supporting_ids),
-        conflicting_ids=set(case.conflicting_ids),
-    )
+    common = {
+        "question": case.question,
+        "ranked_ids": list(case.ranked_ids),
+        "supporting_ids": set(case.supporting_ids),
+        "conflicting_ids": set(case.conflicting_ids),
+    }
     for prefix in increasing_search_prefixes():
         timeout_kwargs = dict(common, actions=list(prefix), max_steps=len(prefix))
         v1, v1_transitions = audit_trajectory(**timeout_kwargs, reward_version="v1")
