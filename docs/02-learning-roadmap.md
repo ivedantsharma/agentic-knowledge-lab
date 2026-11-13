@@ -239,7 +239,7 @@ Key result:
 
 ## Phase 13 — Full Research Campaign
 
-Status: Current (5/6 scoped experiments complete: EXP-120–123 and EXP-125. EXP-124 Gate B0 now has a CI-validated common BM25 action/observation/reward/STOP interface and fixed-K baselines, but learned SFT/RL comparisons remain blocked by missing retrained compatible checkpoints and independent test families; Phase 13 final review is outstanding).
+Status: **Administratively concluded / research review complete (2026-11-14)**. Five of six planned studies were completed as scoped audits or measured development experiments (EXP-120–123, 125). EXP-124 is **closed as stopped / blocked / inconclusive**, not an achieved learned SFT-versus-RL performance comparison: the shared BM25 action/reward/STOP runtime and fixed K controls passed CI, but compatible learned checkpoints and new independent evaluation families are missing. The final review is complete in `docs/research/phase13-final-review.md`. **All six experiment dispositions are documented; only 5/6 are empirically complete.** A fictional teaching-only scenario is explicitly isolated from research findings. Phase 14 engineering may start, but external-generalization claims remain gated.
 
 Learn:
 - preregistered research questions, hypotheses, controls and ablations
