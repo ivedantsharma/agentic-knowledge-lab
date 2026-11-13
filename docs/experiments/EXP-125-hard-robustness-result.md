@@ -102,6 +102,6 @@ uv run python scripts/run_phase13_hard_robustness_comparison.py
 
 ## Decision and campaign status
 
-**EXP-125 closes as a fully measured retrieval-robustness DEVELOPMENT experiment.** The prompt-injection and abstention questions remain **explicitly unmeasured** and must not be presented as completed attack or abstention benchmarks. Build a downstream, source-aware verification/abstention controller with matched answer-generation and paired clean/injected tests before making safety-related claims.
+**EXP-125 closes as a fully measured retrieval-robustness DEVELOPMENT experiment.** The resulting decision on how to track evidence-quality risk alongside recall is recorded in `docs/architecture/ADR-020-retrieval-coverage-versus-evidence-risk.md`. The prompt-injection and abstention questions remain **explicitly unmeasured** and must not be presented as completed attack or abstention benchmarks. Build a downstream, source-aware verification/abstention controller with matched answer-generation and paired clean/injected tests before making safety-related claims.
 
 **EXP-120, 121, 122, 123 and 125 are now complete (5/6 = ~83%). EXP-124 remains blocked at its actual learned-policy comparability gate** because SFT/RL action, retrieval, STOP, heldout-family and checkpoint protocols differ. The Phase 13 final review is an additional uncompleted deliverable; it is not counted as one of the six experiments.
