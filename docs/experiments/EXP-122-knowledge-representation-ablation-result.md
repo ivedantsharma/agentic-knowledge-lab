@@ -94,3 +94,27 @@ uv run python scripts/run_phase13_common_representation_contract.py
 uv run pytest
 uv run ruff check .
 ```
+
+
+## Gate B2 implementation — numerical pretrained-model comparison pending
+
+The actual paired system runner is now implemented **directly on `main`**:
+- `scripts/run_phase13_paired_representation_comparison.py`
+- `knowledgebench/evaluation/phase13_representation_comparison.py`
+- `tests/test_phase13_paired_representation_comparison.py`
+
+The runner uses the four same graph-derived questions and 15 preserved evidence source units. It executes **existing** `BM25Retriever` over flat evidence atoms, `CoarseToFineHierarchicalRetriever` with all eleven parents eligible and a three-section full-evidence output, and `ClaimGraphQAEngine` with a top path of at most three claims. Native graph output includes an answer; flat and hierarchy only return evidence. Evaluator-only gold is used **after** retrieving to score per-task claim coverage and evidence completion.
+
+**Output cap:** up to three evidence atoms per question, counting a graph claim's original evidence references. The run reports retrieved evidence units, context words and candidate scoring counts. The methods have different ranking algorithms/model stacks, so the resource counts and accuracy cannot identify a causal *representation-only* advantage.
+
+**Numerical score status:** the full encoder / cross-encoder / graph model driver has not yet been observed in the user workspace. **No new benchmark results or architecture winner are claimed here.** CI smoke tests using deterministic fake embedding and cross-encoder models validate output shapes, caps, and gold-label independence, not actual model accuracy.
+
+Full run command:
+```bash
+git pull
+uv run pytest
+uv run ruff check .
+uv run python scripts/run_phase13_paired_representation_comparison.py
+```
+
+On receiving numerical stdout, record exact per-task coverage, resource metrics and native-graph answer accuracy separately. The full experiment remains **OPEN** until output review and fair-comparison limitations have been documented.
