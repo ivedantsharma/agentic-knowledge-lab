@@ -63,3 +63,27 @@ With **the same dense search tool, source corpus, multi-hop questions, and limit
 ## Reproduction status
 
 Protocol only; no EXP-123 driver exists yet. The next engineering step is to implement the dataset/protocol feasibility audit and shared retrieval trace adapter, with tests and CI before measuring pretrained-model outcomes.
+
+
+## Implemented comparison arms (fixed before numerical run)
+
+The shared harness lives at `knowledgebench/evaluation/phase13_static_agentic_comparison.py`, the driver at `scripts/run_phase13_static_agentic_comparison.py`, and unit tests at `tests/test_phase13_static_agentic_comparison.py`.
+
+- `static_top3`: original question, one DenseSearchTool call, expose all top 3 hits.
+- `static_top9`: original question, one DenseSearchTool call, expose up to 9 hits; matches the *maximum exposure slots* of three top-3 calls, **not model computation or call count**.
+- `static_repeat3`: same original question, three identical top-3 calls; matches the agent's maximum **call count** but repeats the same evidence. It is a diagnostic weak control, not an optimized static three-query system.
+- `rule_agent3`: existing RuleBasedPlanner makes up to three SEARCH calls (top3 returned on each), sees only the top1 document text from each retrieval when updating PlannerState, and may STOP after the third call. The planner receives no gold hops, answers, expected document IDs or benchmark category.
+
+For **all arms**, gold supporting-document recall is scored on the union of **all returned hit IDs**, not just the single document shown to the planner. Both top-K exposure and first-hit observation must be reported to prevent an evaluation accounting mismatch.
+
+Important asymmetries: static_top9 can expose nine documents in one call; agent gets three candidates each across at most three differently worded calls; the planner uses task-specific regular-expression behaviors originally developed in Phase 4; the benchmark is historic/inspected. No common answer-generation capability is provided, so do not compare answer accuracy. No novel model training or fresh family-disjoint evaluation is claimed.
+
+### Exact reproduction
+```bash
+git pull
+uv run pytest
+uv run ruff check .
+uv run python scripts/run_phase13_static_agentic_comparison.py
+```
+
+Actual numerical outputs must be archived in `EXP-123-static-vs-agentic-search-result.md` after the full model run. CI fake-backend tests establish harness integrity, not frozen-model retrieval accuracy.
