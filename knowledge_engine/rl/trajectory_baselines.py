@@ -4,10 +4,10 @@ Oracle selection uses hidden gold labels exclusively for *evaluation*.
 None of these functions provides gold labels to a deployable policy.
 """
 
+from collections.abc import Iterable
 from dataclasses import dataclass
 from itertools import combinations
 from math import isfinite
-from typing import Iterable
 
 from knowledge_engine.rl.retrieval_environment import RetrievalRLAction
 from knowledge_engine.rl.reward_audit import RewardAudit, audit_trajectory
