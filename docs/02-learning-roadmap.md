@@ -239,7 +239,7 @@ Key result:
 
 ## Phase 13 — Full Research Campaign
 
-Status: Current (5/6 scoped experiments complete: EXP-120–123 and EXP-125; EXP-124 remains blocked by incompatible SFT/RL action/retriever/termination protocols, uninspected-family data gap and lack of checkpoint persistence in inspected scripts. EXP-125 measured Hybrid RRF Recall@5 0.8889 and 5/6 complete supporting evidence, with distractor/contradiction/stale exposure at K5; no abstention or injection-response evaluation. Phase 13 final review remains outstanding).
+Status: Current (5/6 scoped experiments complete: EXP-120–123 and EXP-125. EXP-124 Gate B0 now has a CI-validated common BM25 action/observation/reward/STOP interface and fixed-K baselines, but learned SFT/RL comparisons remain blocked by missing retrained compatible checkpoints and independent test families; Phase 13 final review is outstanding).
 
 Learn:
 - preregistered research questions, hypotheses, controls and ablations
