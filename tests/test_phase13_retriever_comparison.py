@@ -11,12 +11,12 @@ from knowledgebench.evaluation.phase13_retriever_comparison import (
     score_ranking,
 )
 from knowledgebench.tasks.routing_schema import RoutingBenchmarkTask
+from scripts.run_phase10_paired_routing_benchmark import load_tasks
 from scripts.run_phase13_fixed_retriever_comparison import (
     K_VALUES,
     assert_frozen_inputs,
     make_rankings,
 )
-from scripts.run_phase10_paired_routing_benchmark import load_tasks
 
 
 def fake_tasks() -> list[RoutingBenchmarkTask]:
