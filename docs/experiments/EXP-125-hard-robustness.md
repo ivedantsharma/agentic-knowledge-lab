@@ -54,4 +54,4 @@ uv run python scripts/run_phase13_hard_robustness_comparison.py
 ```
 
 ## Phase 13 progress
-Four full experiments (EXP-120–123) completed = **4/6 (~67%)**. EXP-124 is blocked at its compatibility gate. EXP-125 is starting. A measured EXP-125 result alone does **not** close EXP-124 or the Phase 13 final research review.
+**EXP-125 completed and archived** as a retrieval-only development robustness study: three methods × K1/K3/K5 on ten previously inspected tasks; see `EXP-125-hard-robustness-result.md`. Hybrid achieved Recall@5 **0.8889** and complete evidence **5/6** answerable tasks but labeled misleading-source exposure was substantial; no final-answer/abstention/prompt-injection outcome was tested. **5/6 scoped experiments complete (~83%)**. EXP-124 remains blocked at its SFT/RL comparability and new-family gates; the Phase 13 final review also remains outstanding.
