@@ -116,7 +116,7 @@ def test_fake_models_run_three_existing_system_implementations() -> None:
         cross_encoder=FakeCrossEncoder(),
     )
     assert len(outputs) == 12
-    assert set(item.system for item in outputs) == {
+    assert {item.system for item in outputs} == {
         "flat_bm25", "hierarchy", "graph"
     }
     assert all(len(item.atom_ids) <= MAX_ATOMS for item in outputs)
