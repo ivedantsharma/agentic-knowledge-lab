@@ -65,3 +65,24 @@ After Gate A identified incompatible historical tasks, Gate B starts by **reusin
 **Gate B2 still to do:** run the actual flat, hierarchy and graph systems on exactly the four same questions, with a clearly defined equal **evidence-unit/context budget** and per-action resource accounting. Gold claim evidence coverage can be measured after retrieval; answer correctness and search latency must not be inferred from coverage. If the existing hierarchical tool's document→section→chunk scoring makes a unit-equivalent comparison impossible, explicitly report the mismatch instead of claiming architecture superiority.
 
 The native graph data and questions were designed together. Even with a valid paired dataset, this is a **development benchmark with graph-favorable inductive bias**; collect additional source-independent cases before external generalization claims.
+
+
+## Gate B2 — preregistered system-level paired comparison (development-only)
+
+Gate B1 source parity passed. For the first measured run, use the same four existing graph-derived questions and unchanged 15 evidence atoms for every method:
+
+| System | Implementation | Search/output budget |
+|---|---|---|
+| Flat lexical retrieval | existing `BM25Retriever` on 15 source evidence atom texts | top **3 evidence atoms** |
+| Hierarchical | existing `CoarseToFineHierarchicalRetriever`; all **11** parent documents available to avoid parent-beam exclusion, cross-encoder reranks all eligible sections; chunk-size large enough to retain each full single-evidence section | top **3 evidence sections/windows** |
+| Native claim graph | existing `ClaimGraphQAEngine` + `SemanticGraphPathRanker`, explicit entity resolution and max_hops=3 | **one** chosen path with up to **3 claims/evidence atoms** |
+
+Primary measured metric is **gold claim-evidence coverage at the common maximum of three source atoms** and fraction of fully covered tasks. Record actual output evidence atom count and output text word count for all methods, and candidate scoring counts/tool stages separately. The graph path may return only 2 atoms when the answer is two hops, so do not equate output K=3 with actual compute.
+
+Secondary metric: native graph's independently evaluated *answer exact match*, claim-path match, and provenance; **not** a cross-system answer-accuracy comparison because flat/hierarchy provide evidence and have no matched answer generator. Report failures from missing entity resolution, missing evidence, incomplete windows, or excessive output.
+
+**Critical scope:** Flat BM25, hierarchical Dense+CrossEncoder and graph semantic path ranker use different ranking methods and index schemas, so differences cannot be attributed *causally* to knowledge representation alone. Graph questions were authored for the graph substrate. This is a controlled **same-task, same-evidence, capped-output system comparison** and feasibility assessment; a pure architecture ablation requires fixed ranking/evidence selection and aligned reasoning and model access across variants.
+
+Models are frozen `sentence-transformers/all-MiniLM-L6-v2` and `cross-encoder/ms-marco-MiniLM-L6-v2` (no finetuning), current installed revisions may vary. Golden task claims are held only by the scoring/evaluation module and not by the retriever. Gold claims are joined to evidence atoms *after* rankings are returned.
+
+**Stop criteria:** fail if evidence atoms are duplicated/omitted, hierarchy returns partial evidence under the full-section setting, graph result cannot be mapped to source evidence, retrieved evidence exceeds the 3-atom output budget, or source SHA-256 drifts. If one variant cannot run within the contract, report the blocker rather than scoring an incomparable run.
