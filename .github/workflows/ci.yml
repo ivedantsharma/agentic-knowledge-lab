@@ -30,3 +30,6 @@ jobs:
 
       - name: Run Ruff
         run: uv run ruff check .
+
+      - name: Audit Phase 13 benchmark provenance
+        run: uv run python scripts/run_phase13_campaign_inventory.py
