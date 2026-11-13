@@ -1,7 +1,7 @@
 # EXP-125 Result — Hard Retrieval Robustness
 
 ## Status
-**Full pretrained-model numerical run pending.** The experiment's protocol, grader, real-input driver and isolated tests are implemented on `main`. Do not interpret test or mock-encoder results as measured MiniLM performance.
+**Partial real pretrained-model stdout archived: complete BM25/Dense rows and partial Hybrid results. Full Hybrid aggregate and EXP-125 closeout pending.** The experiment's protocol, grader, real-input driver and isolated tests are implemented on `main`. Do not interpret test or mock-encoder results as measured MiniLM performance.
 
 ## Data and controls
 - Existing hard v0 KnowledgeBench documents/tasks, plus four Phase 9 injection cases **for inventory only**.
@@ -73,16 +73,6 @@ uv run pytest
 uv run ruff check .
 uv run python scripts/run_phase13_hard_robustness_comparison.py
 ```
-
-Previous placeholder text:
-```bash
-git pull
-uv run pytest
-uv run ruff check .
-uv run python scripts/run_phase13_hard_robustness_comparison.py
-```
-
-On receipt, archive the exact source hashes and sample counts, all K/method aggregate values, per-task hits, risk-denominator counts and failures. Do not infer stronger generalization from the existing source tasks. The inability to evaluate safe abstention or prompt-injection resistance from retrieval-only runs must remain an explicit limitation.
 
 ## Progress
 EXP-125 is **in progress**, with real-model scores and scientific closeout outstanding. EXP-124 is blocked on protocol/data/checkpoint prerequisites. Phase 13 stays at **4/6 (~67%)** completed full studies until these gates are resolved.
