@@ -35,3 +35,9 @@ Do not promote a learned policy unless it improves heldout answer-quality / evid
 
 ## Next task
 EXP-120 provenance gate is complete (390 tests at initial closeout; EXP-121 CI now 400 tests). EXP-121 is complete: observed BM25/Dense/Hybrid K1/2/3/5 metrics match earlier K3 results, with Hybrid vs BM25 MRR@3 +0.0139 and descriptive family-bootstrap interval [−0.1111,+0.1250]. EXP-122 has started with a preregistered common-substrate feasibility gate: Phase 5 hierarchical and Phase 6 graph benchmarks use different task sets and cannot be directly compared; run the source/label parity audit before designing matched-representation ablations.
+
+## EXP-122 Gate B1 update — verified source parity
+
+Gate A found zero shared Phase 5/Phase 6 benchmark questions, so their historical percentages remain incomparable. The Phase 6 native graph and its four existing multi-hop questions now serve as a **single development-only** source for the next controlled ablation. The lossless source bridge preserved 15 claim evidence references as 15 flat evidence units and 15 sections across 11 entity-grouped hierarchy documents. The graph retains its 15 source claims. CI passed 416 tests, Ruff and both source-provenance steps.
+
+Gate B2 (still pending) must compare actual flat, hierarchical and graph implementations under matched evidence/context budget and separately report gold-claim retrieval versus answer correctness, call count, and provenance. Because this set was graph-designed, no claim of external cross-representation generalization is permitted. **Phase 13 stays at 2/6 complete (~33%), with four full experiments remaining.**
