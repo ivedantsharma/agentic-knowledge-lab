@@ -4,10 +4,8 @@ from random import Random
 
 import pytest
 
-from knowledge_engine.rl.retrieval_environment import (
-    RetrievalObservation,
-    RetrievalRLAction as A,
-)
+from knowledge_engine.rl.retrieval_environment import RetrievalObservation
+from knowledge_engine.rl.retrieval_environment import RetrievalRLAction as A
 from knowledge_engine.rl.stochastic_policy import (
     StochasticBudgetPolicy,
     evaluate_policy,
@@ -80,7 +78,7 @@ def test_invalid_epsilon_rejected(epsilon: float) -> None:
 
 
 def test_invalid_target_rejected() -> None:
-    with pytest.raises(ValueError, match="target"):
+    with pytest.raises(TypeError, match="target"):
         StochasticBudgetPolicy("SEARCH_K2", epsilon=0.2)
 
 
