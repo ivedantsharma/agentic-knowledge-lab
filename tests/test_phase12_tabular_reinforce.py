@@ -118,6 +118,8 @@ def test_seeded_rollout_reproducible() -> None:
 
 def test_identical_visible_state_hidden_gold_changes_reward_not_actions() -> None:
     model = TabularSoftmaxPolicy()
+    model.probabilities(initial_observation())
+    model.logits[(0, 0)][A.SEARCH_K2] = 100.0
     first = rollout(policy=model, **environment({"current"}), rng=Random(117))
     second = rollout(policy=model, **environment({"late"}), rng=Random(117))
     assert first.actions == second.actions
