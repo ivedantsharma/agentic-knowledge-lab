@@ -108,7 +108,7 @@ Graph QA answered and selected gold paths correctly on all four tasks. Its answe
 
 **Not supported:** graph representation alone causes the difference; graph wins on new domains; graph uses fewer compute resources; flat/hierarchy have worse end-to-end answer accuracy; RL/agentic policies outperform baselines.
 
-**Decision:** Close the EXP-122 *system-level* development study and retain its confound limitations as first-class research findings. A separate, more rigorous representation-only ablation would require common scorer/reasoner access and new source-independent cases. Move to EXP-123: agentic versus static search, with an explicit shared tool protocol and budget.
+**Decision:** Close the EXP-122 *system-level* development study and retain its confound limitations as first-class research findings. A separate, more rigorous representation-only ablation would require common scorer/reasoner access and new source-independent cases. Move to EXP-123: agentic versus static search, with an explicit shared tool protocol and budget. See `docs/architecture/ADR-018-representation-ablation-evidence-parity.md` for the durable architectural decision and limitations.
 
 ## Reproduce
 
