@@ -7,7 +7,6 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from knowledge_engine.rl.retrieval_environment import RetrievalRLAction
 from knowledge_engine.rl.reward_audit import audit_trajectory
 
-
 DOCUMENTS_PATH = Path("data/processed/knowledgebench_v2_hard_documents_v0.json")
 TASKS_PATH = Path("data/processed/phase10_routing_pairs_v0.json")
 
