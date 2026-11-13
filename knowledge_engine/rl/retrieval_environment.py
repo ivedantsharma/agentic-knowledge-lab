@@ -57,6 +57,7 @@ class RetrievalEpisode:
         complete_stop_reward: float = 1.0,
         premature_stop_penalty: float = 1.0,
         max_steps: int = 6,
+        timeout_incomplete_penalty: float = 0.0,
     ) -> None:
         if not question.strip() or not ranked_ids or not supporting_ids:
             raise ValueError("question, ranked_ids and supporting_ids must be nonempty")
@@ -74,6 +75,7 @@ class RetrievalEpisode:
         self._complete_stop_reward = complete_stop_reward
         self._premature_stop_penalty = premature_stop_penalty
         self._max_steps = max_steps
+        self._timeout_incomplete_penalty = timeout_incomplete_penalty
         self._retrieved_ids: tuple[str, ...] = ()
         self._requested_k = 0
         self._steps_taken = 0
@@ -122,6 +124,13 @@ class RetrievalEpisode:
             self._requested_k = next_k
         self._steps_taken += 1
         if self._steps_taken >= self._max_steps:
+            # The original v1 reward has no timeout penalty (default zero).
+            # Reward v2 charges incomplete forced termination like early STOP.
+            if (
+                action != RetrievalRLAction.STOP
+                and not self._supporting_ids.issubset(set(self._retrieved_ids))
+            ):
+                reward -= self._timeout_incomplete_penalty
             self._done = True
         return RetrievalTransition(
             observation=before,
@@ -135,3 +144,35 @@ class RetrievalEpisode:
 
 def total_return(transitions: list[RetrievalTransition]) -> float:
     return sum(transition.reward for transition in transitions)
+
+
+class RetrievalEpisodeV2(RetrievalEpisode):
+    """Reward v2: charge incomplete forced termination as premature STOP.
+
+    Gold labels remain hidden from policy observations. Conflict exposure is
+    deliberately audited separately rather than penalized automatically.
+    """
+
+    def __init__(
+        self,
+        question: str,
+        ranked_ids: list[str],
+        supporting_ids: set[str],
+        *,
+        reward_per_support: float = 2.0,
+        cost_per_document: float = 0.1,
+        complete_stop_reward: float = 1.0,
+        premature_stop_penalty: float = 1.0,
+        max_steps: int = 6,
+    ) -> None:
+        super().__init__(
+            question=question,
+            ranked_ids=ranked_ids,
+            supporting_ids=supporting_ids,
+            reward_per_support=reward_per_support,
+            cost_per_document=cost_per_document,
+            complete_stop_reward=complete_stop_reward,
+            premature_stop_penalty=premature_stop_penalty,
+            max_steps=max_steps,
+            timeout_incomplete_penalty=premature_stop_penalty,
+        )
