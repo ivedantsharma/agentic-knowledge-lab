@@ -2,7 +2,7 @@
 
 ## Scope and status
 
-**Core foundation milestones: complete pending EXP-119 local validation.**
+**Core foundation milestones: complete, with EXP-119 CI/driver-smoke validation and outstanding standalone local stdout archival.**
 This review covers deterministic retrieval trajectories, reward design,
 discounted returns, stochastic exploration, REINFORCE training and
 small-corpus family transfer. It does **not** claim robust adaptive
@@ -146,6 +146,17 @@ uv run python scripts/run_phase12_family_disjoint_transfer.py
 uv run python scripts/run_phase12_policy_protocol_audit.py
 ```
 
-The EXP-116 Monte Carlo output and final EXP-119 compatibility audit
-should be included in the archived experiment results before claiming
-comprehensive empirical reproduction of every phase command.
+The EXP-116 numerical Monte Carlo output and standalone user-local EXP-119
+stdout have not been archived; the EXP-119 driver was exercised with
+real files in CI and all 380 tests plus Ruff passed. Do not treat those
+missing stdout records as independently observed numerical results.
+
+## Phase 12 closeout artifacts and handoff
+
+- High-level design: `docs/architecture/phase12-hld.md`.
+- Architectural decision: `docs/architecture/ADR-016-rl-policy-evaluation-guardrails.md`.
+- Failure taxonomy: `docs/research/phase12-failure-taxonomy.md`.
+- Per-experiment protocol/result pairs: `docs/experiments/EXP-111*` through `EXP-119*`.
+- Learning roadmap: `docs/02-learning-roadmap.md`, Phase 12 Complete, Phase 13 Current.
+
+**Handoff to Phase 13:** freeze task provenance and fair benchmark protocols; establish strong fixed baselines, meaningful confidence intervals, fresh evaluation families and controlled ablations before making architecture superiority claims. Phase 13 focuses on systematic evidence, not automatically increasing model size.
