@@ -239,7 +239,7 @@ Key result:
 
 ## Phase 13 — Full Research Campaign
 
-Status: Current (EXP-120–123 complete, with EXP-123 mixed/negative static-vs-agentic finding; EXP-124 policy-comparability and new-family feasibility next).
+Status: Current (EXP-120–123 complete; EXP-124 Gate A audit validated but policy comparison blocked by incompatible SFT/RL protocols, missing independent new families and checkpoint persistence in inspected scripts; EXP-125 remains planned).
 
 Learn:
 - preregistered research questions, hypotheses, controls and ablations
