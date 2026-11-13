@@ -18,6 +18,7 @@ from knowledge_engine.rl.retrieval_environment import (
     RetrievalEpisodeV2,
     RetrievalRLAction,
 )
+from scripts import run_phase12_tabular_reinforce as experiment_driver
 
 A = RetrievalRLAction
 RANKING = ["pending", "current", "other", "late", "fifth"]
@@ -241,3 +242,16 @@ def test_forced_timeout_under_short_horizon() -> None:
     assert trace.actions == (A.SEARCH_K1, A.SEARCH_K2)
     assert trace.final_observation.done
     assert trace.rewards == pytest.approx((-0.1, 1.9))
+
+
+def test_exp117_driver_smoke_on_real_cirrus_files(monkeypatch, capsys) -> None:
+    """Exercise file loading and the end-to-end experiment with a tiny run."""
+    monkeypatch.setattr(experiment_driver, "TRAIN_EPISODES", 20)
+    monkeypatch.setattr(experiment_driver, "EVAL_EPISODES", 20)
+    monkeypatch.setattr(experiment_driver, "SEEDS", (0,))
+    experiment_driver.main()
+    output = capsys.readouterr().out
+    assert "Phase 12 EXP-117" in output
+    assert "gold_oracle_G=+2.7000" in output
+    assert "zero_learning_rate_control_delta=+0.0000" in output
+    assert "synthetic_late_support" in output
