@@ -239,7 +239,7 @@ Key result:
 
 ## Phase 13 — Full Research Campaign
 
-Status: Current (EXP-120 and EXP-121 complete; EXP-122 representation-ablation common-benchmark feasibility audit underway).
+Status: Current (EXP-120, EXP-121 and EXP-122 system-level development comparison complete; EXP-123 agentic-vs-static protocol next).
 
 Learn:
 - preregistered research questions, hypotheses, controls and ablations
