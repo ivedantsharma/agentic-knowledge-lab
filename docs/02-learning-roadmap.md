@@ -239,7 +239,7 @@ Key result:
 
 ## Phase 13 — Full Research Campaign
 
-Status: Current (started with EXP-120 campaign registry/protocol audit).
+Status: Current (EXP-120 provenance/registry audit complete; EXP-121 fixed-retriever baseline comparison next).
 
 Learn:
 - preregistered research questions, hypotheses, controls and ablations
@@ -251,7 +251,7 @@ Learn:
 
 Planned deliverables:
 - phase13 HLD and research campaign plan / experiment matrix
-- EXP-120: benchmark, evaluation and reproducibility protocol inventory
+- EXP-120: benchmark, evaluation and reproducibility protocol inventory (complete; 390 tests, Ruff and provenance audit passed)
 - frozen baseline configurations, seeds, dataset and split manifests
 - controlled architecture ablations and multi-trial result records
 - strong fixed and oracle baselines alongside all learned variants
