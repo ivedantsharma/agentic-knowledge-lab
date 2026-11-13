@@ -73,3 +73,7 @@ This gate should not be waved through by renaming Hybrid actions to BM25 names, 
 
 ## Campaign status
 EXP-120–123 are finished as scoped research studies. **EXP-124 remains in progress** at Gate A, with unresolved genuine data and protocol prerequisites. EXP-125 is unstarted. Phase 13 core study count therefore remains **4/6 (~67%)**, with two studies plus the Phase 13 final review outstanding.
+
+## Independent user-workspace reproduction
+
+The user additionally ran `uv run python scripts/run_phase13_policy_feasibility_audit.py` and supplied the complete local stdout. **All five source SHA-256 values exactly matched the previously archived CI hashes**, with `17` SFT examples split `train=11/dev=3/heldout=3`, `12` shared routing tasks, `9` matching BM25 minimum-budget labels and `3` mismatches. The six gate checks are all `False`, including `ready_for_direct_learned_comparison=False`. This independently confirms the **comparability blocker** in the user's workspace. It is not evidence of trained-model performance or absence of checkpoints elsewhere.
