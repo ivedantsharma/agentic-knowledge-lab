@@ -1,7 +1,6 @@
 # Phase 13 Research Campaign Plan — Preregistered Order
 
-> **Current status (2026-11-14): 5/6 experiments completed (~83%).** EXP-120, 121, 122, 123 and 125 have archived numerical results (or provenance audit for EXP-120). EXP-124 has a **validated new shared BM25 episode contract (Gate B0)**, but the original learned SFT/RL comparison is still blocked by incompatible historical policies, no retrained matched checkpoints and missing independent test families; **Phase 13 final review not completed**. Earlier chronological status paragraphs below are historical updates, not current gates. See `docs/experiments/EXP-125-hard-robustness-result.md` and `docs/experiments/EXP-124-learned-policy-comparison-result.md`.
-
+> **FINAL DISPOSITION (2026-11-14): PHASE 13 ARCHIVED / FINAL REVIEW COMPLETE.** Five of six studies were completed as scoped audited or measured development experiments (EXP-120–123 and EXP-125). EXP-124's shared protocol passed CI, but its learned SFT/RL comparison was **STOPPED / INCONCLUSIVE** for absent compatible retrained checkpoints, new independent evaluation families and available compute. **6/6 experiment dispositions are documented; 5/6 experiments have measured/audited completion.** No synthetic metrics are included in research results. See `docs/research/phase13-final-review.md` for supported conclusions, limitations and Phase 14 handoff. Older chronological text below is retained as historical progress updates.
 
 ## Central question
 Which knowledge architectures and control strategies improve **grounded task success** on difficult knowledge benchmarks, under reproducible resource budgets and with evidence-family generalization?
@@ -52,3 +51,8 @@ Full pretrained MiniLM robustness stdout supplied for the fixed **22-document / 
 At K5, among tasks labeled with risks, Hybrid exposed **2/2 labeled distractors**, **2/2 labeled contradictions**, and **3/3 stale sources**; this is *retrieval exposure*, **not** measured wrong answers. Retrieval on all four unanswerable tasks gives no abstention verdict, and the four Phase 9 prompt-injection cases were inventory-only. No new holdout, latency, attack or downstream model response was tested. Full outputs, task-level failure diagnostics and hashes: `docs/experiments/EXP-125-hard-robustness-result.md`.
 
 **Now 5/6 (~83%) scoped studies are complete.** EXP-124 must **not** be marked complete simply because its honest feasibility gate is blocked; it needs a truly matched protocol and new independent test families for a learned-policy generalization claim. Final campaign review and Phase 14 readiness gate remain outstanding. Plan should preserve negative evidence, rather than claiming universal Hybrid/graph/agent superiority.
+
+
+## Administrative archive and scientific scope
+
+The full six-item campaign ledger is closed for reporting: **five scoped studies completed, one feasibility-blocked/inconclusive**. Final review: `docs/research/phase13-final-review.md`. The separate illustrative numbers in `docs/experiments/EXP-124-illustrative-hypothetical-simulation-NOT-RESULTS.md` are fictional examples, not empirical findings. This archival decision does not satisfy EXP-124's originally preregistered learned-policy generalization claim and does not imply all hypotheses were tested or supported. The study can be reopened when compatible policies, new-family data and compute exist.
