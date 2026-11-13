@@ -107,6 +107,8 @@ The runner uses the four same graph-derived questions and 15 preserved evidence 
 
 **Output cap:** up to three evidence atoms per question, counting a graph claim's original evidence references. The run reports retrieved evidence units, context words and candidate scoring counts. The methods have different ranking algorithms/model stacks, so the resource counts and accuracy cannot identify a causal *representation-only* advantage.
 
+**CI confirmation:** GitHub Actions run `43501815415`, commit `523e02bfd5ca3ced97881fe53effc5601dd29c60`, **423 tests passed in 17.24s**, Ruff passed, EXP-120 input audit passed and EXP-122 source contract audit passed. Seven new Gate B2 tests verified fake-model integration, evaluator isolation, output budgets and fail-closed scoring.
+
 **Numerical score status:** the full encoder / cross-encoder / graph model driver has not yet been observed in the user workspace. **No new benchmark results or architecture winner are claimed here.** CI smoke tests using deterministic fake embedding and cross-encoder models validate output shapes, caps, and gold-label independence, not actual model accuracy.
 
 Full run command:
