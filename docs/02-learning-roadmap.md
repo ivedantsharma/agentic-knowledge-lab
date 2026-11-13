@@ -239,7 +239,7 @@ Key result:
 
 ## Phase 13 — Full Research Campaign
 
-Status: Current (EXP-120 verified; EXP-121 fixed-retriever protocol and CI tests complete, numerical full-model run pending).
+Status: Current (EXP-120 and EXP-121 complete; EXP-122 representation-ablation common-benchmark feasibility audit underway).
 
 Learn:
 - preregistered research questions, hypotheses, controls and ablations
