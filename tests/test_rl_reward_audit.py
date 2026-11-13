@@ -1,7 +1,7 @@
 import pytest
 
-from knowledge_engine.rl.reward_audit import audit_trajectory
 from knowledge_engine.rl.retrieval_environment import RetrievalRLAction
+from knowledge_engine.rl.reward_audit import audit_trajectory
 
 
 def test_conflicting_evidence_exposure_is_separate_from_reward() -> None:
