@@ -239,7 +239,7 @@ Key result:
 
 ## Phase 13 — Full Research Campaign
 
-Status: Current (EXP-120–122 complete; EXP-123 static-vs-agentic search implemented and CI-validated, real MiniLM numerical run pending).
+Status: Current (EXP-120–123 complete, with EXP-123 mixed/negative static-vs-agentic finding; EXP-124 policy-comparability and new-family feasibility next).
 
 Learn:
 - preregistered research questions, hypotheses, controls and ablations
