@@ -36,7 +36,7 @@ def _read_json_list(path: Path) -> tuple[list[dict], str]:
     content = path.read_bytes()
     result = json.loads(content)
     if not isinstance(result, list):
-        raise ValueError(f"expected top-level JSON list: {path}")
+        raise TypeError(f"expected top-level JSON list: {path}")
     return result, hashlib.sha256(content).hexdigest()
 
 
