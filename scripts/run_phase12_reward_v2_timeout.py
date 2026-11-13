@@ -17,7 +17,6 @@ RANKING = [
     "kbv2-doc-borealis-stale",
 ]
 
-
 def main() -> None:
     documents = json.loads(DOCS.read_text(encoding="utf-8"))
     document_by_id = {doc["document_id"]: doc for doc in documents}
