@@ -39,3 +39,6 @@ jobs:
 
       - name: Audit Phase 13 learned policy comparability
         run: uv run python scripts/run_phase13_policy_feasibility_audit.py
+
+      - name: Audit Phase 13 shared policy protocol
+        run: uv run python scripts/run_phase13_shared_policy_contract.py
