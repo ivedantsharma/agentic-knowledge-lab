@@ -48,3 +48,20 @@ Implement the Gate A source/provenance/substrate audit, archive its actual outpu
 
 ## Phase 13 progress
 EXP-120 completed; EXP-121 completed; EXP-122 protocol started. The six-gate Phase 13 campaign remains **2 of 6 completed (~33%)** until a justified EXP-122 evaluation is finished.
+
+
+## Gate B1 — Common source/evidence contract (implementation)
+
+After Gate A identified incompatible historical tasks, Gate B starts by **reusing exactly one pre-existing source**: the Phase 6 branching claim graph and its four original graph traversal tasks. This is a development/reuse experiment, NOT a new independent heldout dataset.
+
+- `knowledgebench/datasets/representation_bridge.py` derives flat evidence atoms and subject-grouped hierarchy sections from the **same** original `ClaimGraph.claims[].evidence[]` references, preserving each exact evidence string and source document ID. No new facts or task questions are written.
+- Flat entries are keyed by a stable `claim_id#index` evidence atom ID with the claim relation as a retrieval header; hierarchical sections preserve the same relation header and original evidence text.
+- Native graph uses the unmodified claims and graph edges. Structural navigation differs intentionally, and must be discussed as an information/inductive-bias distinction; comparable evidence text alone is not equal representation capacity.
+- `scripts/run_phase13_common_representation_contract.py` validates parity and prints source SHA-256, task and evidence atom counts.
+- `tests/test_phase13_representation_bridge.py` tests one-to-one source span preservation, references, task path continuity/terminal answer, and fail-closed malformed task gold. Task gold is only used for contract verification, never added to flat/hierarchical retrieval inputs.
+
+**Gate B1 acceptance:** each source evidence reference maps one-to-one into flat and hierarchy; shared task question/answer list remains unchanged; validation rejects corrupt tasks. This makes future *paired queries possible*, but is not yet a fair model outcome comparison.
+
+**Gate B2 still to do:** run the actual flat, hierarchy and graph systems on exactly the four same questions, with a clearly defined equal **evidence-unit/context budget** and per-action resource accounting. Gold claim evidence coverage can be measured after retrieval; answer correctness and search latency must not be inferred from coverage. If the existing hierarchical tool's document→section→chunk scoring makes a unit-equivalent comparison impossible, explicitly report the mismatch instead of claiming architecture superiority.
+
+The native graph data and questions were designed together. Even with a valid paired dataset, this is a **development benchmark with graph-favorable inductive bias**; collect additional source-independent cases before external generalization claims.
