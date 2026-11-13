@@ -1,122 +1,122 @@
-# EXP-122 Result — Gate A: Representation Substrate Feasibility
+# EXP-122 Result — Paired Representation System Comparison
 
-## Status
-**Gate A implemented and CI validated; the actual fair cross-representation architecture ablation is BLOCKED pending a shared task/source mapping.** EXP-122 as a whole is not complete.
+## Status and research decision
 
-## Validation
-- GitHub Actions on `main` for commit `fd70d2dea9ba134b02781922fe8c29d53b70f638`, run `43497907988`.
-- **407 tests passed in 18.70s**, Ruff **All checks passed**, EXP-120 source provenance audit PASS.
-- Seven EXP-122 unit/smoke tests validated actual Phase 5/6 input schemas, source references, graph claim IDs, duplicate entity rejection, input integrity, and the no-crosswalk warning.
-- CI exercised the real-data `main()` path through pytest output-capture. Full user-local stdout supplied for `uv run python scripts/run_phase13_representation_substrate_audit.py` and the values below were directly observed.
+**EXP-122 complete as a small, paired development-stage SYSTEM comparison; a pure causal representation-only ablation and unseen-family validation remain unproven.** The original Phase 5-vs-Phase 6 benchmark comparison was correctly blocked in Gate A; Gates B1 and B2 created and evaluated a common source representation without inventing independent examples.
 
-## Observed task and substrate differences
-| Property | Phase 5 hierarchy | Phase 6 graph |
-|---|---|---|
-| Source | `phase5_long_section_documents_v0.json` | `phase6_branching_claim_graph_v0.json` |
-| Source units | 6 structured documents with sections | entity and claim records |
-| Tasks | 3 evidence-span questions | 4 graph path/answer questions |
-| Existing pipeline | `CoarseToFineHierarchicalRetriever` | `ClaimGraphQAEngine` |
-| Current metric | evidence retention; returned context words | entity/path/answer/provenance correctness |
-| Exact paired source-task IDs | **None shared** | **None shared** |
-| Exact question-text overlap | **None observed** | **None observed** |
+### Research question
 
-### Full user-observed Gate A values
-- Phase 5: **6 structured documents, 9 sections, 3 tasks**.
-- Phase 6: **11 entities, 15 claims, 4 tasks**.
-- `shared_task_ids=()`, `shared_exact_questions=()`, `shared_expected_answers=()`, `complete_paired_task_crosswalk=False`.
-- **BLOCKED**: no complete paired task mapping exists.
+On the same existing Phase 6 graph-derived four questions and evidence source, how much relevant evidence is retrieved by a flat lexical system, a hierarchical Dense+CrossEncoder system, and native claim-graph QA when output is capped at three evidence atoms?
 
-### Source SHA-256 hashes (exact user-observed output)
-| Source | SHA-256 |
-|---|---|
-| `data/processed/phase5_long_section_documents_v0.json` | `a66964b95752fc8bb50a1c2789c548d4618cd33145c4962adbdb2a9937c21d89` |
-| `data/processed/phase5_long_section_tasks_v0.json` | `6f77a40b281a9c8d3e424e2d44be4a7236829eb9b37612a549123aca89a5e5dc` |
-| `data/processed/phase6_branching_claim_graph_v0.json` | `4e3b26bd9dfbc57f57eb501132279f50e96be87e7db96ba7838d552a2669718e` |
-| `data/processed/phase6_graph_tasks_v0.json` | `767c9b0b2a3ea42d3d08407e1d095062790f770917d1e2452632adc5c9f0db9e` |
+## Gate A — Historical protocols are incomparable
 
-## Scientific conclusion
-The old Phase 5 and Phase 6 percentages cannot estimate a causal advantage of hierarchical over graph retrieval. Comparing them would confound representation with task difficulty, available evidence, answer-vs-span scoring and resource usage.
+The user executed `uv run python scripts/run_phase13_representation_substrate_audit.py`.
 
-No new benchmark examples or model results were generated. Gate B must **not** start without a common labeled source of facts, paired tasks and a matched-budget evaluation contract. This is a negative feasibility result, not a failed model.
+| Property | Phase 5 hierarchy source | Phase 6 graph source |
+|---|---:|---:|
+| Structured documents | 6 | — |
+| Sections | 9 | — |
+| Entities | — | 11 |
+| Claims | — | 15 |
+| Tasks | 3 | 4 |
+| Shared exact task IDs/questions/answers | **0** | **0** |
 
-## Reproduce
+Gate A found `complete_paired_task_crosswalk=False`. The historical Phase 5 evidence retention and Phase 6 graph answer accuracy must not be compared directly.
+
+Source fingerprints:
+- Phase 5 documents: `a66964b95752fc8bb50a1c2789c548d4618cd33145c4962adbdb2a9937c21d89`
+- Phase 5 tasks: `6f77a40b281a9c8d3e424e2d44be4a7236829eb9b37612a549123aca89a5e5dc`
+- Phase 6 graph: `4e3b26bd9dfbc57f57eb501132279f50e96be87e7db96ba7838d552a2669718e`
+- Phase 6 graph tasks: `767c9b0b2a3ea42d3d08407e1d095062790f770917d1e2452632adc5c9f0db9e`
+
+## Gate B1 — Common data contract
+
+The original Phase 6 graph claims were projected losslessly into three views:
+- Flat: **15** source evidence atoms, with relation labels.
+- Hierarchy: **11** subject-grouped documents with **15** evidence sections.
+- Graph: the original **15** claims, relationships, and evidence references.
+
+All **four existing graph-derived QA questions** are identical for the three approaches. Exact evidence text and source provenance were preserved. No newly gathered families or untouched holdout were introduced.
+
+GitHub CI run `43499979668`: **416 tests passed**, Ruff passed, source contract and EXP-120 provenance audit passed.
+
+## Gate B2 — Preregistered observed numerical comparison
+
+The user executed:
 ```bash
-git pull
-uv run pytest
-uv run ruff check .
-uv run python scripts/run_phase13_representation_substrate_audit.py
-```
-
-## Next
-Freeze a cross-representation document/claim mapping and shared question set, then compare flat/hierarchy/graph using evidence coverage, grounded answer correctness, provenance and resource metrics at comparable budgets. Keep the existing Phase 5 and 6 datasets as development history, not independent heldout test sets.
-
-
-## Gate B1 — Common representation contract: VALIDATED
-
-**GitHub Actions `main` run 43499979668** executed the real common-substrate driver and all checks:
-- **416 tests passed in 17.78s**.
-- Ruff: **All checks passed**.
-- EXP-120 benchmark provenance check: **PASS**.
-- EXP-122 common representation contract command: **PASS**.
-
-### Exact observed source and representation counts
-
-| Count | Observed |
-|---|---:|
-| Native graph claims | 15 |
-| Original evidence references / generated evidence atoms | 15 |
-| Flat evidence units | 15 |
-| Hierarchy documents grouped by subject entity | 11 |
-| Hierarchy sections | 15 |
-| Original graph QA tasks | 4 |
-
-The same **15 exact source evidence strings** are preserved once each in both flat and hierarchical projections. Their claim IDs, relation labels, and source document IDs are retained. The native graph retains the source claims/edges. The four QA questions, expected claim paths, and answers were *validated*, not rewritten or exposed as retrieval features.
-
-Exact source SHA-256:
-- Graph source: `4e3b26bd9dfbc57f57eb501132279f50e96be87e7db96ba7838d552a2669718e`
-- Four graph tasks: `767c9b0b2a3ea42d3d08407e1d095062790f770917d1e2452632adc5c9f0db9e`
-
-Implementation files:
-- `knowledgebench/datasets/representation_bridge.py`
-- `scripts/run_phase13_common_representation_contract.py`
-- `tests/test_phase13_representation_bridge.py`
-
-### Decision
-
-**The source-parity prerequisite for a paired development experiment is met.** This does not mean all architectures encode identical information: the graph has explicit entity edges whereas the flat view renders original evidence statements, and the hierarchy provides entity-grouped sections. Graph-derived questions likely advantage graph traversal. This is an intended representation difference requiring careful outcome interpretation.
-
-**EXP-122 remains OPEN:** we have NOT yet measured flat versus hierarchy versus graph retrieval/answer accuracy or costs. Gate B2 needs an explicitly shared evidence-unit/context-budget contract and actual measured runs. The data are recycled from Phase 6, not newly heldout.
-
-Reproduce:
-```bash
-uv run python scripts/run_phase13_representation_substrate_audit.py
-uv run python scripts/run_phase13_common_representation_contract.py
-uv run pytest
-uv run ruff check .
-```
-
-
-## Gate B2 implementation — numerical pretrained-model comparison pending
-
-The actual paired system runner is now implemented **directly on `main`**:
-- `scripts/run_phase13_paired_representation_comparison.py`
-- `knowledgebench/evaluation/phase13_representation_comparison.py`
-- `tests/test_phase13_paired_representation_comparison.py`
-
-The runner uses the four same graph-derived questions and 15 preserved evidence source units. It executes **existing** `BM25Retriever` over flat evidence atoms, `CoarseToFineHierarchicalRetriever` with all eleven parents eligible and a three-section full-evidence output, and `ClaimGraphQAEngine` with a top path of at most three claims. Native graph output includes an answer; flat and hierarchy only return evidence. Evaluator-only gold is used **after** retrieving to score per-task claim coverage and evidence completion.
-
-**Output cap:** up to three evidence atoms per question, counting a graph claim's original evidence references. The run reports retrieved evidence units, context words and candidate scoring counts. The methods have different ranking algorithms/model stacks, so the resource counts and accuracy cannot identify a causal *representation-only* advantage.
-
-**CI confirmation:** GitHub Actions run `43501815415`, commit `523e02bfd5ca3ced97881fe53effc5601dd29c60`, **423 tests passed in 17.24s**, Ruff passed, EXP-120 input audit passed and EXP-122 source contract audit passed. Seven new Gate B2 tests verified fake-model integration, evaluator isolation, output budgets and fail-closed scoring.
-
-**Numerical score status:** the full encoder / cross-encoder / graph model driver has not yet been observed in the user workspace. **No new benchmark results or architecture winner are claimed here.** CI smoke tests using deterministic fake embedding and cross-encoder models validate output shapes, caps, and gold-label independence, not actual model accuracy.
-
-Full run command:
-```bash
-git pull
-uv run pytest
-uv run ruff check .
 uv run python scripts/run_phase13_paired_representation_comparison.py
 ```
 
-On receiving numerical stdout, record exact per-task coverage, resource metrics and native-graph answer accuracy separately. The full experiment remains **OPEN** until output review and fair-comparison limitations have been documented.
+The MiniLM weights (103 objects) and cross-encoder weights (105 objects) loaded. The Hugging Face unauthenticated-request warning did not prevent the run.
+
+**Controls:** 4 source questions, 15 evidence atoms, at most 3 evidence atoms returned per question. Flat uses existing BM25, hierarchical uses the existing coarse-to-fine Dense+CrossEncoder retriever with all 11 parents eligible, and graph uses native explicit-entity ClaimGraphQA with semantic path ranking. Original gold claim IDs and answers are accessed by the evaluator *after* retrieval, not provided as policy inputs.
+
+### Per-task findings
+
+| Task | Gold claims | Flat BM25 coverage | Hierarchy coverage | Graph coverage | Full evidence recovered (Flat / Hierarchy / Graph) |
+|---|---:|---:|---:|---:|---|
+| graph-001 | 3 | 0.3333 | 0.3333 | 1.0000 | No / No / Yes |
+| graph-002 | 2 | 0.5000 | 1.0000 | 1.0000 | No / Yes / Yes |
+| graph-003 | 3 | 0.6667 | 0.6667 | 1.0000 | No / No / Yes |
+| graph-004 | 2 | 1.0000 | 1.0000 | 1.0000 | Yes / Yes / Yes |
+
+### Aggregates
+
+| Metric | Flat BM25 | Hierarchy | Native graph |
+|---|---:|---:|---:|
+| Mean gold claim coverage | **0.6250** | **0.7500** | **1.0000** |
+| Tasks with all gold evidence | **0.2500 (1/4)** | **0.5000 (2/4)** | **1.0000 (4/4)** |
+| Mean retrieved evidence atoms | 3.0000 | 3.0000 | 2.5000 |
+| Mean returned text words | 34.7500 | 38.7500 | 35.0000 |
+| Reported candidate scoring counts | 15.0000 | 29.0000 | 2.0000 |
+| Native answer exact match | Not evaluated | Not evaluated | 1.0000 (4/4) |
+| Native graph claim-path exact match | Not evaluated | Not evaluated | 1.0000 (4/4) |
+
+**Do not compare candidate counts as if they were the same unit.** Flat counts document BM25 scores, hierarchy sums scored parents/sections/chunks, while graph reports candidate path ranking count (not all graph processing work). None provides a controlled wall-clock latency measure.
+
+### Per-task raw resource diagnostics
+
+| Task | Flat atoms / words / candidates | Hierarchy atoms / words / candidates | Graph atoms / words / candidates |
+|---|---|---|---|
+| graph-001 | 3 / 33 / 15 | 3 / 36 / 29 | 3 / 42 / 3 |
+| graph-002 | 3 / 33 / 15 | 3 / 44 / 29 | 2 / 32 / 2 |
+| graph-003 | 3 / 36 / 15 | 3 / 34 / 29 | 3 / 39 / 2 |
+| graph-004 | 3 / 37 / 15 | 3 / 41 / 29 | 2 / 27 / 1 |
+
+Graph QA answered and selected gold paths correctly on all four tasks. Its answer accuracy is **not** comparable with flat and hierarchy because the latter did not generate answers.
+
+## Validation
+
+- Latest Gate B2 implementation CI: GitHub Actions run `43501815415`, commit `523e02bfd5ca3ced97881fe53effc5601dd29c60`.
+- **423 tests passed in 17.24s**, Ruff passed, EXP-120 source-provenance audit passed, and EXP-122 common representation contract passed.
+- Tests include source atom preservation, exact task-path integrity, capped evidence outputs, fake-model system integration, and evaluator gold-label isolation.
+- Full pretrained-model numerical results above are directly from the **user's local experiment run**, not inferred from CI smoke tests.
+
+## Failure analysis and limitations
+
+1. **Multi-hop gap:** graph-001 and graph-003 require three connected facts; at K3 both flat and hierarchy miss at least one claim, while graph QA follows a complete path.
+2. **Hierarchy helps some queries:** hierarchy recovers both claims on graph-002 versus flat coverage 0.5, but still misses multi-hop chain evidence elsewhere.
+3. **Graph-favorable benchmark:** the original Phase 6 graph and questions were designed together; representational edge access and task alignment favor graph.
+4. **Retriever/model confound:** BM25 vs dense+cross-encoder vs semantic graph-path scoring differ, as do explicit edge navigation and response generation. This is *not* a controlled one-variable causal ablation of representation alone.
+5. **Cost confound:** a three-atom output cap aligns exposed evidence units but not model inferences, indexing work, retrieval latency, or compute.
+6. **No broad inference:** four questions from one existing graph source; no independent evidence-family variation, meaningful confidence intervals, novel deployment corpus, or untouched test set.
+7. **Answer-quality asymmetry:** native graph outputs answers; flat and hierarchy do not. Retrieval completeness alone is not final-answer correctness.
+
+## Scientific conclusion
+
+**Supported:** On the four existing graph-oriented tasks and this output budget, native graph QA achieves full evidence-path retrieval (4/4) and exact native answer/path accuracy (4/4). Hierarchy achieves 2/4 full evidence coverage; flat BM25 achieves 1/4. All measurements are reproducible and documented.
+
+**Not supported:** graph representation alone causes the difference; graph wins on new domains; graph uses fewer compute resources; flat/hierarchy have worse end-to-end answer accuracy; RL/agentic policies outperform baselines.
+
+**Decision:** Close the EXP-122 *system-level* development study and retain its confound limitations as first-class research findings. A separate, more rigorous representation-only ablation would require common scorer/reasoner access and new source-independent cases. Move to EXP-123: agentic versus static search, with an explicit shared tool protocol and budget.
+
+## Reproduce
+
+```bash
+git pull
+uv run pytest
+uv run ruff check .
+uv run python scripts/run_phase13_representation_substrate_audit.py
+uv run python scripts/run_phase13_common_representation_contract.py
+uv run python scripts/run_phase13_paired_representation_comparison.py
+```
