@@ -84,7 +84,7 @@ def run_shared_episode(
         observation = episode.observe()
         action = policy.choose_action(observation)
         if not isinstance(action, RetrievalRLAction):
-            raise ValueError("policy returned non-contract action")
+            raise TypeError("policy returned non-contract action")
         if action not in legal_actions(observation):
             raise ValueError(f"policy returned illegal action: {action}")
         transition = episode.step(action)
