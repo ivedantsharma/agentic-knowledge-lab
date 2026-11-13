@@ -110,7 +110,7 @@ def test_family_split_leakage_rejected(tmp_path: Path) -> None:
 def test_invalid_json_shape_rejected(tmp_path: Path) -> None:
     docs, routes, policies = _copies(tmp_path)
     docs.write_text('{"not": "a list"}', encoding="utf-8")
-    with pytest.raises(ValueError, match="top-level JSON list"):
+    with pytest.raises(TypeError, match="top-level JSON list"):
         build_inventory(docs, routes, policies)
 
 
