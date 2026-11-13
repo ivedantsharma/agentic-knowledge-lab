@@ -43,3 +43,27 @@ Audit the repo's real policy/checkpoint code and gather dataset provenance, then
 
 ## Phase progress
 EXP-120–123 complete (4/6 planned studies, roughly 67%). EXP-124 and EXP-125 remain, followed by Phase 13 final review. An honest blocked feasibility study is a useful research outcome, but it is not proof of learned-policy success.
+
+
+## Gate B0 — New shared BM25 action/observation protocol (implemented, no retraining)
+
+An initial **new common policy interface** is implemented in `knowledge_engine/rl/shared_policy_protocol.py`; it deliberately **does not** relabel or execute the old Hybrid SFT checkpoint.
+
+| Contract facet | Frozen v0 choice |
+|---|---|
+| Identifier | `EXP-124-common-bm25-v0` |
+| Retriever | Same frozen full-corpus BM25 ranking for every arm, without query reformulation |
+| Policy observation | Existing `RetrievalObservation(question, retrieved_ids, requested_k, steps_taken, done)`; no gold labels or reward |
+| Policy action | One of `SEARCH_K1`, `SEARCH_K2`, `SEARCH_K3`, `SEARCH_K5`, `STOP` |
+| Legal transitions | Search K strictly increases; once done, no actions; `STOP` terminates explicitly |
+| Episode and reward | Existing `RetrievalEpisodeV2`; +2 per newly found support, −0.1 per newly retrieved document, +1 for complete STOP, −1 for premature STOP or incomplete forced timeout |
+| Horizon and discount | Max 6 actions, `gamma=0.9` |
+| Gold information | Evaluator / environment only, never passed to `policy.choose_action(observation)` |
+| Baselines | Frozen gold-blind fixed-K1/K2/K3/K5 run through **exactly the same episode API** |
+| Reformulation | **Out of scope** in v0; to introduce REFORMULATE later both SFT and RL need a new same-query-state, query-budget and tool protocol, plus retraining |
+
+The v0 action space intentionally matches the **new** standardized runtime, not Phase 11's historical SFT action set. Existing SFT action-label accuracy is not an online decision outcome; no checkpoint is silently adapted. A policy can be compared only if it was trained and inferred on this *same* observation/action protocol.
+
+Implementation: `knowledge_engine/rl/shared_policy_protocol.py`; tests: `tests/test_phase13_shared_policy_protocol.py`; development smoke run: `scripts/run_phase13_shared_policy_contract.py`. The smoke runner calls the existing `scripts/run_phase12_family_disjoint_transfer.py:load_ranked_tasks` to recompute original BM25 rankings for 12 already-inspected routing tasks. Its fixed-baseline measurements are **mechanics diagnostics**, not new heldout generalization or new learned-policy outcomes.
+
+**Exit condition:** v0 adapter tests and source-frozen fixed baseline runner pass CI; still require independently sourced families with a pre-training sealed split, SFT and RL retraining under the same contract, checkpoint save/reload, five independent seeds and fair baseline evaluation before EXP-124 can be closed as a *learned generalization* study. Do not confuse completion of Gate B0 with completion of EXP-124.
