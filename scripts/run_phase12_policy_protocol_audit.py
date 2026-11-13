@@ -59,7 +59,6 @@ def audit_shared_tasks(
     sft_path: Path = SFT_DATA,
 ) -> tuple[SharedTaskAudit, ...]:
     ranked = load_ranked_tasks()
-    by_id = {task.task_id: task for task in ranked}
     rows = json.loads(sft_path.read_text(encoding="utf-8"))
     sft_by_id = {}
     for row in rows:
