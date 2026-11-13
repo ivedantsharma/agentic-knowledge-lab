@@ -24,3 +24,7 @@ On receipt, archive the exact source hashes and sample counts, all K/method aggr
 
 ## Progress
 EXP-125 is **in progress**, with real-model scores and scientific closeout outstanding. EXP-124 is blocked on protocol/data/checkpoint prerequisites. Phase 13 stays at **4/6 (~67%)** completed full studies until these gates are resolved.
+
+## Implementation validation
+
+GitHub Actions run `43507480873`, source commit `a0882fe815673502cadf1c0defbea6001fbef03c`: **447 tests passed in 16.30s**, Ruff **All checks passed**, existing EXP-120 source-provenance, EXP-122 common representation and EXP-124 comparability audits passed. The eight new EXP-125 tests cover actual hard-v0 and Phase 9 inventory counts, all three retrieval adapters using a deterministic fake embedder, K-monotonicity, evaluator-only unanswerable treatment, source integrity, invalid rankings and conditional risk denominators. **These are not observed real MiniLM risk or recall scores.**
