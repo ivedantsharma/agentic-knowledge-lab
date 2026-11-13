@@ -33,7 +33,6 @@ from knowledge_engine.training.sft_format import (
     build_target_only_labels,
 )
 
-
 MODEL_NAME = "Qwen/Qwen2.5-0.5B-Instruct"
 DATA_PATH = Path(
     "data/processed/phase11_policy_dataset_v1.json"
@@ -86,11 +85,13 @@ def build_training_tensors(
         prompt_messages,
         tokenize=True,
         add_generation_prompt=True,
+        return_dict=False,
     )
     full_ids = tokenizer.apply_chat_template(
         full_messages,
         tokenize=True,
         add_generation_prompt=False,
+        return_dict=False,
     )
 
     labels = build_target_only_labels(
@@ -186,7 +187,7 @@ def evaluate(
     print(label)
 
     for example in examples:
-        raw, predicted = generate_action(
+        _raw, predicted = generate_action(
             tokenizer,
             model,
             example,

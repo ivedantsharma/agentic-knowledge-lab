@@ -4,7 +4,6 @@ from knowledge_engine.training.retrieval_policy import (
     RetrievalPolicyAction,
 )
 
-
 _K_TO_ACTION = {
     1: RetrievalPolicyAction.SEARCH_HYBRID_K1,
     2: RetrievalPolicyAction.SEARCH_HYBRID_K2,

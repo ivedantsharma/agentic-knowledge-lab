@@ -9,7 +9,6 @@ from knowledge_engine.training.retrieval_policy import (
     RetrievalPolicyExample,
 )
 
-
 DATA_PATH = Path(
     "data/processed/phase11_policy_dataset_v0.json"
 )

@@ -20,7 +20,6 @@ from knowledge_engine.training.sft_format import (
     count_supervised_tokens,
 )
 
-
 MODEL_NAME = "Qwen/Qwen2.5-0.5B-Instruct"
 DATA_PATH = Path(
     "data/processed/phase11_policy_dataset_v0.json"
@@ -83,12 +82,14 @@ def main() -> None:
         prompt_messages,
         tokenize=True,
         add_generation_prompt=True,
+        return_dict=False,
     )
 
     full_ids = tokenizer.apply_chat_template(
         full_messages,
         tokenize=True,
         add_generation_prompt=False,
+        return_dict=False,
     )
 
     labels = build_target_only_labels(

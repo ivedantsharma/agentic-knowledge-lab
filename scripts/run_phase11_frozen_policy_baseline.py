@@ -16,7 +16,6 @@ from knowledge_engine.training.retrieval_policy import (
     parse_retrieval_policy_action,
 )
 
-
 MODEL_NAME = "Qwen/Qwen2.5-0.5B-Instruct"
 DATA_PATH = Path(
     "data/processed/phase11_policy_seed_v0.json"

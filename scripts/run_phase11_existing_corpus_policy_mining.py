@@ -24,7 +24,6 @@ from knowledgebench.tasks.routing_schema import (
     RoutingBenchmarkTask,
 )
 
-
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 
 DOCUMENTS_PATH = Path(
