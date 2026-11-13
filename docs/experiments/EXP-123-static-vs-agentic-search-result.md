@@ -15,6 +15,12 @@
 - Gold paths/answers are evaluation-only; model doesn't receive task hop labels.
 - These are **previously inspected** Phase 4 tasks, not a pristine unseen-family evaluation; no broad generalization inference.
 
+## Implementation CI validation
+
+- GitHub Actions run `43503795790`, commit `0c72dad28a606f26bfd95d0d72bb1d687ff93a85`: **432 tests passed in 20.73s**, Ruff **All checks passed**; provenance audits ran successfully.
+- Nine new EXP-123 tests cover the real 19-document/five-task source contract, one- vs nine-document exposure, three-call repeat baseline, the actual existing rule planner with fake backend, a gold-label isolation test, all-top-K evidence scoring, malformed outputs and invalid arms.
+- CI uses a fake search backend and **does not** infer numerical results for the real MiniLM embedding model.
+
 ## Unfilled numerical results
 **Do not invent or infer results.** Await actual stdout for:
 ```bash
