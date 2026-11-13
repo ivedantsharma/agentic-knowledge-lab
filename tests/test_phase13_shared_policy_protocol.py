@@ -84,7 +84,7 @@ def test_wrong_action_type_cannot_cast_historical_sft_labels() -> None:
         def choose_action(self, observation):
             return "SEARCH_HYBRID_K3"
 
-    with pytest.raises(ValueError, match="non-contract action"):
+    with pytest.raises(TypeError, match="non-contract action"): 
         run_shared_episode(
             policy=OldSftPolicy(),
             question="q", ranked_ids=["a"],
