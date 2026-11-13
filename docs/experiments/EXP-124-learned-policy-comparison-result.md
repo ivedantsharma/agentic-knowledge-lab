@@ -77,3 +77,47 @@ EXP-120–123 are finished as scoped research studies. **EXP-124 remains in prog
 ## Independent user-workspace reproduction
 
 The user additionally ran `uv run python scripts/run_phase13_policy_feasibility_audit.py` and supplied the complete local stdout. **All five source SHA-256 values exactly matched the previously archived CI hashes**, with `17` SFT examples split `train=11/dev=3/heldout=3`, `12` shared routing tasks, `9` matching BM25 minimum-budget labels and `3` mismatches. The six gate checks are all `False`, including `ready_for_direct_learned_comparison=False`. This independently confirms the **comparability blocker** in the user's workspace. It is not evidence of trained-model performance or absence of checkpoints elsewhere.
+
+## Gate B0 — New common BM25 episode protocol: verified
+
+**CI-validated on `main`**: GitHub Actions run `43510455499`, commit `58d13714e9545927481230d2b6549fa6bdce4b80`: **458 tests passed in 20.56s**, Ruff clean, all previous audit steps and the new standalone `run_phase13_shared_policy_contract.py` **PASS**.
+
+This is a **new common execution contract**, not a retroactive conversion of the old SFT policy:
+
+- Identifier: `EXP-124-common-bm25-v0`.
+- Reuses the existing BM25 ranking and `RetrievalEpisodeV2` reward semantics; action space `SEARCH_K1/K2/K3/K5` and `STOP`, no `REFORMULATE`; max 6 decisions, `gamma=0.9`.
+- The new `ActionPolicy.choose_action(RetrievalObservation)` interface receives only `question, retrieved_ids, requested_k, steps_taken, done`. The hidden supporting IDs enter evaluator/reward logic only.
+- Existing `legal_actions` ensures budgets strictly increase and terminal states do not accept actions. Tests reject old SFT action text, repeated K and incorrect action types.
+- All fixed K baselines now execute through **the same runtime**; their scores below came from the actual CI driver, not inferred from fake models.
+
+### Measured fixed-control contract smoke test (inspected development tasks only)
+
+`uv run python scripts/run_phase13_shared_policy_contract.py` recomputed BM25 on the **12 existing Phase 10 route questions, 6 already inspected source families**, with frozen source hashes:
+
+- Documents `9015e8924fffcb461a7278c24e7f108d7a33377fcb6967d0f7bf0539fe9022be`
+- Routing tasks `996514ff172e71756e300a9b43fc189603d14ba914da18e5c7cf12129d014ef2`
+
+| Gold-blind fixed policy | Mean support recall | Complete support fraction | Mean discounted reward | Mean documents |
+|---|---:|---:|---:|---:|
+| Fixed K1 | 0.6667 | 0.6667 | +1.5333 | 1.0000 |
+| Fixed K2 | 0.9167 | 0.9167 | +2.3833 | 2.0000 |
+| **Fixed K3** | **1.0000** | **1.0000** | **+2.6000** | 3.0000 |
+| Fixed K5 | 1.0000 | 1.0000 | +2.4000 | 5.0000 |
+
+**Scientific interpretation:** the new mechanics now work, but fixed K3 already retrieves all labeled support at lower average context cost than K5 on these inspected questions. This makes a learned-policy win on the same dataset both difficult to demonstrate and uninformative for external generalization. These fixed policy numbers are consistent with EXP-118, **not a new result about SFT/RL learning**.
+
+### Gate B0 decision / remaining blockers
+
+**PASS: shared action/state/reward/STOP execution interface for future retrained models.**
+
+**NOT DONE:** new SFT model trained on that action protocol, new RL policy trained and checkpointed using the same corpus/reward/splits, checkpoints reloaded for inference, fresh independently sourced test families, 5-seed trial evidence, final answer quality or generalization result.
+
+**EXP-124 stays OPEN**; the six-study Phase 13 progress remains **5/6 (~83%)**, plus final research review. One must never claim the old Phase 11 Qwen policy is now comparable simply because a new shared interface exists.
+
+Reproduce:
+```bash
+git pull
+uv run pytest
+uv run ruff check .
+uv run python scripts/run_phase13_shared_policy_contract.py
+```
