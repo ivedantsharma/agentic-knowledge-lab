@@ -186,7 +186,7 @@ Learn:
 
 ## Phase 11 — Fine-Tuning Retrieval/Search Behavior
 
-Status: Current.
+Status: Complete.
 
 Learn:
 - PyTorch basics
@@ -195,7 +195,19 @@ Learn:
 - supervised fine-tuning
 - retrieval-policy training data
 
+Deliverables:
+- typed retrieval-policy action space
+- frozen-model policy baseline
+- target-only causal-LM SFT formatting
+- LoRA optimization pipeline
+- measured oracle policy dataset
+- evidence-family-disjoint evaluation
+- class-balanced SFT baseline
+- Phase 11 failure analysis and final review
+
 ## Phase 12 — RL for Retrieval Policy
+
+Status: Current.
 
 Learn:
 - rewards
