@@ -36,3 +36,6 @@ jobs:
 
       - name: Audit Phase 13 common representation contract
         run: uv run python scripts/run_phase13_common_representation_contract.py
+
+      - name: Audit Phase 13 learned policy comparability
+        run: uv run python scripts/run_phase13_policy_feasibility_audit.py
