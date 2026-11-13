@@ -1,9 +1,11 @@
 """Evaluator-only Phase 12 reward audit; never use these signals as policy features."""
 
 from dataclasses import dataclass
+from typing import Literal
 
 from knowledge_engine.rl.retrieval_environment import (
     RetrievalEpisode,
+    RetrievalEpisodeV2,
     RetrievalRLAction,
     RetrievalTransition,
     total_return,
@@ -30,11 +32,13 @@ def audit_trajectory(
     actions: list[RetrievalRLAction],
     max_steps: int = 6,
     cost_per_document: float = 0.1,
+    reward_version: Literal["v1", "v2"] = "v1",
 ) -> tuple[RewardAudit, list[RetrievalTransition]]:
     """Audit reward versus evidence/risk/termination using hidden gold labels."""
     if not conflicting_ids.issubset(set(ranked_ids)):
         raise ValueError("conflicting IDs must exist in ranking")
-    episode = RetrievalEpisode(
+    episode_class = RetrievalEpisode if reward_version == "v1" else RetrievalEpisodeV2
+    episode = episode_class(
         question,
         ranked_ids,
         supporting_ids,
