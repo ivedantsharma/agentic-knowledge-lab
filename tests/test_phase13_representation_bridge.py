@@ -88,7 +88,7 @@ def test_graph_task_path_from_source_is_consistent() -> None:
 
 def test_missing_expected_claim_rejected(tmp_path: Path) -> None:
     graph, tasks = _copy(tmp_path)
-    _edit(tasks, lambda x: x[0].update(expected_claim_ids=["unknown"]))
+    _edit(tasks, lambda x: x[0]["expected_claim_ids"].__setitem__(0, "unknown"))
     with pytest.raises(ValueError, match="missing claim"):
         build_common_substrate(graph, tasks)
 
