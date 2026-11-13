@@ -239,7 +239,7 @@ Key result:
 
 ## Phase 13 — Full Research Campaign
 
-Status: Current (EXP-120–123 complete; EXP-124 Gate A audit validated but policy comparison blocked by incompatible SFT/RL protocols, missing independent new families and checkpoint persistence in inspected scripts; EXP-125 remains planned).
+Status: Current (EXP-120–123 complete; EXP-124 Gate A audit validated but policy comparison blocked by incompatible SFT/RL protocols, missing independent new families and checkpoint persistence in inspected scripts; EXP-125 robustness protocol and implementation in progress (pretrained-model scores pending)).
 
 Learn:
 - preregistered research questions, hypotheses, controls and ablations
