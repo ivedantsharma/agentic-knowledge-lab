@@ -8,6 +8,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from knowledge_engine.integrated.pipeline import IntegratedKnowledgeEngine
+from knowledge_engine.integrated.verification import extract_source_answer
 from knowledgebench.documents.v2_schema import KnowledgeBenchV2Document
 
 DOCUMENTS = Path("data/processed/knowledgebench_v2_hard_documents_v0.json")
@@ -30,6 +31,7 @@ def main() -> None:
     )
     parser.add_argument("--strategy", choices=["auto", "static", "planner"], default="auto")
     parser.add_argument("--top-k", type=int, default=3)
+    parser.add_argument("--extractive-answer", action="store_true")
     parser.add_argument("--max-planner-searches", type=int, default=3)
     args = parser.parse_args()
     result = build_engine().query(
@@ -38,7 +40,10 @@ def main() -> None:
         top_k=args.top_k,
         max_planner_searches=args.max_planner_searches,
     )
-    print(json.dumps(result.as_dict(), indent=2))
+    report = result.as_dict()
+    if args.extractive_answer:
+        report["source_answer"] = extract_source_answer(result).as_dict()
+    print(json.dumps(report, indent=2))
 
 
 if __name__ == "__main__":
