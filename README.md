@@ -27,7 +27,7 @@ We will build difficult evaluations for:
 
 ## Current status
 
-**Phases 0–12: foundational milestones complete. Phase 13: research campaign archived and final review complete (2026-11-14).** Five scoped Phase 13 audits/experiments were completed; EXP-124 stopped as scientifically inconclusive because compatible SFT/RL checkpoints and independent evaluation families were unavailable. This is **not** a six-for-six measured research success. Phase 14 integration is planned, not completed.
+**Phases 0–12: foundational milestones complete. Phase 13: research campaign archived and final review complete (2026-11-14).** Five scoped Phase 13 audits/experiments were completed; EXP-124 stopped as scientifically inconclusive because compatible SFT/RL checkpoints and independent evaluation families were unavailable. This is **not** a six-for-six measured research success. Phase 14 has begun: a CPU-only BM25 evidence pipeline, rule-planner fallback, traceable JSON CLI, source metadata flags, and regression tests have been implemented. Verified answers, abstention, end-to-end model evaluations, and a web UI are not yet implemented.
 
 Start with:
 - `docs/00-project-overview.md`
@@ -40,6 +40,20 @@ Start with:
 - `docs/experiments/EXP-125-hard-robustness-result.md` — retrieval robustness findings
 
 **Data integrity:** Experimental metrics must come from observed runs. The separate `EXP-124-illustrative-hypothetical-simulation-NOT-RESULTS.md` is fictional teaching material and must never be quoted as empirical performance.
+
+## Phase 14 — evidence-first demo
+
+The initial integration stage provides an inspectable retrieval trace **without claiming verified answers**.
+
+```bash
+uv run python scripts/run_phase14_integrated_demo.py --strategy static --top-k 3
+uv run python scripts/run_phase14_integrated_demo.py --strategy auto --question "Where do exhausted failed jobs go?"
+uv run pytest tests/test_phase14_integrated_pipeline.py
+```
+
+Outputs include source IDs, source metadata, search queries and fallback reasons. The `answer` field is **always `null`**, and `status` is `evidence_only_unverified`, until a separately tested answer verifier is added. An unknown planner intent triggers unchanged-question BM25 retrieval rather than leaving the result empty.
+
+Architecture and milestone gates: [Phase 14 HLD](docs/architecture/phase14-hld.md).
 
 ## Core principle
 
