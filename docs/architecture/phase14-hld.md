@@ -2,7 +2,7 @@
 
 ## Status (2026-11-14)
 
-**Phase 14.0: architecture and integration contract defined. Phase 14.1: initial evidence-first CPU-only pipeline and static fallback CI-validated (467 tests). Phase 14.2: narrow optional source-cited extractive gate and explicit abstention rules implemented; independent answer-quality validation remains pending.** The pipeline returns **retrieved evidence only**, not verified answers or calibrated abstentions. Phases 14.2–14.7 are NOT complete.
+**Phase 14.0: architecture and integration contract defined. Phase 14.1: integrated BM25/Dense/Hybrid ranking adapters with static fallback CI-validated (487 tests). Phase 14.2: narrow optional source-cited extractive gate and explicit abstention rules implemented; independent answer-quality validation remains pending.** The pipeline returns **retrieved evidence only**, not verified answers or calibrated abstentions. Phases 14.2–14.7 are NOT complete.
 
 ## Goal
 Deliver a coherent runnable Agentic Knowledge Engine and KnowledgeBench demonstration whose claims remain traceable to the real Phase 13 results. Avoid implying the historical fixed template planner generalizes or that an LLM has verified evidence.
@@ -12,17 +12,18 @@ Deliver a coherent runnable Agentic Knowledge Engine and KnowledgeBench demonstr
 ```text
 Question
   |
-  +--> Static BM25 --------------------------------+
+  +--> Shared ranking backend --------------------+
+  |    BM25 / Dense MiniLM / Hybrid RRF            |
   |                                               |
   +--> Existing RuleBasedPlanner                  |
            |                                       |
            +--> generate query                    |
-           +--> BM25 top-k evidence               |
+           +--> selected backend top-k evidence               |
            +--> observe top1, update state        |
            +--> STOP or query failure ------------+
                       |
           If failure/budget exhaustion:
-          original-question static BM25 fallback
+          original-question search on same backend
                       |
            Ordered unique evidence results
            Source type/effective date provenance
@@ -37,7 +38,7 @@ Question
 
 ## Component contracts
 
-**Retrieval:** `knowledge_engine.retrieval.bm25.BM25Retriever`, unchanged. The engine indexes `KnowledgeBenchV2Document` with stable document IDs, text, source types and effective dates. This CPU-only starter does not download embeddings.
+**Retrieval:** common `RankingBackend` in `knowledge_engine/integrated/backends.py` can use the existing BM25, frozen Dense MiniLM or Hybrid RRF. BM25 is the no-download default. The engine indexes `KnowledgeBenchV2Document` with stable document IDs, text, source types and effective dates. This CPU-only starter does not download embeddings.
 
 **Planner:** existing `RuleBasedPlanner.next_action(PlannerState)` and `parse_retrieval_observation`; only the first hit text is passed to the next planner step. Failed query generation or budget exhaustion triggers a static original-question query. Earlier planner failures in EXP-123 motivate this fallback.
 
@@ -59,7 +60,7 @@ uv run python scripts/run_phase14_integrated_demo.py --strategy static --top-k 3
 uv run python scripts/run_phase14_integrated_demo.py --question "Where do failed jobs go after retries?" --strategy auto
 ```
 
-The second query intentionally demonstrates a rule-planner unsupported-intent fallback. Inspect `strategy_used`, `fallback_reason`, `steps`, and `evidence` instead of treating unverified evidence as final answer.
+The second query intentionally demonstrates a rule-planner unsupported-intent fallback. Add `--backend dense` or `--backend hybrid` to the JSON CLI to load MiniLM on demand (separate from CPU-only CI). Inspect `strategy_used`, `fallback_reason`, `steps`, and `evidence` instead of treating unverified evidence as final answer.
 
 ## Subsequent milestones and explicit exit gates
 
@@ -96,3 +97,9 @@ uv run pytest tests/test_phase14_source_answer.py
 ```
 
 **Exit criterion for real 14.2:** run source-independent answer/abstention checks with counterfactual and misleading source tests, document false positives and false negatives, and compare to a matched generator. The current prototype does not meet the complete end-to-end reliability gate.
+
+## Observed Phase 14 integration checkpoint
+
+CI run `43590314766` on commit `50953715ea86faed0c5ecb53f09d9880841be7f6`: **487 tests passed in 15.28s**, Ruff clean, existing research audits passed, both evidence JSON and optional extractive CLI smoke checks passed, integrated KnowledgeBench development evaluation ran, and a self-contained `phase14-evidence-demo` HTML artifact was generated and uploaded. These CI checks cover real BM25 engine execution and fake-encoder Dense/Hybrid adapter tests; they do **not** claim real new-family Dense/Hybrid end-to-end inference outcomes.
+
+On the known ten-task benchmark, **static extractive answer correct 2/6, auto 2/6, auto fallback 10/10**. Source-aware verification, flexible planner generalization and calibrated abstention remain unachieved.
