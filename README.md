@@ -4,6 +4,15 @@ Research-engineering experiments on **agentic search, knowledge representations,
 
 > **Research scope:** This is a development-stage system, not a production-ready fact-checker. The known benchmark families have been inspected across experiments; no broad unseen-family generalization is established.
 
+## Two research workstreams
+
+This repository supports **two complementary resume entries**—one for the system, one for its evaluation. They share source data and research history; they are not separate repositories.
+
+| Workstream | Start here | Focus |
+|---|---|---|
+| **Agentic Knowledge Engine** | [Architecture, code and demo](knowledge_engine/README.md) | Information architectures, BM25/Dense/Hybrid retrieval, graph/hierarchy research, multi-hop planning, SFT/RL prototypes and evidence traces |
+| **KnowledgeBench** | [Benchmarks, graders and experiments](knowledgebench/README.md) | Hard evidence tasks, retrieval/agent evaluation, robustness diagnostics, reproducible measurements and failure analysis |
+
 ## What is implemented
 
 - **Retrieval:** BM25, MiniLM Dense, Hybrid reciprocal rank fusion, reranking, structure-aware chunks, hierarchical and claim-graph methods.
