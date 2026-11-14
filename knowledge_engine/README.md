@@ -17,9 +17,10 @@ flowchart TD
     Planner -->|"unsupported / budget exhausted"| Fallback["Original-question fallback"]
     Fallback --> Rank
 
-    Rank --> BM25["BM25"]
-    Rank --> Dense["Dense MiniLM"]
-    Rank --> Hybrid["Hybrid RRF"]
+    Rank --> Choice{"Select one ranking backend"}
+    Choice --> BM25["BM25"]
+    Choice --> Dense["Dense MiniLM"]
+    Choice --> Hybrid["Hybrid RRF"]
     BM25 --> Hits["Ranked document IDs"]
     Dense --> Hits
     Hybrid --> Hits
