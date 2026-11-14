@@ -60,6 +60,7 @@ The measured Phase 14 results deliberately expose **negative findings**, not jus
 - [Phase 13 final research review](docs/research/phase13-final-review.md)
 - [Phase 14 HLD](docs/architecture/phase14-hld.md) and [LLD](docs/architecture/phase14-lld.md)
 - [Phase 14 integrated development benchmark result](docs/research/phase14-integrated-development-benchmark-result.md)
+- [Phase 14 engineering handoff review](docs/research/phase14-integration-handoff-review.md)
 - [Phase 14 no-Codespace runbook](docs/operations/phase14-runbook.md)
 - [Portfolio research-engineering case study](docs/portfolio/agentic-knowledge-lab-case-study.md)
 - [Learning and project roadmap](docs/02-learning-roadmap.md)
