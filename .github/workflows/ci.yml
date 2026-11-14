@@ -42,3 +42,6 @@ jobs:
 
       - name: Audit Phase 13 shared policy protocol
         run: uv run python scripts/run_phase13_shared_policy_contract.py
+
+      - name: Smoke Phase 14 integrated evidence demo
+        run: uv run python scripts/run_phase14_integrated_demo.py --strategy static --top-k 3
