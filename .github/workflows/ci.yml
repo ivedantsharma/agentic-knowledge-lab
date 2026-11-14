@@ -48,3 +48,6 @@ jobs:
 
       - name: Smoke Phase 14 extractive citation and abstention
         run: uv run python scripts/run_phase14_integrated_demo.py --strategy static --top-k 5 --extractive-answer
+
+      - name: Audit Phase 14 integrated benchmark development results
+        run: uv run python scripts/run_phase14_integrated_benchmark.py
