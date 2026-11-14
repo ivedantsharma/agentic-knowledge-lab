@@ -82,7 +82,7 @@ def extract_source_answer(result: IntegratedResult) -> SourceAnswer:
         if found is None:
             continue
         subject = found.group("subject")
-        if re.search(r"\b" + re.escape(subject) + r"\b", result.question, re.I) is None:
+        if re.search(r"\b" + re.escape(subject) + r"\b", result.question, re.IGNORECASE) is None:
             continue
         candidate = " ".join(found.group("answer").split())
         normalized = candidate.casefold()
