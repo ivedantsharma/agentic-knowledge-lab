@@ -1,6 +1,7 @@
 """Phase 14 integrated retrieval tests: only actual source metadata is exposed."""
 
 import json
+
 import pytest
 
 from knowledge_engine.agent.actions import PlannerAction, PlannerActionType
