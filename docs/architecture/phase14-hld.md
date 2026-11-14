@@ -2,7 +2,7 @@
 
 ## Status (2026-11-14)
 
-**Phase 14.0: architecture and integration contract defined. Phase 14.1: initial evidence-first CPU-only pipeline implemented; GitHub CI validation pending.** The pipeline returns **retrieved evidence only**, not verified answers or calibrated abstentions. Phases 14.2–14.7 are NOT complete.
+**Phase 14.0: architecture and integration contract defined. Phase 14.1: initial evidence-first CPU-only pipeline and static fallback CI-validated (467 tests). Phase 14.2: narrow optional source-cited extractive gate and explicit abstention rules implemented; independent answer-quality validation remains pending.** The pipeline returns **retrieved evidence only**, not verified answers or calibrated abstentions. Phases 14.2–14.7 are NOT complete.
 
 ## Goal
 Deliver a coherent runnable Agentic Knowledge Engine and KnowledgeBench demonstration whose claims remain traceable to the real Phase 13 results. Avoid implying the historical fixed template planner generalizes or that an LLM has verified evidence.
@@ -81,3 +81,18 @@ EXP-124 stopped/inconclusive; SFT and RL models were not compared on new indepen
 ## Execution environment
 
 GitHub Actions provides a repository-native test path while Codespaces is unavailable due to billing. Documentation and source changes are made through GitHub. No one should claim an end-to-end pretrained-model run merely from CPU unit tests.
+
+## Phase 14.2 prototype — bounded extractive source verification
+
+`knowledge_engine/integrated/verification.py` provides an **opt-in** `extract_source_answer(result)` function with structured `SourceAnswer`. It is intentionally limited to direct service-specific backup cadence, job retries, cache duration and signing-key rotation when the service name appears **explicitly in the question** and the `service_manual` corpus text contains a matching fixed expression.
+
+The extractor excludes `service_manual_previous_revision` and `pending_policy_revision` sources and abstains on distinct answers from multiple qualifying service manuals. Each accepted extracted answer includes citation document IDs; no benchmark gold support labels or expected answers enter this logic. The output is `source_supported_extractive` and explicitly **NOT independently fact-checked**. Multi-hop service inference, arbitrary user questions, contradiction resolution outside the narrow patterns, stale records with incorrect source metadata, malicious document text outside recognized patterns, and calibrated uncertainty are unsolved.
+
+The original `IntegratedResult.answer` remains `null` and `status=evidence_only_unverified`; the optional CLI flag `--extractive-answer` adds a separate `source_answer` field containing a source-supported candidate or an abstention.
+
+```bash
+uv run python scripts/run_phase14_integrated_demo.py --strategy static --top-k 5 --extractive-answer
+uv run pytest tests/test_phase14_source_answer.py
+```
+
+**Exit criterion for real 14.2:** run source-independent answer/abstention checks with counterfactual and misleading source tests, document false positives and false negatives, and compare to a matched generator. The current prototype does not meet the complete end-to-end reliability gate.
