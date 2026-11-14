@@ -7,6 +7,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+from knowledge_engine.integrated.backends import create_ranking_backend
 from knowledge_engine.integrated.pipeline import IntegratedKnowledgeEngine
 from knowledge_engine.integrated.verification import extract_source_answer
 from knowledgebench.documents.v2_schema import KnowledgeBenchV2Document
@@ -14,12 +15,15 @@ from knowledgebench.documents.v2_schema import KnowledgeBenchV2Document
 DOCUMENTS = Path("data/processed/knowledgebench_v2_hard_documents_v0.json")
 
 
-def build_engine(path: Path = DOCUMENTS) -> IntegratedKnowledgeEngine:
+def build_engine(
+    path: Path = DOCUMENTS, *, backend: str = "bm25", encoder=None
+) -> IntegratedKnowledgeEngine:
     documents = [
         KnowledgeBenchV2Document.model_validate(row)
         for row in json.loads(path.read_text(encoding="utf-8"))
     ]
-    return IntegratedKnowledgeEngine(documents)
+    ranking = create_ranking_backend(documents, name=backend, encoder=encoder)
+    return IntegratedKnowledgeEngine(documents, backend=ranking)
 
 
 def main() -> None:
@@ -31,10 +35,11 @@ def main() -> None:
     )
     parser.add_argument("--strategy", choices=["auto", "static", "planner"], default="auto")
     parser.add_argument("--top-k", type=int, default=3)
+    parser.add_argument("--backend", choices=["bm25", "dense", "hybrid"], default="bm25")
     parser.add_argument("--extractive-answer", action="store_true")
     parser.add_argument("--max-planner-searches", type=int, default=3)
     args = parser.parse_args()
-    result = build_engine().query(
+    result = build_engine(backend=args.backend).query(
         args.question,
         strategy=args.strategy,
         top_k=args.top_k,
