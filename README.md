@@ -1,66 +1,73 @@
 # Agentic Knowledge Lab
 
-A research-engineering project exploring agent-native information architectures, adaptive retrieval, model training for search/tool use, and adversarial evaluation of knowledge-seeking agents.
+Research-engineering experiments on **agentic search, knowledge representations, evidence grounding, and evaluation**. The repository contains reusable retrieval and grading implementations, reproducible research protocols, a small evidence-first integration demo, and a record of positive, negative, and inconclusive findings.
 
-## Projects
+> **Research scope:** This is a development-stage system, not a production-ready fact-checker. The known benchmark families have been inspected across experiments; no broad unseen-family generalization is established.
 
-### 1. Agent-Native Knowledge Engine
-We will build and compare:
-- lexical retrieval
-- dense/vector retrieval
-- hybrid retrieval
-- reranking
-- agentic multi-step search
-- hierarchical and graph-based knowledge representations
-- learned retrieval policies
-- fine-tuning and reinforcement-learning experiments
+## What is implemented
 
-### 2. KnowledgeBench
-We will build difficult evaluations for:
-- multi-hop retrieval
-- stale and contradictory evidence
-- distractors
-- entity ambiguity
-- unanswerable questions
-- search-loop failures
-- prompt-injection documents
+- **Retrieval:** BM25, MiniLM Dense, Hybrid reciprocal rank fusion, reranking, structure-aware chunks, hierarchical and claim-graph methods.
+- **Agents:** multi-hop planning, query observations, tool traces, static-query fallback and evaluation of stopping/failure behavior.
+- **KnowledgeBench:** typed multi-hop, distractor, contradiction, stale, ambiguity and unanswerable tasks; evidence/retrieval/trace/grounding graders.
+- **Learning research:** supervised action-classification and REINFORCE prototypes, fair-baseline and protocol-compatibility studies. **No supported learned SFT-versus-RL superiority claim.**
+- **Phase 14 integration:** a common BM25/Dense/Hybrid ranking interface, a transparent rule planner with original-question fallback, source provenance and risk flags, an opt-in narrow source-cited extractive answer/abstain gate, JSON and portable HTML demonstrations.
 
-## Current status
+## Try the evidence-first demo
 
-**Phases 0–12: foundational milestones complete. Phase 13: research campaign archived and final review complete (2026-11-14).** Five scoped Phase 13 audits/experiments were completed; EXP-124 stopped as scientifically inconclusive because compatible SFT/RL checkpoints and independent evaluation families were unavailable. This is **not** a six-for-six measured research success. Phase 14 has begun: a CPU-only BM25 evidence pipeline, rule-planner fallback, traceable JSON CLI, source metadata flags, and regression tests have been implemented. Verified answers, abstention, end-to-end model evaluations, and a web UI are not yet implemented.
-
-Start with:
-- `docs/00-project-overview.md`
-- `docs/01-glossary.md`
-- `docs/02-learning-roadmap.md`
-- `docs/03-cloud-development-setup.md`
-- `docs/research/phase13-final-review.md` — final measured findings, negative results, limitations and portfolio-ready description
-- `docs/research/phase13-campaign-plan.md` — experiment ledger and source protocols
-- `docs/experiments/EXP-124-learned-policy-comparison-result.md` — blocked/inconclusive learned-policy experiment
-- `docs/experiments/EXP-125-hard-robustness-result.md` — retrieval robustness findings
-
-**Data integrity:** Experimental metrics must come from observed runs. The separate `EXP-124-illustrative-hypothetical-simulation-NOT-RESULTS.md` is fictional teaching material and must never be quoted as empirical performance.
-
-## Phase 14 — evidence-first demo
-
-The initial integration stage provides an inspectable retrieval trace **without claiming verified answers**.
+The default BM25 integration does **not** need model weights or a GPU. With Python 3.12 and `uv` installed:
 
 ```bash
+uv sync --all-groups
+uv run pytest
+uv run ruff check .
+
+# Explainable evidence JSON with provenance and fallback traces
 uv run python scripts/run_phase14_integrated_demo.py --strategy static --top-k 3
+
+# Opt-in narrow extractive answer and source citations
+uv run python scripts/run_phase14_integrated_demo.py --strategy static --top-k 5 --extractive-answer
+
+# Unknown intent: original-question fallback
 uv run python scripts/run_phase14_integrated_demo.py --strategy auto --question "Where do exhausted failed jobs go?"
-uv run pytest tests/test_phase14_integrated_pipeline.py
+
+# Model-based retrieval (downloads frozen MiniLM when selected)
+uv run python scripts/run_phase14_integrated_demo.py --backend hybrid --strategy static --top-k 5
+
+# Development benchmark + standalone HTML report
+uv run python scripts/run_phase14_integrated_benchmark.py
+uv run python scripts/run_phase14_html_demo.py --output phase14_demo.html
 ```
 
-Outputs include source IDs, source metadata, search queries and fallback reasons. The `answer` field is **always `null`**, and `status` is `evidence_only_unverified`, until a separately tested answer verifier is added. An unknown planner intent triggers unchanged-question BM25 retrieval rather than leaving the result empty.
+Alternatively, open [GitHub Actions](https://github.com/ivedantsharma/agentic-knowledge-lab/actions), choose a successful CI run, and download the **`phase14-evidence-demo`** artifact. Its HTML opens locally without a web service or Codespaces.
 
-Architecture and milestone gates: [Phase 14 HLD](docs/architecture/phase14-hld.md).
+**Answer integrity:** The base pipeline always has `answer=null` and `status=evidence_only_unverified`. With `--extractive-answer`, a *separate* `source_answer` may be returned for a few directly named service questions backed by explicit source-manual text; it abstains on unsupported or conflicting evidence. Such extracted values are **not independently verified world facts**.
 
-## Core principle
+## Selected observed research results
 
-We do not add complexity because it looks impressive.
+| Study | Development-scale result | Limitation |
+|---|---|---|
+| EXP-121 | Hybrid MRR@3 0.8333 vs BM25 0.8194; six-family bootstrap interval for the difference spans zero | No established universal Hybrid win |
+| EXP-122 | Graph retrieval covered 4/4 graph-derived task evidence paths; flat 1/4, hierarchy 2/4 | Graph-aligned tasks; different algorithms, not causal proof |
+| EXP-123 | Rule agent recovered full evidence on 4/5 but failed before searching on the OOD fifth; static Top9 recovered 5/5 | Unmatched call/document budgets |
+| EXP-124 | Common BM25 policy execution protocol and fixed-K baselines validated | Learned SFT/RL comparison **stopped inconclusive** |
+| EXP-125 | Hybrid Recall@5 0.8889 with 5/6 complete evidence chains; labeled risk documents also exposed at K5 | Retrieval-only, not answer quality or injection safety |
+| Phase 14 | On 10 inspected tasks, source-extractive answers correct 2/6 answerable, abstained 4/4 unanswerable; auto fallback **10/10** | Narrow extractor; planner not generalized; unmatched call budgets |
 
-Every component must answer:
-1. What problem does it solve?
-2. What is the simplest baseline?
-3. How will we measure whether it helps?
-4. What trade-offs does it introduce?
+The measured Phase 14 results deliberately expose **negative findings**, not just successes. Source-grounded extraction currently has limited answer coverage, and the historical rule planner needs fallback for all ten hard-v0 tasks.
+
+## Documentation
+
+- [Phase 13 final research review](docs/research/phase13-final-review.md)
+- [Phase 14 HLD](docs/architecture/phase14-hld.md) and [LLD](docs/architecture/phase14-lld.md)
+- [Phase 14 integrated development benchmark result](docs/research/phase14-integrated-development-benchmark-result.md)
+- [Phase 14 no-Codespace runbook](docs/operations/phase14-runbook.md)
+- [Portfolio research-engineering case study](docs/portfolio/agentic-knowledge-lab-case-study.md)
+- [Learning and project roadmap](docs/02-learning-roadmap.md)
+
+**Data integrity:** The separate `EXP-124-illustrative-hypothetical-simulation-NOT-RESULTS.md` contains deliberately fictional teaching-only numbers. They are **not experimental findings** and must never be quoted as actual model outcomes.
+
+## What remains open
+
+Truly independent source-family evaluations; a general grounded answer generator and verifier; calibrated abstention and prompt-injection resistance; robust non-template agent planning; fair same-budget latency/quality comparisons; compatible trained SFT/RL inference checkpoints; production deployment.
+
+We don't add complexity for its own sake. Every addition needs a baseline, a measurable research question, source provenance, and honest failure analysis.
