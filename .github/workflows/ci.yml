@@ -51,3 +51,12 @@ jobs:
 
       - name: Audit Phase 14 integrated benchmark development results
         run: uv run python scripts/run_phase14_integrated_benchmark.py
+
+      - name: Build Phase 14 portable HTML evidence demo
+        run: uv run python scripts/run_phase14_html_demo.py --output phase14_demo.html
+
+      - name: Upload Phase 14 HTML demo artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase14-evidence-demo
+          path: phase14_demo.html
