@@ -8,7 +8,7 @@ This is the **implemented** low-level design for a CPU-only, development-stage r
 
 | File | Entry point | Behavior |
 |---|---|---|
-| `knowledge_engine/integrated/pipeline.py` | `IntegratedKnowledgeEngine(documents).query(question, strategy, top_k, max_planner_searches)` | BM25 retrieval, optional rule planner, fallback, source provenance |
+| `knowledge_engine/integrated/backends.py` | `create_ranking_backend(documents, name, encoder)` | One shared BM25 / Dense MiniLM / Hybrid RRF ranking interface |\n| `knowledge_engine/integrated/pipeline.py` | `IntegratedKnowledgeEngine(documents).query(question, strategy, top_k, max_planner_searches)` | BM25 retrieval, optional rule planner, fallback, source provenance |
 | `knowledge_engine/integrated/verification.py` | `extract_source_answer(result)` | Narrow source-matched extractive candidates or explicit abstention |
 | `knowledge_engine/integrated/html_report.py` | `render_demo_html(result, verdict)` | HTML-escaped, standalone trace and evidence display |
 | `scripts/run_phase14_integrated_demo.py` | `main()`, `build_engine()` | Structured JSON CLI |
@@ -17,11 +17,11 @@ This is the **implemented** low-level design for a CPU-only, development-stage r
 
 ### Retrieval pipeline
 
-Construction validates nonempty unique document IDs. It builds `BM25Retriever` over exact document texts, retains `KnowledgeBenchV2Document` objects with `source_type` and optional `effective_at`, and never uses gold support IDs in retrieval.
+Construction validates nonempty unique document IDs. It constructs a shared `RankingBackend` (BM25, Dense or Hybrid; BM25 is the CPU-only default) over exact document texts, retains `KnowledgeBenchV2Document` objects with `source_type` and optional `effective_at`, and never uses gold support IDs in retrieval.
 
-`strategy=static` performs one unchanged-question BM25 query.
+`strategy=static` performs one unchanged-question query using the selected backend.
 
-`strategy=auto` / `planner` invokes the existing `RuleBasedPlanner.next_action(PlannerState)`, searches using BM25 Top-K for each generated query, feeds only the top-ranked retrieved document's actual text through `parse_retrieval_observation`, then repeats until STOP or max three searches. Unsupported query patterns, missing hits and search-budget exhaustion trigger a **separate unchanged-question BM25 fallback**. Search steps preserve exact query and ranked document IDs; evidence is deduplicated in first-seen order.
+`strategy=auto` / `planner` invokes the existing `RuleBasedPlanner.next_action(PlannerState)`, searches using the selected backend's Top-K ranking for each generated query, feeds only the top-ranked retrieved document's actual text through `parse_retrieval_observation`, then repeats until STOP or max three searches. Unsupported query patterns, missing hits and search-budget exhaustion trigger a **separate unchanged-question retrieval fallback using the same selected backend**. Search steps preserve exact query and ranked document IDs; evidence is deduplicated in first-seen order.
 
 The result has `status=evidence_only_unverified`, `answer=None`, optional `fallback_reason`, `planner_stopped`, full search traces and `EvidenceHit` objects.
 
@@ -77,3 +77,9 @@ uv run python scripts/run_phase14_integrated_demo.py --strategy static --top-k 5
 uv run python scripts/run_phase14_integrated_benchmark.py
 uv run python scripts/run_phase14_html_demo.py --output phase14_demo.html
 ```
+
+## Shared retrieval adapters
+
+`knowledge_engine/integrated/backends.py` implements `RankingBackend.rank(query, top_k)`, a default BM25 adapter, Dense MiniLM cosine ranking, and Hybrid RRF (`rrf_k=60`) over BM25 and dense full-corpus ranks. The Dense/Hybrid backends accept a fake/injected encoder in tests and load the frozen `sentence-transformers/all-MiniLM-L6-v2` on demand otherwise. The runtime checks that backend outputs contain no unknown IDs, duplicate document IDs or more than the requested K. The CLI exposes `--backend bm25|dense|hybrid`. Only BM25 is exercised in the CPU-only CI smoke demos; the fake-encoder adapter tests validate plumbing, not real dense/hybrid model quality.
+
+CI run `43590314766` confirms **487 passing tests**, Ruff clean, and a successful HTML artifact build; the user-facing development benchmark is still retrospective and small.
