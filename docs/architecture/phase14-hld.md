@@ -66,14 +66,14 @@ The second query intentionally demonstrates a rule-planner unsupported-intent fa
 
 | Milestone | Exit gate | Status |
 |---|---|---|
-| 14.0 architecture/contract | HLD, existing import verification, evidence boundaries | Documented |
-| 14.1 retrieval integration | Executable static/planner/fallback pipeline and CI tests | Implemented, pending CI |
-| 14.2 answer verification/abstention | Source-aware evidence checking and actual answer/abstain accuracy | Not started |
-| 14.3 KnowledgeBench integration | Unified per-task end-to-end evaluator and honest baseline metrics | Not started |
-| 14.4 interface/demo | Reproducible human-readable UI or CLI trace, citations and examples | CLI skeleton only |
-| 14.5 reproducibility | Runbook, CI, regression and failure tests for full system | Partial |
-| 14.6 portfolio/report | Portfolio README and system/report diagrams grounded in real findings | Not started |
-| 14.7 final review/handoff | Audited limitations, supported outputs and phase exit | Not started |
+| 14.0 architecture/contract | HLD, real module import verification, evidence boundaries | **Completed as prototype architecture** |
+| 14.1 retrieval integration | BM25/Dense/Hybrid common rankers, static/planner/fallback, CI tests | **Completed as integration plumbing**; broad planner effectiveness unproven |
+| 14.2 answer verification/abstention | Source-aware evidence checking and real answer/abstain accuracy | **Narrow prototype only**; 2/6 answers correct on inspected tasks |
+| 14.3 KnowledgeBench integration | Per-task evaluator and explicit answer/abstention/call metrics | **Development diagnostic complete**; no unseen-family validation |
+| 14.4 interface/demo | JSON traces and portable source-cited HTML demo artifact | **Completed as static demo** (not a hosted web app) |
+| 14.5 reproducibility | CI, runbook, regression/failure tests and production reproducibility | **Completed for CPU prototype**; production/model validation open |
+| 14.6 portfolio/report | Credible README, research portfolio case study, documentation | **Completed for current evidence scope** |
+| 14.7 final review/handoff | Audited supported results and remaining scientific blockers | **Review in progress** |
 
 ## Phase 13 constraints inherited
 
