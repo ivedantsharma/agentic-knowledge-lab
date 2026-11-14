@@ -266,7 +266,7 @@ Gates before strong claims:
 
 ## Phase 14 — Final Research System & Portfolio
 
-Status: Planned (not started).
+Status: **Evidence-first integration prototype and engineering handoff delivered (2026-11-14); full research-system validation NOT complete.** Common BM25/Dense/Hybrid ranking adapters, rule-based search with fallback, source provenance, a narrow extractive answer/abstention prototype, JSON and static HTML demos, a ten-task development benchmark, CI tests, HLD/LLD, runbook, research result and portfolio case study are committed. Last verified integration CI: 487 tests passed, Ruff clean, HTML demo artifact produced. Development benchmark: extracted answers correct on only 2/6 answerable questions; auto strategy fell back on all 10 questions. The broader goals—general citation verification, flexible planning, independent-family validation, calibrated abstention, hosted UI and production deployment—remain open. See `docs/research/phase14-integration-handoff-review.md`.
 
 Deliverables:
 - integrated knowledge engine
