@@ -1,0 +1,83 @@
+# Phase 14 — Integrated System Architecture and Engineering Plan
+
+## Status (2026-11-14)
+
+**Phase 14.0: architecture and integration contract defined. Phase 14.1: initial evidence-first CPU-only pipeline implemented; GitHub CI validation pending.** The pipeline returns **retrieved evidence only**, not verified answers or calibrated abstentions. Phases 14.2–14.7 are NOT complete.
+
+## Goal
+Deliver a coherent runnable Agentic Knowledge Engine and KnowledgeBench demonstration whose claims remain traceable to the real Phase 13 results. Avoid implying the historical fixed template planner generalizes or that an LLM has verified evidence.
+
+## Architecture (HLD)
+
+```text
+Question
+  |
+  +--> Static BM25 --------------------------------+
+  |                                               |
+  +--> Existing RuleBasedPlanner                  |
+           |                                       |
+           +--> generate query                    |
+           +--> BM25 top-k evidence               |
+           +--> observe top1, update state        |
+           +--> STOP or query failure ------------+
+                      |
+          If failure/budget exhaustion:
+          original-question static BM25 fallback
+                      |
+           Ordered unique evidence results
+           Source type/effective date provenance
+           Previous/pending source-risk flags
+                      |
+             EVIDENCE ONLY / UNVERIFIED
+             answer = null
+                      |
+          Future 14.2 verification + answer/abstention
+          Future 14.3 KnowledgeBench integration
+```
+
+## Component contracts
+
+**Retrieval:** `knowledge_engine.retrieval.bm25.BM25Retriever`, unchanged. The engine indexes `KnowledgeBenchV2Document` with stable document IDs, text, source types and effective dates. This CPU-only starter does not download embeddings.
+
+**Planner:** existing `RuleBasedPlanner.next_action(PlannerState)` and `parse_retrieval_observation`; only the first hit text is passed to the next planner step. Failed query generation or budget exhaustion triggers a static original-question query. Earlier planner failures in EXP-123 motivate this fallback.
+
+**Provenance:** `EvidenceHit` includes original document ID, title, full text, source type, effective date and a *metadata-derived* risk flag for previous revision or pending revision. These flags do not use the benchmark's gold distractor/stale labels, and do not independently establish factual authority.
+
+**Output:** `IntegratedResult` contains requested/used strategy, fallback reason, whether planner STOP occurred, every search query and returned document IDs, deduplicated ordered evidence, `status=evidence_only_unverified`, and `answer=null`. The planner's raw extracted answer is intentionally never returned as a verified final answer.
+
+**CLI:** `scripts/run_phase14_integrated_demo.py` reads the existing hard-v0 corpus and prints inspectable JSON. No web service, UI, generation model or question-answer correctness claim exists yet.
+
+**Boundaries:** input validation ensures positive top-k within corpus size, max planner steps 1–6 and nonempty unique documents; no benchmark gold, support labels or expected answers enter policy or search queries. This does not demonstrate prompt-injection resistance of a downstream language model.
+
+## Reproduction
+
+```bash
+git pull
+uv run pytest
+uv run ruff check .
+uv run python scripts/run_phase14_integrated_demo.py --strategy static --top-k 3
+uv run python scripts/run_phase14_integrated_demo.py --question "Where do failed jobs go after retries?" --strategy auto
+```
+
+The second query intentionally demonstrates a rule-planner unsupported-intent fallback. Inspect `strategy_used`, `fallback_reason`, `steps`, and `evidence` instead of treating unverified evidence as final answer.
+
+## Subsequent milestones and explicit exit gates
+
+| Milestone | Exit gate | Status |
+|---|---|---|
+| 14.0 architecture/contract | HLD, existing import verification, evidence boundaries | Documented |
+| 14.1 retrieval integration | Executable static/planner/fallback pipeline and CI tests | Implemented, pending CI |
+| 14.2 answer verification/abstention | Source-aware evidence checking and actual answer/abstain accuracy | Not started |
+| 14.3 KnowledgeBench integration | Unified per-task end-to-end evaluator and honest baseline metrics | Not started |
+| 14.4 interface/demo | Reproducible human-readable UI or CLI trace, citations and examples | CLI skeleton only |
+| 14.5 reproducibility | Runbook, CI, regression and failure tests for full system | Partial |
+| 14.6 portfolio/report | Portfolio README and system/report diagrams grounded in real findings | Not started |
+| 14.7 final review/handoff | Audited limitations, supported outputs and phase exit | Not started |
+
+## Phase 13 constraints inherited
+
+EXP-124 stopped/inconclusive; SFT and RL models were not compared on new independent source families. EXP-125's K5 hybrid recall 0.8889 was accompanied by distractor/contradiction/stale exposure. Use a verifier/abstention gate in 14.2 before any answer correctness or trust claim. The existing hard corpus is inspected development data.
+
+## Execution environment
+
+GitHub Actions provides a repository-native test path while Codespaces is unavailable due to billing. Documentation and source changes are made through GitHub. No one should claim an end-to-end pretrained-model run merely from CPU unit tests.
