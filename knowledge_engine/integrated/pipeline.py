@@ -11,7 +11,7 @@ from knowledge_engine.agent.actions import PlannerActionType
 from knowledge_engine.agent.observation_parser import parse_retrieval_observation
 from knowledge_engine.agent.rule_based_planner import RuleBasedPlanner
 from knowledge_engine.agent.state import PlannerState
-from knowledge_engine.retrieval.bm25 import BM25Retriever
+from knowledge_engine.integrated.backends import RankingBackend, create_ranking_backend
 from knowledgebench.documents.v2_schema import KnowledgeBenchV2Document
 
 RISK_SOURCE_TYPES = {
@@ -88,14 +88,12 @@ class IntegratedKnowledgeEngine:
         documents: list[KnowledgeBenchV2Document],
         *,
         planner: RuleBasedPlanner | None = None,
+        backend: RankingBackend | None = None,
     ) -> None:
         if not documents or len({doc.document_id for doc in documents}) != len(documents):
             raise ValueError("documents must be nonempty with unique IDs")
         self._documents = {doc.document_id: doc for doc in documents}
-        self._retriever = BM25Retriever(
-            document_ids=[doc.document_id for doc in documents],
-            document_texts=[doc.text for doc in documents],
-        )
+        self._retriever = backend if backend is not None else create_ranking_backend(documents)
         self._planner = planner if planner is not None else RuleBasedPlanner()
 
     def query(
@@ -121,7 +119,14 @@ class IntegratedKnowledgeEngine:
         fallback: str | None = None
 
         def search(query: str) -> tuple[str, ...]:
-            ids = tuple(item_id for item_id, _ in self._retriever.rank(query, top_k))
+            ranked = self._retriever.rank(query, top_k)
+            ids = tuple(item_id for item_id, _ in ranked)
+            if (
+                len(ids) > top_k
+                or len(ids) != len(set(ids))
+                or not set(ids).issubset(self._documents)
+            ):
+                raise ValueError("backend returned duplicate, unknown or over-budget IDs")
             steps.append(SearchStep(query=query, returned_document_ids=ids))
             for item_id in ids:
                 seen_ids[item_id] = None
