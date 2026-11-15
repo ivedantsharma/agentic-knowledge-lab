@@ -207,71 +207,59 @@ Deliverables:
 
 ## Phase 12 — RL for Retrieval Policy
 
-Status: Complete (foundational learning milestones; no robust heldout policy generalization claim).
-
 Learn:
-- rewards, trajectories, credit assignment and discounting
+- rewards, trajectories, credit assignment, and discounting
 - on-policy stochastic exploration and action masking
 - REINFORCE / policy-gradient optimization with baselines
-- multi-seed variance, evaluator-only gold labels and leakage controls
+- multi-seed variance, evaluator-only gold labels, and leakage controls
 - evidence-family-disjoint evaluation and retriever-protocol confounds
-- strong fixed-policy / gold-aware oracle comparisons
+- strong fixed-policy and gold-aware oracle comparisons
 
 Deliverables:
-- deterministic Reward v1/v2 retrieval environment and termination audits (EXP-111–114)
-- discounted returns and finite-horizon oracle / fixed baselines (EXP-115)
-- stochastic exploration and reproducible rollouts (EXP-116)
-- five-seed tabular REINFORCE training, positive in-sample result (EXP-117)
-- BM25 source-family-disjoint transfer audit, negative/unstable result (EXP-118)
-- Phase 11 SFT versus Phase 12 RL compatibility audit (EXP-119)
-- `docs/architecture/phase12-hld.md`
-- `docs/architecture/ADR-016-rl-policy-evaluation-guardrails.md`
-- `docs/research/phase12-failure-taxonomy.md`
-- `docs/research/phase12-final-review.md`
-- EXP-111–119 experimental protocols/results in `docs/experiments/`
+- deterministic Reward v1/v2 retrieval environment and termination audits
+- discounted returns and finite-horizon oracle / fixed baselines
+- stochastic exploration and reproducible rollouts
+- five-seed tabular REINFORCE training pipeline
+- source-family-disjoint transfer audit and SFT-vs-RL compatibility audit
+- Phase 12 architecture HLD, evaluation guardrails ADR, failure taxonomy, and final review
 
-Key result:
-- EXP-117 training-task return +1.5765 → +2.6722 (five-seed mean).
-- EXP-118 heldout return +1.6573 → +1.7540 with large seed variability,
-  completion 0.7753 → 0.7416; fixed K3 +2.6000 / 1.0000 completion.
-- No apples-to-apples Phase 11 SFT-vs-Phase 12 RL win established.
-- See final review and ADR-016 before extending policy training.
+Status: Complete (foundational milestones met; heldout generalization remains unverified).
 
 ## Phase 13 — Full Research Campaign
 
-Status: **Administratively concluded / research review complete (2026-11-14)**. Five of six planned studies were completed as scoped audits or measured development experiments (EXP-120–123, 125). EXP-124 is **closed as stopped / blocked / inconclusive**, not an achieved learned SFT-versus-RL performance comparison: the shared BM25 action/reward/STOP runtime and fixed K controls passed CI, but compatible learned checkpoints and new independent evaluation families are missing. The final review is complete in `docs/research/phase13-final-review.md`. **All six experiment dispositions are documented; only 5/6 are empirically complete.** A fictional teaching-only scenario is explicitly isolated from research findings. Phase 14 engineering may start, but external-generalization claims remain gated.
-
 Learn:
-- preregistered research questions, hypotheses, controls and ablations
-- reproducible benchmark versions, provenance and experimental manifests
-- multiple independent trials, confidence intervals and across-seed variance
-- fair architecture / retriever comparisons under the same task protocol
-- failure taxonomies, stress tests, cost and quality trade-offs
-- evaluation leakage prevention and new heldout evidence-family construction
+- preregistered research questions, hypotheses, controls, and ablations
+- reproducible benchmark versions, provenance, and experimental manifests
+- multiple independent trials, confidence intervals, and across-seed variance
+- fair architecture and retriever comparisons under a shared task protocol
+- failure taxonomies, stress tests, and cost/quality trade-offs
+- evaluation leakage prevention and unseen evidence-family construction
 
-Planned deliverables:
-- phase13 HLD and research campaign plan / experiment matrix
-- EXP-120: benchmark, evaluation and reproducibility protocol inventory (complete; 390 tests, Ruff and provenance audit passed)
-- frozen baseline configurations, seeds, dataset and split manifests
+Deliverables:
+- Phase 13 HLD and research campaign experiment matrix
+- benchmark, evaluation, and reproducibility protocol inventory
+- frozen baseline configurations, seeds, and dataset split manifests
 - controlled architecture ablations and multi-trial result records
-- strong fixed and oracle baselines alongside all learned variants
-- confidence/variance reporting, per-family error analysis and negative findings
-- decision ADRs, experiment records and Phase 13 final review
+- confidence/variance reporting and per-family error analysis
+- decision ADRs, experiment records, and Phase 13 final review
 
-Gates before strong claims:
-- no tuning against already inspected EXP-118 heldout families as pristine test data
-- a common retriever/action/state/termination/evaluation protocol for any SFT-vs-RL comparison
-- independent, genuinely unseen evidence families and separate answer-quality metrics
-- no unsupported claim that RL beats fixed K3, improves final answers, or generalizes broadly
+Status: Concluded (5/6 experiments complete; SFT-vs-RL comparison blocked on missing checkpoints and unseen test families).
 
 ## Phase 14 — Final Research System & Portfolio
 
-Status: **Evidence-first integration prototype and engineering handoff delivered (2026-11-14); full research-system validation NOT complete.** Common BM25/Dense/Hybrid ranking adapters, rule-based search with fallback, source provenance, a narrow extractive answer/abstention prototype, JSON and static HTML demos, a ten-task development benchmark, CI tests, HLD/LLD, runbook, research result and portfolio case study are committed. Last verified integration CI: 487 tests passed, Ruff clean, HTML demo artifact produced. Development benchmark: extracted answers correct on only 2/6 answerable questions; auto strategy fell back on all 10 questions. The broader goals—general citation verification, flexible planning, independent-family validation, calibrated abstention, hosted UI and production deployment—remain open. See `docs/research/phase14-integration-handoff-review.md`.
+Learn:
+- end-to-end system integration and unified retrieval adapters
+- rule-based fallback routing and source provenance tracking
+- extractive answer generation and calibrated abstention
+- production packaging, CLI/JSON/HTML demo interfaces, and runbooks
+- technical research reporting and evidence-backed portfolio framing
 
 Deliverables:
 - integrated knowledge engine
 - final KnowledgeBench and benchmark/evaluation harness
 - technical research report with reproduced evidence and failure cases
-- architecture documentation, HLD/LLD, ADR trail and runbook
+- architecture documentation, HLD/LLD, ADR trail, and runbook
 - polished GitHub repository with reproducible experiments
-- portfolio/application narrative with only supported quantitative claims
+- portfolio narrative with strictly supported quantitative claims
+
+Status: Prototype delivered (integration CI passing; full system validation and hosted deployment open).
